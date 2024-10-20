@@ -47,8 +47,9 @@ SyntaxLab is a web-based code editor built using TypeScript and Next.js 14. It f
 3. Set up environment variables:
    Create a `.env.local` file in the root directory and add the necessary API keys:
    ```
-   RAPID_API_KEY=your_rapid_api_key
-   LIVEBLOCKS_SECRET_KEY=your_liveblocks_secret_key
+   NEXT_PUBLIC_RAPIDAPI_URL='<your-rapidapi-url>'
+   NEXT_PUBLIC_RAPIDAPI_HOST='<your-rapidapi-host>'
+   NEXT_PUBLIC_RAPIDAPI_KEY='<your-rapidapi-key>'
    ```
 
 4. Run the development server:
