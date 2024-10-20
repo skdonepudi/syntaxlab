@@ -33,7 +33,7 @@ SyntaxLab is a web-based code editor built using TypeScript and Next.js 14. It f
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/syntaxlab.git
+   git clone https://github.com/skdonepudi/syntaxlab.git
    cd syntaxlab
    ```
 
