@@ -10,6 +10,7 @@ import ThemeDropdown from "@/components/ThemeDropdown";
 import OutputWindow from "@/components/OutputWindow";
 import { RunIcon } from "@/components/icons";
 import CustomInput from "@/components/CustomInput";
+import OutputDetails from "@/components/OutputDetails";
 import { Language } from "@/types/language";
 import { handleCompile, checkStatus } from "@/lib/compilerUtils";
 import { defineTheme } from "@/lib/defineTheme";
@@ -118,6 +119,7 @@ export default function EditorPage() {
               )}
             </button>
           </div>
+          {outputDetails && <OutputDetails outputDetails={outputDetails} />}
         </div>
       </div>
       <ToastContainer
