@@ -1,7 +1,7 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import EditorPage from "./editor/page";
 
 export default function Home() {
-  redirect("/editor");
+  return <EditorPage />;
 }

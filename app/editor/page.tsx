@@ -1,12 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import React, { useState, useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import clsx from "clsx";
 import LanguagesDropdown from "@/components/LanguagesDropdown";
 import ThemeDropdown from "@/components/ThemeDropdown";
+import OutputWindow from "@/components/OutputWindow";
+import { RunIcon } from "@/components/icons";
+import CustomInput from "@/components/CustomInput";
+import { Language } from "@/types/language";
+import { handleCompile, checkStatus } from "@/lib/compilerUtils";
 import { defineTheme } from "@/lib/defineTheme";
 import { languages } from "@/constants/languages";
-import { Language } from "@/types/language";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), {
   ssr: false,
@@ -16,6 +23,10 @@ export default function EditorPage() {
   const [code, setCode] = useState<string>("// Start coding here");
   const [language, setLanguage] = useState<Language>(languages[0]);
   const [theme, setTheme] = useState<string>("oceanic-next");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [outputDetails, setOutputDetails] = useState<any>(null);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [customInput, setCustomInput] = useState<string>("");
   useEffect(() => {
     defineTheme("oceanic-next").then(() => setTheme("oceanic-next"));
   }, []);
@@ -35,6 +46,28 @@ export default function EditorPage() {
     if (selectedLanguage) {
       setLanguage(selectedLanguage);
     }
+  };
+
+  const handleCompileClick = async () => {
+    setIsProcessing(true);
+    toast.promise(
+      (async () => {
+        try {
+          const token = await handleCompile(language, code, customInput);
+          const result = await checkStatus(token);
+          setOutputDetails(result);
+        } catch (error) {
+          throw error;
+        } finally {
+          setIsProcessing(false);
+        }
+      })(),
+      {
+        pending: "Processing your request...",
+        error: "Error compiling code",
+        success: "Compilation successful",
+      }
+    );
   };
 
   return (
@@ -61,9 +94,44 @@ export default function EditorPage() {
         </div>
 
         <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
-          <div className="flex flex-col items-end"></div>
+          <OutputWindow outputDetails={outputDetails} />
+          <div className="flex flex-col items-end">
+            <CustomInput
+              customInput={customInput}
+              setCustomInput={setCustomInput}
+            />
+            <button
+              className={clsx(
+                "bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded",
+                isProcessing || !code ? "opacity-50 cursor-not-allowed" : ""
+              )}
+              onClick={handleCompileClick}
+              disabled={isProcessing || !code}
+            >
+              {isProcessing ? (
+                "Processing..."
+              ) : (
+                <div className="flex flex-row items-center gap-3">
+                  <RunIcon color="#ffffff" /> Compile
+                  {/* (<CmdIcon /> + <EnterIcon />) */}
+                </div>
+              )}
+            </button>
+          </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }
