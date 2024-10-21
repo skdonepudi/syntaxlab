@@ -87,7 +87,7 @@ export default function EditorPage() {
         theme={editorTheme}
         onThemeChange={handleThemeChange}
       />
-      <div className="flex flex-row space-x-4 items-start px-4 py-4">
+      <div className="flex flex-col md:flex-row space-x-0 md:space-x-4 items-start px-4 py-4">
         <div className="flex flex-col w-full h-full justify-start items-end">
           <CodeEditor
             theme={editorTheme}
@@ -97,7 +97,7 @@ export default function EditorPage() {
           />
         </div>
 
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
+        <div className="right-container flex flex-col w-full md:w-[30%] flex-shrink-0">
           <OutputWindow outputDetails={outputDetails} />
           <div className="flex flex-col items-end">
             <CustomInput
@@ -117,7 +117,6 @@ export default function EditorPage() {
               ) : (
                 <div className="flex flex-row items-center gap-3">
                   <RunIcon color="#ffffff" /> Compile
-                  {/* (<CmdIcon /> + <EnterIcon />) */}
                 </div>
               )}
             </button>

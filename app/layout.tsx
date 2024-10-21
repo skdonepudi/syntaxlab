@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Code Editor",
+  title: "SyntaxLab",
   description: "A web-based code editor built using TypeScript and Next.js 14",
 };
 

@@ -3,7 +3,7 @@ import React from "react";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const OutputDetails = ({ outputDetails }: any) => {
   return (
-    <div className="metrics-container mt-4 flex flex-col space-y-3">
+    <div className="metrics-container mt-4 flex flex-col space-y-3 text-sm">
       <p className="text-sm">
         Status:{" "}
         <span className="font-semibold px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">

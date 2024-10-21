@@ -15,7 +15,7 @@ const ThemeDropdown: React.FC<ThemeDropdownProps> = ({
 }) => {
   return (
     <Select onValueChange={onThemeChange} value={theme}>
-      <SelectTrigger className="w-[250px] h-[40px] border-2 border-gray-300 rounded-md dark:border-gray-700">
+      <SelectTrigger className="w-[280px] h-[40px] border-2 border-gray-300 rounded-md dark:border-gray-700">
         <SelectValue placeholder="Select a theme" />
       </SelectTrigger>
       <SelectContent>
