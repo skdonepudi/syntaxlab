@@ -1,12 +1,12 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
 import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clsx from "clsx";
-import LanguagesDropdown from "@/components/LanguagesDropdown";
-import ThemeDropdown from "@/components/ThemeDropdown";
+import Header from "@/components/Header";
 import OutputWindow from "@/components/OutputWindow";
 import { RunIcon } from "@/components/icons";
 import CustomInput from "@/components/CustomInput";
@@ -15,22 +15,29 @@ import { Language } from "@/types/language";
 import { handleCompile, checkStatus } from "@/lib/compilerUtils";
 import { defineTheme } from "@/lib/defineTheme";
 import { languages } from "@/constants/languages";
+import { getDefaultCode } from "@/constants/defaultCode";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), {
   ssr: false,
 });
 
 export default function EditorPage() {
-  const [code, setCode] = useState<string>("// Start coding here");
+  const { theme } = useTheme();
   const [language, setLanguage] = useState<Language>(languages[0]);
-  const [theme, setTheme] = useState<string>("oceanic-next");
+  const [code, setCode] = useState<string>(getDefaultCode(language.value));
+  const [editorTheme, setEditorTheme] = useState<string>("oceanic-next");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [outputDetails, setOutputDetails] = useState<any>(null);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [customInput, setCustomInput] = useState<string>("");
+
   useEffect(() => {
-    defineTheme("oceanic-next").then(() => setTheme("oceanic-next"));
+    defineTheme("oceanic-next").then(() => setEditorTheme("oceanic-next"));
   }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
 
   const handleEditorChange = (value: string | undefined) => {
     setCode(value || "");
@@ -38,14 +45,15 @@ export default function EditorPage() {
 
   const handleThemeChange = (selectedTheme: string) => {
     if (["vs-dark", "light", "hc-black", "hc-light"].includes(selectedTheme)) {
-      setTheme(selectedTheme);
+      setEditorTheme(selectedTheme);
     } else {
-      defineTheme(selectedTheme).then(() => setTheme(selectedTheme));
+      defineTheme(selectedTheme).then(() => setEditorTheme(selectedTheme));
     }
   };
   const handleLanguageChange = (selectedLanguage: Language) => {
     if (selectedLanguage) {
       setLanguage(selectedLanguage);
+      setCode(getDefaultCode(selectedLanguage.value));
     }
   };
 
@@ -72,22 +80,17 @@ export default function EditorPage() {
   };
 
   return (
-    <>
-      <div className="flex flex-row">
-        <div className="px-4 py-2">
-          <LanguagesDropdown
-            language={language}
-            onSelectChange={handleLanguageChange}
-          />
-        </div>
-        <div className="px-4 py-2">
-          <ThemeDropdown theme={theme} onThemeChange={handleThemeChange} />
-        </div>
-      </div>
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+      <Header
+        language={language}
+        onLanguageChange={handleLanguageChange}
+        theme={editorTheme}
+        onThemeChange={handleThemeChange}
+      />
       <div className="flex flex-row space-x-4 items-start px-4 py-4">
         <div className="flex flex-col w-full h-full justify-start items-end">
           <CodeEditor
-            theme={theme}
+            theme={editorTheme}
             language={language}
             value={code}
             onChange={handleEditorChange}
@@ -134,6 +137,6 @@ export default function EditorPage() {
         pauseOnHover
         theme="light"
       />
-    </>
+    </div>
   );
 }

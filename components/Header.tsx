@@ -1,0 +1,35 @@
+import React from "react";
+import LanguagesDropdown from "@/components/LanguagesDropdown";
+import ThemeDropdown from "@/components/ThemeDropdown";
+import ColorModeToggle from "@/components/ColorModeToggle";
+import { Language } from "@/types/language";
+
+function Header({
+  language,
+  onLanguageChange,
+  theme,
+  onThemeChange,
+}: {
+  language: Language;
+  onLanguageChange: (language: Language) => void;
+  theme: string;
+  onThemeChange: (theme: string) => void;
+}) {
+  return (
+    <header className="flex flex-row justify-between items-center p-2 px-4 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+      <div className="flex flex-row items-center gap-4">
+        <h1 className="text-2xl mr-4 font-bold">SyntaxLab</h1>
+        <div className="flex space-x-4">
+          <LanguagesDropdown
+            language={language}
+            onSelectChange={onLanguageChange}
+          />
+          <ThemeDropdown theme={theme} onThemeChange={onThemeChange} />
+        </div>
+      </div>
+      <ColorModeToggle />
+    </header>
+  );
+}
+
+export default Header;

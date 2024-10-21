@@ -18,7 +18,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   return (
     <div className="overlay rounded-lg overflow-hidden w-full h-full shadow-4xl">
       <Editor
-        className="rounded-lg border border-gray-300"
+        className="rounded-lg border border-gray-300 dark:border-gray-700"
         height="90vh"
         language={language.value}
         value={value}

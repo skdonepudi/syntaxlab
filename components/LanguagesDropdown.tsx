@@ -37,7 +37,7 @@ const LanguagesDropdown: React.FC<LanguagesDropdownProps> = ({
 
   return (
     <Select onValueChange={handleValueChange} value={language.id.toString()}>
-      <SelectTrigger className="w-[280px] h-[40px] border-2 border-gray-300 rounded-md">
+      <SelectTrigger className="w-[280px] h-[40px] border-2 border-gray-300 rounded-md dark:border-gray-700">
         <SelectValue placeholder="Select a language" />
       </SelectTrigger>
       <SelectContent>{languageOptions}</SelectContent>
