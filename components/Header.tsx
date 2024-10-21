@@ -16,7 +16,10 @@ function Header({
   onThemeChange: (theme: string) => void;
 }) {
   return (
-    <header className="flex flex-col md:flex-row justify-between items-center p-2 px-4 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+    <header
+      className="flex flex-col md:flex-row justify-between items-center p-2 px-4 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+      style={{ fontFamily: "Inter, sans-serif" }}
+    >
       <div className="flex flex-col md:flex-row items-center gap-4">
         <h1 className="text-2xl mr-4 font-bold">SyntaxLab</h1>
         <div className="flex flex-col md:flex-row space-x-0 md:space-x-4 space-y-2 md:space-y-0">
