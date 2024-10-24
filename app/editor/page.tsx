@@ -7,7 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "@/components/Header";
 import OutputWindow from "@/components/OutputWindow";
-import { ExpandEditor } from "@/components/icons";
+import { ExpandEditor, RunIcon } from "@/components/icons";
 import CustomInput from "@/components/CustomInput";
 import OutputDetails from "@/components/OutputDetails";
 import { ExpandIcon, CompressIcon } from "@/components/icons";
@@ -109,7 +109,7 @@ export default function EditorPage() {
           handleCompileClick={handleCompileClick}
         />
       )}
-      <div className="flex flex-grow overflow-hidden">
+      <div className="flex flex-col md:flex-row flex-grow overflow-auto md:overflow-hidden">
         <div
           className={`flex flex-col transition-all duration-300 ease-in-out ${
             isEditorExpanded || isFullScreen ? "w-full" : "w-full md:w-[70%]"
@@ -147,7 +147,7 @@ export default function EditorPage() {
               )}
             </div>
           </div>
-          <div className="flex-grow overflow-hidden">
+          <div className="flex-grow overflow-auto md:overflow-hidden">
             <CodeEditor
               theme={editorTheme}
               language={language}
@@ -158,7 +158,7 @@ export default function EditorPage() {
         </div>
 
         {!isFullScreen && !isEditorExpanded && (
-          <div className="hidden md:flex flex-col w-[30%] bg-slate-200 dark:bg-gray-800">
+          <div className="md:flex flex-col w-full md:w-[30%] bg-slate-200 dark:bg-gray-800">
             <OutputWindow outputDetails={outputDetails} position="top" />
             <CustomInput
               customInput={customInput}
@@ -169,6 +169,15 @@ export default function EditorPage() {
           </div>
         )}
       </div>
+
+      <button
+        onClick={handleCompileClick}
+        disabled={isProcessing}
+        className="md:hidden fixed bottom-6 right-4 bg-slate-600 hover:bg-slate-700 text-white rounded-full p-3 shadow-lg z-50"
+      >
+        <RunIcon color="#ffffff" width={16} height={16} />
+      </button>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}

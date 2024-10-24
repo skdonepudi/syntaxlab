@@ -9,8 +9,10 @@ import CompressIcon from "./CompressIcon";
 import ExpandEditor from "./ExpandEditor";
 import ExpandTop from "./ExpandTop";
 import ExpandBottom from "./ExpandBottom";
+import { MenuIcon } from "./MenuIcon";
 
 export {
+  MenuIcon,
   CmdIcon,
   EnterIcon,
   RunIcon,

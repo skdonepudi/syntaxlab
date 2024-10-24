@@ -16,7 +16,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   onChange,
 }) => {
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-[75vh] md:h-full overflow-auto">
       <Editor
         className="w-full h-full"
         language={language.value}
