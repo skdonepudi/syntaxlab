@@ -16,10 +16,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   onChange,
 }) => {
   return (
-    <div className="overlay rounded-lg overflow-hidden w-full h-full shadow-4xl">
+    <div className="overlay overflow-hidden shadow-4xl">
       <Editor
-        className="rounded-lg border border-gray-300 dark:border-gray-700"
-        height="90vh"
         language={language.value}
         value={value}
         theme={theme}
@@ -31,6 +29,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           scrollBeyondLastLine: false,
           automaticLayout: true,
         }}
+        className="h-auto"
       />
     </div>
   );

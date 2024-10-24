@@ -1,7 +1,10 @@
 import React from "react";
+import { useTheme } from "next-themes";
+import { ExpandTop } from "./icons";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const OutputWindow = ({ outputDetails }: any) => {
+  const { theme } = useTheme();
   const getOutput = () => {
     const statusId = outputDetails?.status?.id;
 
@@ -36,10 +39,16 @@ const OutputWindow = ({ outputDetails }: any) => {
   };
   return (
     <>
-      <h1 className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 mb-2 dark:from-gray-300 dark:to-gray-50 mt-4 md:mt-0">
-        Output
-      </h1>
-      <div className="w-full h-56 bg-[#1e293b] rounded-md text-white font-normal text-sm overflow-y-auto mb-4 dark:bg-gray-800 dark:text-white">
+      <div className="w-full bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-t border-l border-gray-300 dark:border-gray-700">
+        <span className="text-[13px] font-mono font-semibold">Output</span>
+        <button className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
+          <ExpandTop
+            className="w-4 h-4"
+            color={theme === "dark" ? "#ffffff" : "#000000"}
+          />
+        </button>
+      </div>
+      <div className="w-full h-56 bg-slate-50 dark:bg-gray-800 text-white font-normal text-sm overflow-y-auto dark:text-white border border-gray-300 cursor-not-allowed">
         {outputDetails ? <>{getOutput()}</> : null}
       </div>
     </>

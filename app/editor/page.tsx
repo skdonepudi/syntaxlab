@@ -2,15 +2,15 @@
 
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import clsx from "clsx";
 import Header from "@/components/Header";
 import OutputWindow from "@/components/OutputWindow";
-import { RunIcon } from "@/components/icons";
+import { ExpandEditor } from "@/components/icons";
 import CustomInput from "@/components/CustomInput";
 import OutputDetails from "@/components/OutputDetails";
+import { ExpandIcon, CompressIcon } from "@/components/icons";
 import { Language } from "@/types/language";
 import { handleCompile, checkStatus } from "@/lib/compilerUtils";
 import { defineTheme } from "@/lib/defineTheme";
@@ -30,10 +30,17 @@ export default function EditorPage() {
   const [outputDetails, setOutputDetails] = useState<any>(null);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [customInput, setCustomInput] = useState<string>("");
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [fileName, setFileName] = useState(language.sampleFileName);
+  const [isEditorExpanded, setIsEditorExpanded] = useState(false);
 
   useEffect(() => {
-    defineTheme("oceanic-next").then(() => setEditorTheme("oceanic-next"));
-  }, []);
+    if (theme === "dark") {
+      defineTheme("oceanic-next").then(() => setEditorTheme("oceanic-next"));
+    } else {
+      defineTheme("eiffel").then(() => setEditorTheme("eiffel"));
+    }
+  }, [theme]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -50,9 +57,11 @@ export default function EditorPage() {
       defineTheme(selectedTheme).then(() => setEditorTheme(selectedTheme));
     }
   };
+
   const handleLanguageChange = (selectedLanguage: Language) => {
     if (selectedLanguage) {
       setLanguage(selectedLanguage);
+      setFileName(selectedLanguage.sampleFileName);
       setCode(getDefaultCode(selectedLanguage.value));
     }
   };
@@ -79,50 +88,104 @@ export default function EditorPage() {
     );
   };
 
+  const toggleFullScreen = useCallback(() => {
+    setIsFullScreen(!isFullScreen);
+  }, [isFullScreen]);
+
+  const toggleEditor = useCallback(() => {
+    setIsEditorExpanded(!isEditorExpanded);
+  }, [isEditorExpanded]);
+
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-      <Header
-        language={language}
-        onLanguageChange={handleLanguageChange}
-        theme={editorTheme}
-        onThemeChange={handleThemeChange}
-      />
-      <div className="flex flex-col md:flex-row space-x-0 md:space-x-4 items-start px-4 py-4">
-        <div className="flex flex-col w-full h-full justify-start items-end">
-          <CodeEditor
-            theme={editorTheme}
-            language={language}
-            value={code}
-            onChange={handleEditorChange}
-          />
+    <div
+      className={`min-h-screen bg-slate-200 dark:bg-gray-800 text-gray-900 dark:text-white flex flex-col ${
+        isFullScreen ? "min-h-screen" : ""
+      }`}
+    >
+      {!isFullScreen && (
+        <Header
+          language={language}
+          onLanguageChange={handleLanguageChange}
+          theme={editorTheme}
+          onThemeChange={handleThemeChange}
+          isProcessing={isProcessing}
+          code={code}
+          handleCompileClick={handleCompileClick}
+        />
+      )}
+      <div
+        className={`flex flex-col md:flex-row space-x-2 items-start ${
+          isFullScreen ? "h-screen" : "flex-grow"
+        } overflow-hidden`}
+      >
+        <div
+          className={`flex flex-col w-full justify-start items-end transition-all duration-300 ease-in-out ${
+            isEditorExpanded || isFullScreen
+              ? "md:w-full h-screen"
+              : "md:w-[70%]"
+          }`}
+        >
+          <div className="w-full bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-t border-r border-gray-300 dark:border-gray-700">
+            <span className="text-[13px] font-mono">{fileName}</span>
+
+            <div className="flex flex-row items-center gap-2">
+              <button
+                onClick={toggleFullScreen}
+                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+              >
+                {isFullScreen ? (
+                  <CompressIcon
+                    className="w-4 h-4"
+                    color={theme === "dark" ? "#ffffff" : "#000000"}
+                  />
+                ) : (
+                  <ExpandIcon
+                    className="w-4 h-4"
+                    color={theme === "dark" ? "#ffffff" : "#000000"}
+                  />
+                )}
+              </button>
+              {!isFullScreen && (
+                <button
+                  className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                  onClick={toggleEditor}
+                >
+                  <ExpandEditor
+                    className="w-4 h-4"
+                    color={theme === "dark" ? "#ffffff" : "#000000"}
+                  />
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="w-full flex-grow overflow-hidden">
+            <CodeEditor
+              theme={editorTheme}
+              language={language}
+              value={code}
+              onChange={handleEditorChange}
+            />
+          </div>
         </div>
 
-        <div className="right-container flex flex-col w-full md:w-[30%] flex-shrink-0">
-          <OutputWindow outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
-            <CustomInput
-              customInput={customInput}
-              setCustomInput={setCustomInput}
-            />
-            <button
-              className={clsx(
-                "bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded",
-                isProcessing || !code ? "opacity-50 cursor-not-allowed" : ""
-              )}
-              onClick={handleCompileClick}
-              disabled={isProcessing || !code}
-            >
-              {isProcessing ? (
-                "Processing..."
-              ) : (
-                <div className="flex flex-row items-center gap-3">
-                  <RunIcon color="#ffffff" /> Compile
-                </div>
-              )}
-            </button>
+        {!isFullScreen && !isEditorExpanded && (
+          <div className="right-container flex flex-col w-full md:w-[30%] flex-shrink-0 bg-slate-200 dark:bg-gray-800 transition-all duration-300 ease-in-out">
+            <div className="flex flex-col h-full">
+              <div className="transition-all duration-300 ease-in-out">
+                <OutputWindow outputDetails={outputDetails} position="top" />
+              </div>
+              <div className="flex flex-col transition-all duration-300 ease-in-out">
+                <CustomInput
+                  customInput={customInput}
+                  setCustomInput={setCustomInput}
+                  position="bottom"
+                />
+              </div>
+            </div>
+            {outputDetails && <OutputDetails outputDetails={outputDetails} />}
           </div>
-          {outputDetails && <OutputDetails outputDetails={outputDetails} />}
-        </div>
+        )}
       </div>
       <ToastContainer
         position="top-right"

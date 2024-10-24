@@ -1,0 +1,51 @@
+const ExpandTop = ({
+  className,
+  color = "#000000",
+}: {
+  className: string;
+  color?: string;
+}) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <title>i</title>
+      <g id="Complete">
+        <g id="sidebar-bottom">
+          <g>
+            <rect
+              id="Square-2"
+              data-name="Square"
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="2"
+              ry="2"
+              fill="none"
+              stroke={color}
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+            <line
+              x1="21"
+              y1="15"
+              x2="3"
+              y2="15"
+              fill="none"
+              stroke={color}
+              strokeMiterlimit="10"
+              strokeWidth="2"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export default ExpandTop;
