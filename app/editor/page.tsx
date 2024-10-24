@@ -97,11 +97,7 @@ export default function EditorPage() {
   }, [isEditorExpanded]);
 
   return (
-    <div
-      className={`min-h-screen bg-slate-200 dark:bg-gray-800 text-gray-900 dark:text-white flex flex-col ${
-        isFullScreen ? "min-h-screen" : ""
-      }`}
-    >
+    <div className="flex flex-col h-screen bg-slate-200 dark:bg-gray-800 text-gray-900 dark:text-white">
       {!isFullScreen && (
         <Header
           language={language}
@@ -113,22 +109,15 @@ export default function EditorPage() {
           handleCompileClick={handleCompileClick}
         />
       )}
-      <div
-        className={`flex flex-col md:flex-row space-x-2 items-start ${
-          isFullScreen ? "h-screen" : "flex-grow"
-        } overflow-hidden`}
-      >
+      <div className="flex flex-grow overflow-hidden">
         <div
-          className={`flex flex-col w-full justify-start items-end transition-all duration-300 ease-in-out ${
-            isEditorExpanded || isFullScreen
-              ? "md:w-full h-screen"
-              : "md:w-[70%]"
+          className={`flex flex-col transition-all duration-300 ease-in-out ${
+            isEditorExpanded || isFullScreen ? "w-full" : "w-full md:w-[70%]"
           }`}
         >
-          <div className="w-full bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-t border-r border-gray-300 dark:border-gray-700">
+          <div className="bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-t border-r border-gray-300 dark:border-gray-700">
             <span className="text-[13px] font-mono">{fileName}</span>
-
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex items-center gap-2">
               <button
                 onClick={toggleFullScreen}
                 className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
@@ -158,8 +147,7 @@ export default function EditorPage() {
               )}
             </div>
           </div>
-
-          <div className="w-full flex-grow overflow-hidden">
+          <div className="flex-grow overflow-hidden">
             <CodeEditor
               theme={editorTheme}
               language={language}
@@ -170,19 +158,13 @@ export default function EditorPage() {
         </div>
 
         {!isFullScreen && !isEditorExpanded && (
-          <div className="right-container flex flex-col w-full md:w-[30%] flex-shrink-0 bg-slate-200 dark:bg-gray-800 transition-all duration-300 ease-in-out">
-            <div className="flex flex-col h-full">
-              <div className="transition-all duration-300 ease-in-out">
-                <OutputWindow outputDetails={outputDetails} position="top" />
-              </div>
-              <div className="flex flex-col transition-all duration-300 ease-in-out">
-                <CustomInput
-                  customInput={customInput}
-                  setCustomInput={setCustomInput}
-                  position="bottom"
-                />
-              </div>
-            </div>
+          <div className="hidden md:flex flex-col w-[30%] bg-slate-200 dark:bg-gray-800">
+            <OutputWindow outputDetails={outputDetails} position="top" />
+            <CustomInput
+              customInput={customInput}
+              setCustomInput={setCustomInput}
+              position="bottom"
+            />
             {outputDetails && <OutputDetails outputDetails={outputDetails} />}
           </div>
         )}
