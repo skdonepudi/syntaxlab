@@ -3,6 +3,7 @@ export interface Language {
   value: string;
   label: string;
   sampleFileName: string;
+  icon: string;
 }
 
 export interface LanguagesDropdownProps {

@@ -32,6 +32,7 @@ export default function EditorPage() {
   const [customInput, setCustomInput] = useState<string>("");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [fileName, setFileName] = useState(language.sampleFileName);
+  const [languageIcon, setLanguageIcon] = useState(language.icon);
   const [isEditorExpanded, setIsEditorExpanded] = useState(false);
 
   useEffect(() => {
@@ -63,6 +64,7 @@ export default function EditorPage() {
       setLanguage(selectedLanguage);
       setFileName(selectedLanguage.sampleFileName);
       setCode(getDefaultCode(selectedLanguage.value));
+      setLanguageIcon(selectedLanguage.icon);
     }
   };
 
@@ -115,8 +117,11 @@ export default function EditorPage() {
             isEditorExpanded || isFullScreen ? "w-full" : "w-full md:w-[70%]"
           }`}
         >
-          <div className="bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-t border-r border-gray-300 dark:border-gray-700">
-            <span className="text-[13px] font-mono">{fileName}</span>
+          <div className="bg-slate-200 dark:bg-gray-800  flex justify-between items-center px-3  border-r border-gray-300 dark:border-gray-700">
+            <div className="flex items-center gap-2 bg-white dark:bg-gray-700  px-2 py-1.5 border-t border-blue-500">
+              <img src={languageIcon} alt="Language Icon" className="w-4 h-4" />
+              <span className="text-[13px]">{fileName}</span>
+            </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={toggleFullScreen}
