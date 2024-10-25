@@ -43,6 +43,17 @@ export default function EditorPage() {
     }
   }, [resolvedTheme]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+        handleCompileClick();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleEditorChange = (value: string | undefined) => {
     setCode(value || "");
   };
