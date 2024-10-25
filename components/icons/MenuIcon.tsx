@@ -1,6 +1,6 @@
 export const MenuIcon = ({ className }: { className?: string }) => (
   <svg
-    className={className}
+    className={className + "dark:stroke-white"}
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"

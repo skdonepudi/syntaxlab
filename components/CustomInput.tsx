@@ -1,4 +1,3 @@
-import { useTheme } from "next-themes";
 import clsx from "clsx";
 import { ExpandBottom } from "./icons";
 
@@ -10,7 +9,6 @@ const CustomInput = ({
   setCustomInput: (value: string) => void;
   position: "top" | "bottom";
 }) => {
-  const { theme } = useTheme();
   return (
     <>
       <div className="w-full bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-b border-t border-gray-200 dark:border-gray-700">
@@ -18,10 +16,7 @@ const CustomInput = ({
           Custom Input
         </span>
         <button className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
-          <ExpandBottom
-            className="w-4 h-4"
-            color={theme === "dark" ? "#ffffff" : "#000000"}
-          />
+          <ExpandBottom className="w-4 h-4" />
         </button>
       </div>
       <textarea

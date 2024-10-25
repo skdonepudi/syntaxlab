@@ -1,17 +1,11 @@
-const ExpandTop = ({
-  className,
-  color = "#000000",
-}: {
-  className: string;
-  color?: string;
-}) => {
+const ExpandTop = ({ className }: { className: string }) => {
   return (
     <svg
       width="24"
       height="24"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={className + "dark:stroke-white"}
     >
       <title>i</title>
       <g id="Complete">
@@ -27,7 +21,7 @@ const ExpandTop = ({
               rx="2"
               ry="2"
               fill="none"
-              stroke={color}
+              stroke="currentColor"
               strokeMiterlimit="10"
               strokeWidth="2"
             />
@@ -37,7 +31,7 @@ const ExpandTop = ({
               x2="3"
               y2="15"
               fill="none"
-              stroke={color}
+              stroke="currentColor"
               strokeMiterlimit="10"
               strokeWidth="2"
             />

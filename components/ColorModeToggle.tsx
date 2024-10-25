@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { DarkModeIcon, LightModeIcon } from "./icons";
 
 function ColorModeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { systemTheme, theme, setTheme } = useTheme();
+  const currentTheme = theme === "system" ? systemTheme : theme;
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -16,15 +17,11 @@ function ColorModeToggle() {
 
   return (
     <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={() => setTheme(currentTheme === "light" ? "dark" : "light")}
       className="p-1.5 rounded-full bg-gray-200 dark:bg-gray-700"
       aria-label="Toggle color mode"
     >
-      {theme === "dark" ? (
-        <DarkModeIcon color="#ffffff" />
-      ) : (
-        <LightModeIcon color="#000000" />
-      )}
+      {currentTheme === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
     </button>
   );
 }

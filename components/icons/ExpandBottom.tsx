@@ -1,17 +1,11 @@
-const ExpandBottom = ({
-  className,
-  color = "#000000",
-}: {
-  className: string;
-  color?: string;
-}) => {
+const ExpandBottom = ({ className }: { className: string }) => {
   return (
     <svg
       width="24"
       height="24"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={className + "dark:stroke-white"}
     >
       <title />
 
@@ -25,7 +19,7 @@ const ExpandBottom = ({
               id="Square-2"
               rx="2"
               ry="2"
-              stroke={color}
+              stroke="currentColor"
               strokeMiterlimit="10"
               strokeWidth="2"
               width="18"
@@ -35,7 +29,7 @@ const ExpandBottom = ({
 
             <line
               fill="none"
-              stroke={color}
+              stroke="currentColor"
               strokeMiterlimit="10"
               strokeWidth="2"
               x1="21"

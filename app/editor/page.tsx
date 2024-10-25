@@ -22,7 +22,7 @@ const CodeEditor = dynamic(() => import("@/components/CodeEditor"), {
 });
 
 export default function EditorPage() {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [language, setLanguage] = useState<Language>(languages[0]);
   const [code, setCode] = useState<string>(getDefaultCode(language.value));
   const [editorTheme, setEditorTheme] = useState<string>("oceanic-next");
@@ -36,16 +36,12 @@ export default function EditorPage() {
   const [isEditorExpanded, setIsEditorExpanded] = useState(false);
 
   useEffect(() => {
-    if (theme === "dark") {
+    if (resolvedTheme === "dark") {
       defineTheme("oceanic-next").then(() => setEditorTheme("oceanic-next"));
     } else {
       defineTheme("eiffel").then(() => setEditorTheme("eiffel"));
     }
-  }, [theme]);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
+  }, [resolvedTheme]);
 
   const handleEditorChange = (value: string | undefined) => {
     setCode(value || "");
@@ -134,15 +130,9 @@ export default function EditorPage() {
                 className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
               >
                 {isFullScreen ? (
-                  <CompressIcon
-                    className="w-4 h-4"
-                    color={theme === "dark" ? "#ffffff" : "#000000"}
-                  />
+                  <CompressIcon className="w-4 h-4" />
                 ) : (
-                  <ExpandIcon
-                    className="w-4 h-4"
-                    color={theme === "dark" ? "#ffffff" : "#000000"}
-                  />
+                  <ExpandIcon className="w-4 h-4" />
                 )}
               </button>
               {!isFullScreen && (
@@ -150,10 +140,7 @@ export default function EditorPage() {
                   className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
                   onClick={toggleEditor}
                 >
-                  <ExpandEditor
-                    className="w-4 h-4"
-                    color={theme === "dark" ? "#ffffff" : "#000000"}
-                  />
+                  <ExpandEditor className="w-4 h-4" />
                 </button>
               )}
             </div>
@@ -186,7 +173,7 @@ export default function EditorPage() {
         disabled={isProcessing}
         className="md:hidden fixed bottom-6 right-4 bg-slate-600 hover:bg-slate-700 text-white rounded-full p-3 shadow-lg z-50"
       >
-        <RunIcon color="#ffffff" width={16} height={16} />
+        <RunIcon width={16} height={16} />
       </button>
 
       <ToastContainer

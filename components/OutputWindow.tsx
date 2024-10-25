@@ -1,10 +1,8 @@
 import React from "react";
-import { useTheme } from "next-themes";
 import { ExpandTop } from "./icons";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const OutputWindow = ({ outputDetails }: any) => {
-  const { theme } = useTheme();
   const getOutput = () => {
     const statusId = outputDetails?.status?.id;
 
@@ -42,10 +40,7 @@ const OutputWindow = ({ outputDetails }: any) => {
       <div className="w-full bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-t border-l border-gray-300 dark:border-gray-700">
         <span className="text-[13px] font-mono font-semibold">Output</span>
         <button className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
-          <ExpandTop
-            className="w-4 h-4"
-            color={theme === "dark" ? "#ffffff" : "#000000"}
-          />
+          <ExpandTop className="w-4 h-4" />
         </button>
       </div>
       <div className="w-full h-56 bg-slate-50 dark:bg-gray-800 text-white font-normal text-sm overflow-y-auto dark:text-white border border-gray-300 cursor-not-allowed">

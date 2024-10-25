@@ -1,17 +1,11 @@
-const ExpandEditor = ({
-  className,
-  color = "#000000",
-}: {
-  className: string;
-  color?: string;
-}) => {
+const ExpandEditor = ({ className }: { className: string }) => {
   return (
     <svg
       height="24"
       width="24"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={className + "dark:stroke-white"}
     >
       <title />
 
@@ -25,7 +19,7 @@ const ExpandEditor = ({
               id="Square-2"
               rx="2"
               ry="2"
-              stroke={color}
+              stroke="currentColor"
               strokeMiterlimit="10"
               strokeWidth="2"
               width="18"
@@ -35,7 +29,7 @@ const ExpandEditor = ({
 
             <line
               fill="none"
-              stroke={color}
+              stroke="currentColor"
               strokeMiterlimit="10"
               strokeWidth="2"
               x1="15"

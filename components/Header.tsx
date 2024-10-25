@@ -92,7 +92,7 @@ function Header({
                 "Processing..."
               ) : (
                 <div className="flex flex-row items-center justify-center gap-2">
-                  <RunIcon color="#ffffff" width={16} height={16} />
+                  <RunIcon width={16} height={16} />
                   <p className="text-sm">Run</p>
                 </div>
               )}
