@@ -15,12 +15,18 @@ const ThemeDropdown: React.FC<ThemeDropdownProps> = ({
 }) => {
   return (
     <Select onValueChange={onThemeChange} value={theme}>
-      <SelectTrigger className="w-full md:w-[280px] h-[40px] border-2 border-gray-300 rounded-md dark:border-gray-700">
+      <SelectTrigger className="w-full md:w-[280px] h-[40px] border-2 border-gray-300 rounded-md dark:border-gray-700 dark:bg-slate-800">
         <SelectValue placeholder="Select a theme" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-white dark:bg-[#011727]">
         {themes.map((t: Theme) => (
-          <SelectItem key={t.id} value={t.id}>
+          <SelectItem
+            key={t.id}
+            value={t.id}
+            className={`${
+              t.id === theme ? "bg-gray-300 dark:bg-slate-700" : ""
+            } hover:bg-gray-200 dark:hover:bg-slate-600`}
+          >
             {t.name}
           </SelectItem>
         ))}

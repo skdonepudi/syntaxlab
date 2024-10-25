@@ -11,7 +11,7 @@ const CustomInput = ({
 }) => {
   return (
     <>
-      <div className="w-full bg-slate-200 dark:bg-gray-800 flex justify-between items-center px-3 border-b border-t border-gray-200 dark:border-gray-700">
+      <div className="w-full bg-slate-200 dark:bg-slate-800 flex justify-between items-center px-3 border-b border-t border-gray-200 dark:border-gray-700">
         <span className="text-[13px] font-mono font-semibold">
           Custom Input
         </span>
@@ -24,7 +24,7 @@ const CustomInput = ({
         value={customInput}
         onChange={(e) => setCustomInput(e.target.value)}
         className={clsx(
-          "focus:outline-none w-full border border-gray-300 z-10 px-4 py-2 transition duration-200 bg-slate-50 mb-4 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+          "focus:outline-none w-full border border-gray-300 z-10 px-4 py-2 transition duration-200 bg-slate-50 mb-4 dark:bg-[#011727] dark:text-white dark:border-gray-700"
         )}
       ></textarea>
     </>

@@ -37,7 +37,7 @@ export default function EditorPage() {
 
   useEffect(() => {
     if (resolvedTheme === "dark") {
-      defineTheme("oceanic-next").then(() => setEditorTheme("oceanic-next"));
+      defineTheme("night-owl").then(() => setEditorTheme("night-owl"));
     } else {
       defineTheme("eiffel").then(() => setEditorTheme("eiffel"));
     }
@@ -106,7 +106,7 @@ export default function EditorPage() {
   }, [isEditorExpanded]);
 
   return (
-    <div className="flex flex-col h-screen bg-slate-200 dark:bg-gray-800 text-gray-900 dark:text-white">
+    <div className="flex flex-col h-screen bg-slate-200 dark:bg-slate-800 text-gray-900 dark:text-white">
       {!isFullScreen && (
         <Header
           language={language}
@@ -124,8 +124,8 @@ export default function EditorPage() {
             isEditorExpanded || isFullScreen ? "w-full" : "w-full md:w-[70%]"
           }`}
         >
-          <div className="bg-slate-200 dark:bg-gray-800  flex justify-between items-center px-3  border-r border-gray-300 dark:border-gray-700">
-            <div className="flex items-center gap-2 bg-white dark:bg-gray-700  px-2 py-1.5 border-t border-blue-500">
+          <div className="bg-slate-200 dark:bg-slate-800  flex justify-between items-center px-3  border-r border-gray-300 dark:border-gray-700">
+            <div className="flex items-center gap-2 bg-white dark:bg-[#011727]  px-2 py-1.5 border-t border-blue-500">
               <Image
                 src={languageIcon}
                 alt="Language Icon"
@@ -138,7 +138,7 @@ export default function EditorPage() {
             <div className="flex items-center gap-2">
               <button
                 onClick={toggleFullScreen}
-                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                className="p-1 hover:bg-gray-200 dark:hover:bg-slate-700 rounded"
               >
                 {isFullScreen ? (
                   <CompressIcon className="w-4 h-4" />
@@ -167,7 +167,7 @@ export default function EditorPage() {
         </div>
 
         {!isFullScreen && !isEditorExpanded && (
-          <div className="md:flex flex-col w-full md:w-[30%] bg-slate-200 dark:bg-gray-800">
+          <div className="md:flex flex-col w-full md:w-[30%] bg-slate-200 dark:bg-slate-800">
             <OutputWindow outputDetails={outputDetails} position="top" />
             <CustomInput
               customInput={customInput}
@@ -182,7 +182,7 @@ export default function EditorPage() {
       <button
         onClick={handleCompileClick}
         disabled={isProcessing}
-        className="md:hidden fixed bottom-6 right-4 bg-slate-600 hover:bg-slate-700 text-white rounded-full p-3 shadow-lg z-50"
+        className="md:hidden fixed bottom-12 right-4 bg-green-600 dark:bg-blue-700 hover:bg-slate-700 text-white rounded-full p-3 shadow-lg z-50"
       >
         <RunIcon width={16} height={16} />
       </button>

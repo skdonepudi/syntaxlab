@@ -37,13 +37,13 @@ const OutputWindow = ({ outputDetails }: any) => {
   };
   return (
     <>
-      <div className="w-full bg-slate-200 dark:bg-gray-800  flex justify-between items-center px-3 border-t border-l border-gray-300 dark:border-gray-700">
+      <div className="w-full bg-slate-200 dark:bg-slate-800  flex justify-between items-center px-3 border-t border-l border-gray-300 dark:border-gray-700">
         <span className="text-[13px] font-mono font-semibold">Output</span>
         <button className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <ExpandTop className="w-4 h-4" />
         </button>
       </div>
-      <div className="w-full h-56 bg-slate-50 dark:bg-gray-800 text-white font-normal text-sm overflow-y-auto dark:text-white border border-gray-300 cursor-not-allowed">
+      <div className="w-full h-56 bg-slate-50 dark:bg-[#011727] text-white font-normal text-sm overflow-y-auto dark:text-white border border-gray-300 dark:border-gray-700 cursor-not-allowed">
         {outputDetails ? <>{getOutput()}</> : null}
       </div>
     </>

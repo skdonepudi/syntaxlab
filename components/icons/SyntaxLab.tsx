@@ -6,7 +6,6 @@ const SyntaxLabIcon = ({
   className: string;
   width?: number;
   height?: number;
-  color?: string;
 }) => {
   return (
     <svg
