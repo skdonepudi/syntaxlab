@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import React, { useState, useEffect, useCallback } from "react";
@@ -119,7 +119,13 @@ export default function EditorPage() {
         >
           <div className="bg-slate-200 dark:bg-gray-800  flex justify-between items-center px-3  border-r border-gray-300 dark:border-gray-700">
             <div className="flex items-center gap-2 bg-white dark:bg-gray-700  px-2 py-1.5 border-t border-blue-500">
-              <img src={languageIcon} alt="Language Icon" className="w-4 h-4" />
+              <Image
+                src={languageIcon}
+                alt="Language Icon"
+                className="w-4 h-4"
+                width={16}
+                height={16}
+              />
               <span className="text-[13px]">{fileName}</span>
             </div>
             <div className="flex items-center gap-2">

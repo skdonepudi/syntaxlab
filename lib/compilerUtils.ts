@@ -33,6 +33,7 @@ export const handleCompile = async (
     const error = err.response ? err.response.data : err;
     const status = err.response?.status;
     if (status === 429) {
+      throw new Error("Quota of 50 requests exceeded for the Day!");
     }
     throw error;
   }
