@@ -11,7 +11,7 @@ const CustomInput = ({
 }) => {
   return (
     <>
-      <div className="w-full bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-b border-t border-gray-200 dark:border-gray-700">
+      <div className="w-full bg-slate-200 dark:bg-gray-800 flex justify-between items-center px-3 border-b border-t border-gray-200 dark:border-gray-700">
         <span className="text-[13px] font-mono font-semibold">
           Custom Input
         </span>

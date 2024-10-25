@@ -107,7 +107,7 @@ export default function EditorPage() {
           handleCompileClick={handleCompileClick}
         />
       )}
-      <div className="flex flex-col md:flex-row flex-grow overflow-auto md:overflow-hidden">
+      <div className="flex flex-col md:flex-row flex-grow overflow-auto md:overflow-hidden space-x-2">
         <div
           className={`flex flex-col transition-all duration-300 ease-in-out ${
             isEditorExpanded || isFullScreen ? "w-full" : "w-full md:w-[70%]"

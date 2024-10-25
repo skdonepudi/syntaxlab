@@ -37,7 +37,7 @@ const OutputWindow = ({ outputDetails }: any) => {
   };
   return (
     <>
-      <div className="w-full bg-slate-200 dark:bg-gray-800 p-1 flex justify-between items-center px-3 border-t border-l border-gray-300 dark:border-gray-700">
+      <div className="w-full bg-slate-200 dark:bg-gray-800  flex justify-between items-center px-3 border-t border-l border-gray-300 dark:border-gray-700">
         <span className="text-[13px] font-mono font-semibold">Output</span>
         <button className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
           <ExpandTop className="w-4 h-4" />
