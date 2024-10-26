@@ -118,7 +118,7 @@ export default function EditorPage() {
           handleCompileClick={handleCompileClick}
         />
       )}
-      <div className="flex flex-col md:flex-row flex-grow overflow-auto md:overflow-hidden space-x-2">
+      <div className="flex flex-col md:flex-row flex-grow overflow-y-auto overflow-x-hidden space-x-2">
         <div
           className={`flex flex-col transition-all duration-300 ease-in-out ${
             isEditorExpanded || isFullScreen ? "w-full" : "w-full md:w-[70%]"
@@ -148,7 +148,7 @@ export default function EditorPage() {
               </button>
               {!isFullScreen && (
                 <button
-                  className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                  className="hidden md:block p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
                   onClick={toggleEditor}
                 >
                   <ExpandEditor className="w-4 h-4" />
@@ -162,6 +162,7 @@ export default function EditorPage() {
               language={language}
               value={code}
               onChange={handleEditorChange}
+              isFullScreen={isFullScreen}
             />
           </div>
         </div>
