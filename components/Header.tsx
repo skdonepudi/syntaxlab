@@ -76,7 +76,7 @@ function Header({
               <div className="ml-12">
                 <button
                   className={clsx(
-                    "bg-green-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-semibold py-2 px-3 rounded",
+                    "bg-green-600 dark:bg-blue-700 hover:bg-green-700 dark:hover:bg-blue-800 text-white font-semibold py-2 px-3 rounded",
                     isProcessing || !code
                       ? "opacity-50 cursor-not-allowed"
                       : "",
