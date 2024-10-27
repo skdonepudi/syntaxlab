@@ -1,27 +1,33 @@
 import CmdIcon from "./CmdIcon";
-import EnterIcon from "./EnterIcon";
-import RunIcon from "./RunIcon";
-import LightModeIcon from "./LightMode";
-import DarkModeIcon from "./DarkMode";
-import SyntaxLabIcon from "./SyntaxLab";
-import ExpandIcon from "./ExpandIcon";
 import CompressIcon from "./CompressIcon";
-import ExpandEditor from "./ExpandEditor";
-import ExpandTop from "./ExpandTop";
+import DarkModeIcon from "./DarkMode";
+import EnterIcon from "./EnterIcon";
 import ExpandBottom from "./ExpandBottom";
-import { MenuIcon } from "./MenuIcon";
+import ExpandEditor from "./ExpandEditor";
+import ExpandIcon from "./ExpandIcon";
+import ExpandTop from "./ExpandTop";
+import GithubIcon from "./Github";
+import GoogleIcon from "./Google";
+import LightModeIcon from "./LightMode";
+import MenuIcon from "./MenuIcon";
+import RunIcon from "./RunIcon";
+import SignInIcon from "./SignIn";
+import SyntaxLabIcon from "./SyntaxLab";
 
 export {
-  MenuIcon,
   CmdIcon,
-  EnterIcon,
-  RunIcon,
-  LightModeIcon,
-  DarkModeIcon,
-  SyntaxLabIcon,
-  ExpandIcon,
   CompressIcon,
-  ExpandEditor,
-  ExpandTop,
+  DarkModeIcon,
+  EnterIcon,
   ExpandBottom,
+  ExpandEditor,
+  ExpandIcon,
+  ExpandTop,
+  GithubIcon,
+  GoogleIcon,
+  LightModeIcon,
+  MenuIcon,
+  RunIcon,
+  SignInIcon,
+  SyntaxLabIcon,
 };

@@ -18,7 +18,7 @@ function ColorModeToggle() {
   return (
     <button
       onClick={() => setTheme(currentTheme === "light" ? "dark" : "light")}
-      className="p-1.5 rounded-full bg-gray-200 dark:bg-gray-700"
+      className="p-1.5 rounded-full bg-gray-200/70 dark:bg-gray-700/70"
       aria-label="Toggle color mode"
     >
       {currentTheme === "dark" ? <DarkModeIcon /> : <LightModeIcon />}

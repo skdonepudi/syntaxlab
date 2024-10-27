@@ -1,4 +1,4 @@
-export const MenuIcon = ({ className }: { className?: string }) => (
+const MenuIcon = ({ className }: { className?: string }) => (
   <svg
     className={className + "dark:stroke-white"}
     fill="none"
@@ -14,3 +14,5 @@ export const MenuIcon = ({ className }: { className?: string }) => (
     />
   </svg>
 );
+
+export default MenuIcon;

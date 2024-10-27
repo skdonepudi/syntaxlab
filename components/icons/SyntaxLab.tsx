@@ -1,9 +1,9 @@
 const SyntaxLabIcon = ({
-  className,
+  className = "",
   width = 24,
   height = 24,
 }: {
-  className: string;
+  className?: string;
   width?: number;
   height?: number;
 }) => {

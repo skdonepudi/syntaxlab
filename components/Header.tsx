@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
+import { User } from "@supabase/supabase-js";
+import { Language } from "@/types/language";
+import { RunIcon, SyntaxLabIcon, MenuIcon } from "./icons";
+import { getCurrentUser } from "@/utils/authUtils";
 import LanguagesDropdown from "@/components/LanguagesDropdown";
 import ThemeDropdown from "@/components/ThemeDropdown";
 import ColorModeToggle from "@/components/ColorModeToggle";
-import { Language } from "@/types/language";
-import { RunIcon, SyntaxLabIcon, MenuIcon } from "./icons";
+import { UserMenu } from "@/components/UserMenu";
+import { SignInDialog } from "@/components/SignInDialog";
 
 function Header({
   language,
@@ -24,6 +28,21 @@ function Header({
   onLanguageChange: (language: Language) => void;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        setIsLoading(true);
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadUser();
+  }, []);
 
   return (
     <>
@@ -43,8 +62,15 @@ function Header({
                 SyntaxLab
               </h1>
             </div>
-            <div className="md:hidden flex items-center gap-2">
+            <div className="md:hidden flex items-center gap-4">
               <ColorModeToggle />
+              {isLoading ? (
+                <div className="h-8 w-8 animate-pulse rounded-full bg-gray-200 dark:bg-gray-700" />
+              ) : user ? (
+                <UserMenu user={user} setUser={setUser} />
+              ) : (
+                <SignInDialog />
+              )}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -99,12 +125,18 @@ function Header({
             </div>
           </div>
         </div>
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-4 mr-2">
           <ColorModeToggle />
+          {isLoading ? (
+            <div className="h-8 w-8 animate-pulse rounded-full bg-gray-200 dark:bg-gray-700" />
+          ) : user ? (
+            <UserMenu user={user} setUser={setUser} />
+          ) : (
+            <SignInDialog />
+          )}
         </div>
       </header>
     </>
   );
 }
-
 export default Header;
