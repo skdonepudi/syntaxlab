@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOutUser } from "@/utils/authUtils";
 import { User } from "@supabase/supabase-js";
-import { LogOut, User as UserIcon, Settings, Shapes } from "lucide-react";
+import { LogOut, User as UserIcon, Settings } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 type UserMenuProps = {
