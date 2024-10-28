@@ -9,6 +9,7 @@ import ThemeDropdown from "@/components/ThemeDropdown";
 import ColorModeToggle from "@/components/ColorModeToggle";
 import { UserMenu } from "@/components/UserMenu";
 import { SignInDialog } from "@/components/SignInDialog";
+import Link from "next/link";
 
 function Header({
   language,
@@ -121,6 +122,9 @@ function Header({
                     </div>
                   )}
                 </button>
+              </div>
+              <div className="flex items-center ml-10">
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </div>
             </div>
           </div>
