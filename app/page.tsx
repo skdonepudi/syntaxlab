@@ -1,7 +1,7 @@
 "use client";
-import EditorPage from "@/app/editor/page";
 import "@/styles/global.css";
+import LandingPage from "./landing/page";
 
 export default function Home() {
-  return <EditorPage />;
+  return <LandingPage />;
 }
