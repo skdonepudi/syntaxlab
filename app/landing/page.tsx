@@ -63,7 +63,7 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-grow max-w-4xl mx-auto text-center mt-32 px-4">
-        <h1 className="text-6xl font-bold mb-8 animate-gradient bg-gradient-to-r from-[#fff] via-[#fff]/80 to-[#9089fc] bg-300% bg-clip-text text-transparent">
+        <h1 className="text-6xl font-bold mb-8 animate-gradient bg-gradient-to-r from-[#fff] via-[#fff]/80 to-[#9089fc] bg-300% bg-clip-text text-transparent leading-tight">
           Code, Collaborate,
           <br />
           Create Together
@@ -108,7 +108,7 @@ export default function LandingPage() {
       <footer className="mt-auto w-full py-6 px-4 border-t border-white/10">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="text-sm text-gray-400">
-            © {new Date().getFullYear()} Syntax Lab. All rights reserved.
+            © 2024 Syntax Lab. All rights reserved.
           </div>
           <div className="flex gap-6">
             <Link
