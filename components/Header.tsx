@@ -9,7 +9,6 @@ import ThemeDropdown from "@/components/ThemeDropdown";
 import ColorModeToggle from "@/components/ColorModeToggle";
 import { UserMenu } from "@/components/UserMenu";
 import { SignInDialog } from "@/components/SignInDialog";
-import Link from "next/link";
 
 function Header({
   language,
