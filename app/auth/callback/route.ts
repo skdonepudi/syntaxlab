@@ -6,29 +6,29 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/editor";
 
-  console.log("Origin:", origin);
-  console.log("Next path:", next);
-  console.log("Forwarded host:", request.headers.get("x-forwarded-host"));
-  console.log("NODE_ENV:", process.env.NODE_ENV);
+  console.log("Callback received:");
+  console.log("- Code:", code ? "exists" : "missing");
+  console.log("- Next:", next);
+  console.log("- Origin:", origin);
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
+    console.log("Session exchange:", error ? "failed" : "success");
+
     if (!error) {
-      const forwardedHost = request.headers.get("x-forwarded-host");
-      const isLocalEnv = process.env.NODE_ENV === "development";
-
-      let redirectUrl;
-      if (isLocalEnv) {
-        redirectUrl = `${origin}${next}`;
-      } else {
-        redirectUrl = `https://${forwardedHost || new URL(origin).host}${next}`;
-      }
-
+      // Simplified redirect logic
+      const redirectUrl = `${process.env.NEXT_PUBLIC_SITE_URL}${next}`;
       console.log("Redirecting to:", redirectUrl);
       return NextResponse.redirect(redirectUrl);
+    } else {
+      console.error("Auth error:", error);
     }
   }
 
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  // If we get here, something went wrong
+  console.log("Redirecting to error page");
+  return NextResponse.redirect(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/auth/auth-code-error`
+  );
 }
