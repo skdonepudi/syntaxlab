@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { Provider } from "@supabase/supabase-js";
 import { signInWithOAuth } from "@/utils/authActions";
 import {
@@ -13,19 +12,21 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-export function SignInDialog() {
+interface SignInDialogProps {
+  redirectPath?: string;
+}
+
+export function SignInDialog({ redirectPath = "/editor" }: SignInDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOAuthLoading, setIsOAuthLoading] = useState<{
     google: boolean;
     github: boolean;
   }>({ google: false, github: false });
-  const searchParams = useSearchParams();
-  const next = searchParams.get("next");
 
   async function handleOAuthSignIn(provider: Provider) {
     setIsOAuthLoading((prev) => ({ ...prev, [provider]: true }));
     try {
-      const url = await signInWithOAuth(provider, next || undefined);
+      const url = await signInWithOAuth(provider, redirectPath);
       if (url) {
         window.location.href = url;
       }
