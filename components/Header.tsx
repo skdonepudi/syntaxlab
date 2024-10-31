@@ -123,14 +123,6 @@ function Header({
                   )}
                 </button>
               </div>
-              <div className="flex items-center ml-10">
-                <Link
-                  href="/privacy-policy"
-                  className="text-sm text-slate-500 dark:text-slate-400"
-                >
-                  Privacy Policy
-                </Link>
-              </div>
             </div>
           </div>
         </div>
