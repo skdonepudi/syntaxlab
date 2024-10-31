@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { SyntaxLabIcon } from "@/components/icons";
+import ColorModeToggle from "@/components/ColorModeToggle";
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[image:radial-gradient(80%_50%_at_50%_-20%,hsl(206,81.9%,65.3%,0.5),rgba(255,255,255,0))] text-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-transparent bg-[image:radial-gradient(80%_50%_at_50%_-20%,hsl(206,81.9%,65.3%,0.5),rgba(255,255,255,0))] dark:text-white text-gray-900">
       <svg
-        className="absolute inset-0 -z-10 h-full w-full stroke-white/5 [mask-image:radial-gradient(75%_50%_at_top_center,white,transparent)]"
+        className="absolute inset-0 -z-10 h-full w-full stroke-black/10 dark:stroke-white/5 [mask-image:radial-gradient(75%_50%_at_top_center,white,transparent)]"
         aria-hidden="true"
       >
         <defs>
@@ -22,16 +23,17 @@ export default function LandingPage() {
         <rect
           width="100%"
           height="100%"
-          stroke-width="0"
+          strokeWidth="0"
           fill="url(#hero)"
         ></rect>
       </svg>
-      <header className="flex justify-between items-center p-6">
+      <header className="flex justify-between items-center p-4 sm:p-6 gap-4">
         <div className="flex items-center gap-2">
           <SyntaxLabIcon width={32} height={32} />
-          <div className="text-2xl font-bold">Syntax Lab</div>
+          <div className="text-xl sm:text-2xl font-bold">Syntax Lab</div>
         </div>
         <div className="flex gap-4 items-center">
+          <ColorModeToggle className="bg-slate-400/20" />
           <Link
             href={"/editor"}
             className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6  text-white inline-block"
@@ -39,7 +41,7 @@ export default function LandingPage() {
             <span className="absolute inset-0 overflow-hidden rounded-full">
               <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             </span>
-            <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-1 px-4 ring-1 ring-white/10 ">
+            <div className="hidden sm:flex relative  space-x-2 items-center z-10 rounded-full bg-zinc-950 py-1 px-4 ring-1 ring-white/10 ">
               <span className="ml-2">Try it now</span>
               <svg
                 fill="none"
@@ -63,12 +65,12 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-grow max-w-4xl mx-auto text-center mt-32 px-4">
-        <h1 className="text-6xl font-bold mb-8 animate-gradient bg-gradient-to-r from-[#fff] via-[#fff]/80 to-[#9089fc] bg-300% bg-clip-text text-transparent leading-tight">
+        <h1 className="text-4xl sm:text-6xl font-bold mb-8 animate-gradient bg-gradient-to-r from-gray-900 via-gray-800 to-[#9089fc] bg-300% dark:from-[#fff] dark:via-[#fff]/80 dark:to-[#9089fc] bg-300% bg-clip-text text-transparent leading-tight sm:leading-tight">
           Code, Collaborate,
           <br />
           Create Together
         </h1>
-        <p className="text-gray-400 text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-gray-600 dark:text-gray-400 text-lg sm:text-xl mb-8 sm:mb-12 max-w-3xl mx-auto sm:leading-relaxed px-2">
           Experience the next generation of web-based coding. With support for
           40+ programming languages, real-time collaboration, customizable
           themes, and instant compilation. Code smarter, share easier, build
@@ -77,7 +79,7 @@ export default function LandingPage() {
         <div className="flex flex-col items-center gap-6">
           <Link
             href="/editor"
-            className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-sm font-semibold leading-6 text-white inline-block"
+            className="bg-slate-800 no-underline group cursor-pointer relative dark:shadow-2xl shadow-zinc-900 rounded-full p-px text-sm font-semibold leading-6 text-white inline-block"
           >
             <span className="absolute inset-0 overflow-hidden rounded-full">
               <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -105,15 +107,15 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <footer className="mt-auto w-full py-6 px-4 border-t border-white/10">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="text-sm text-gray-400">
+      <footer className="mt-auto w-full py-4 sm:py-6 px-4 border-t border-gray-200 dark:border-white/10">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+          <div className="text-sm text-gray-600 dark:text-gray-400">
             © 2024 Syntax Lab. All rights reserved.
           </div>
           <div className="flex gap-6">
             <Link
               href="/privacy-policy"
-              className="text-sm text-gray-400 hover:text-white transition-colors"
+              className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
             >
               Privacy Policy
             </Link>
