@@ -6,6 +6,11 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/editor";
 
+  console.log("Origin:", origin);
+  console.log("Next path:", next);
+  console.log("Forwarded host:", request.headers.get("x-forwarded-host"));
+  console.log("NODE_ENV:", process.env.NODE_ENV);
+
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
@@ -13,15 +18,15 @@ export async function GET(request: Request) {
       const forwardedHost = request.headers.get("x-forwarded-host");
       const isLocalEnv = process.env.NODE_ENV === "development";
 
-      // This handles different deployment scenarios
+      let redirectUrl;
       if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}${next}`);
-      } else if (forwardedHost) {
-        // This handles platforms like Vercel
-        return NextResponse.redirect(`https://${forwardedHost}${next}`);
+        redirectUrl = `${origin}${next}`;
       } else {
-        return NextResponse.redirect(`${origin}${next}`);
+        redirectUrl = `https://${forwardedHost || new URL(origin).host}${next}`;
       }
+
+      console.log("Redirecting to:", redirectUrl);
+      return NextResponse.redirect(redirectUrl);
     }
   }
 
