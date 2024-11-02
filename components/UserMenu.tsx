@@ -20,7 +20,6 @@ export function UserMenu({ user, setUser }: UserMenuProps) {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    console.log("Signing out");
     await signOutUser();
     setUser(null);
     router.push("/");

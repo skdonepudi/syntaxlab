@@ -6,9 +6,6 @@ import { createClient } from "@/utils/supabase/server";
 export async function signInWithOAuth(provider: Provider, next: string) {
   const supabase = await createClient();
 
-  console.log("Starting OAuth with next path:", next);
-  console.log("NEXT_PUBLIC_SITE_URL:", process.env.NEXT_PUBLIC_SITE_URL);
-
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
@@ -24,7 +21,6 @@ export async function signInWithOAuth(provider: Provider, next: string) {
   }
 
   if (data.url) {
-    console.log("OAuth redirect URL:", data.url);
     return data.url;
   }
 

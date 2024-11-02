@@ -7,7 +7,6 @@ export async function getCurrentUser(): Promise<User | null> {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    console.log("User:", user);
     return user;
   } catch (error) {
     console.error("Error fetching current user:", error);
@@ -16,9 +15,7 @@ export async function getCurrentUser(): Promise<User | null> {
 }
 
 export async function signOutUser() {
-  console.log("Signing out user");
   const supabase = await createClient();
   await supabase.auth.signOut();
-  console.log("User signed out");
   return null;
 }
