@@ -1,5 +1,5 @@
-import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -14,10 +14,9 @@ export async function GET(request: Request) {
       return NextResponse.redirect(redirectUrl);
     } else {
       console.error("Auth error:", error);
+      throw error;
     }
   }
 
-  return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/auth/auth-code-error`
-  );
+  throw new Error("No authentication code provided");
 }
