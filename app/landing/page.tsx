@@ -107,10 +107,10 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <footer className="mt-auto w-full py-4 sm:py-6 px-4 border-t border-gray-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+      <footer className="mt-auto w-screen py-4 sm:py-6 border-t border-gray-200 dark:border-white/10">
+        <div className="w-full mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 px-4 sm:px-6">
           <div className="text-sm text-gray-600 dark:text-gray-400">
-            © 2024 Syntax Lab. All rights reserved.
+            © {new Date().getFullYear()} Syntax Lab. All rights reserved.
           </div>
           <div className="flex gap-6">
             <Link
