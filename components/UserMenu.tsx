@@ -22,7 +22,7 @@ export function UserMenu({ user, setUser }: UserMenuProps) {
   const handleSignOut = async () => {
     await signOutUser();
     setUser(null);
-    router.push("/");
+    router.push("/editor");
   };
 
   return (
