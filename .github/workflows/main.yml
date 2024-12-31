@@ -11,4 +11,4 @@ jobs:
 
     steps:
       - name: Send HTTP Request
-        run: curl -f https://${{ secrets.DOMAIN_NAME }}/api/supabase-activity-scheduler || echo "Request failed"
+        run: curl -f https://syntaxlab.vercel.app/api/supabase-activity-scheduler || echo "Request failed"
