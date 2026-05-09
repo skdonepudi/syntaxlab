@@ -1,125 +1,86 @@
 import Link from "next/link";
 import { SyntaxLabIcon } from "@/components/icons";
 import ColorModeToggle from "@/components/ColorModeToggle";
+
+const features = [
+  { icon: "⬡", title: "60+ Languages", desc: "JavaScript, Python, Rust, Go, Java, and 55 more. Every language runs on the same Judge0 backend." },
+  { icon: "⚡", title: "Instant Execution", desc: "Submit code and get output in seconds. Stdin support, execution time, and memory usage included." },
+  { icon: "👥", title: "Real-time Collab", desc: "Share a room link and code together with live cursors and presence avatars." },
+  { icon: "🤖", title: "AI Assistant", desc: "Press Cmd+K to explain, fix, optimize, or translate your code — with full awareness of your output." },
+  { icon: "📎", title: "Snippet Sharing", desc: "Save snippets to your profile and share a public URL. Anyone can view and fork your code." },
+  { icon: "🎨", title: "Custom Themes", desc: "25+ Monaco themes. Switch on the fly. Preferences saved to your account." },
+];
+
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-transparent bg-[image:radial-gradient(80%_50%_at_50%_-20%,hsl(206,81.9%,65.3%,0.5),rgba(255,255,255,0))] dark:text-white text-gray-900">
-      <svg
-        className="absolute inset-0 -z-10 h-full w-full stroke-black/10 dark:stroke-white/5 [mask-image:radial-gradient(75%_50%_at_top_center,white,transparent)]"
-        aria-hidden="true"
-      >
+    <div className="min-h-screen flex flex-col bg-obsidian-base text-ink-primary">
+      {/* Grid background */}
+      <svg className="absolute inset-0 -z-10 h-full w-full stroke-white/[0.04] [mask-image:radial-gradient(60%_40%_at_50%_0%,white,transparent)]" aria-hidden="true">
         <defs>
-          <pattern
-            id="hero"
-            width="80"
-            height="80"
-            x="50%"
-            y="-1"
-            patternUnits="userSpaceOnUse"
-          >
-            <path d="M.5 200V.5H200" fill="none"></path>
+          <pattern id="grid" width="80" height="80" x="50%" y="-1" patternUnits="userSpaceOnUse">
+            <path d="M.5 200V.5H200" fill="none" />
           </pattern>
         </defs>
-        <rect
-          width="100%"
-          height="100%"
-          strokeWidth="0"
-          fill="url(#hero)"
-        ></rect>
+        <rect width="100%" height="100%" strokeWidth="0" fill="url(#grid)" />
       </svg>
-      <header className="flex justify-between items-center p-4 sm:p-6 gap-4">
+
+      {/* Header */}
+      <header className="flex justify-between items-center px-6 py-4 border-b border-border-subtle">
         <div className="flex items-center gap-2">
-          <SyntaxLabIcon width={32} height={32} />
-          <div className="text-xl sm:text-2xl font-bold">Syntax Lab</div>
+          <SyntaxLabIcon width={28} height={28} />
+          <span className="text-lg font-semibold">SyntaxLab</span>
         </div>
-        <div className="flex gap-4 items-center">
-          <ColorModeToggle className="bg-slate-400/20" />
+        <div className="flex items-center gap-3">
+          <ColorModeToggle className="text-ink-muted hover:text-ink-primary" />
           <Link
-            href={"/editor"}
-            className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6  text-white inline-block"
+            href="/editor"
+            className="text-sm px-4 py-1.5 rounded bg-brand-blue text-obsidian-base font-semibold hover:bg-brand-blue/90 transition-colors"
           >
-            <span className="absolute inset-0 overflow-hidden rounded-full">
-              <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            </span>
-            <div className="hidden sm:flex relative  space-x-2 items-center z-10 rounded-full bg-zinc-950 py-1 px-4 ring-1 ring-white/10 ">
-              <span className="ml-2">Try it now</span>
-              <svg
-                fill="none"
-                height="16"
-                viewBox="0 0 24 24"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.75 8.75L14.25 12L10.75 15.25"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                />
-              </svg>
-            </div>
-            <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+            Open Editor
           </Link>
         </div>
       </header>
 
-      <main className="flex-grow max-w-4xl mx-auto text-center mt-32 px-4">
-        <h1 className="text-4xl sm:text-6xl font-bold mb-8 animate-gradient bg-gradient-to-r from-gray-900 via-gray-800 to-[#9089fc] bg-300% dark:from-[#fff] dark:via-[#fff]/80 dark:to-[#9089fc] bg-300% bg-clip-text text-transparent leading-tight sm:leading-tight">
-          Code, Collaborate,
-          <br />
-          Create Together
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 text-lg sm:text-xl mb-8 sm:mb-12 max-w-3xl mx-auto sm:leading-relaxed px-2">
-          Experience the next generation of web-based coding. With support for
-          40+ programming languages, real-time collaboration, customizable
-          themes, and instant compilation. Code smarter, share easier, build
-          faster.
-        </p>
-        <div className="flex flex-col items-center gap-6">
-          <Link
-            href="/editor"
-            className="bg-slate-800 no-underline group cursor-pointer relative dark:shadow-2xl shadow-zinc-900 rounded-full p-px text-sm font-semibold leading-6 text-white inline-block"
-          >
-            <span className="absolute inset-0 overflow-hidden rounded-full">
-              <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            </span>
-            <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-2 px-8 ring-1 ring-white/10">
-              <span className="ml-2">Start Coding</span>
-              <svg
-                fill="none"
-                height="16"
-                viewBox="0 0 24 24"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.75 8.75L14.25 12L10.75 15.25"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                />
-              </svg>
-            </div>
-            <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
-          </Link>
+      {/* Hero */}
+      <main className="flex-grow flex flex-col items-center justify-center text-center px-4 pt-24 pb-16">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border-default text-ink-faint text-xs mb-8">
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse" />
+          Now with AI code assistance
         </div>
+
+        <h1 className="text-5xl sm:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-b from-ink-primary to-ink-muted bg-clip-text text-transparent leading-none">
+          Code, Collaborate,<br />Create Together
+        </h1>
+
+        <p className="text-ink-muted text-lg sm:text-xl max-w-2xl mb-10 leading-relaxed">
+          A professional-grade web editor for developers. 60+ languages, real-time collaboration, AI assistance, and instant shareable snippets.
+        </p>
+
+        <Link
+          href="/editor"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-brand-blue text-obsidian-base font-semibold text-sm hover:bg-brand-blue/90 transition-colors shadow-lg shadow-brand-blue/20"
+        >
+          Start Coding →
+        </Link>
       </main>
 
-      <footer className="mt-auto w-screen py-4 sm:py-6 border-t border-gray-200 dark:border-white/10">
-        <div className="w-full mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 px-4 sm:px-6">
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            © {new Date().getFullYear()} Syntax Lab. All rights reserved.
+      {/* Features */}
+      <section className="max-w-5xl mx-auto w-full px-6 pb-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {features.map((f) => (
+          <div key={f.title} className="rounded-lg border border-border-default bg-obsidian-surface p-5">
+            <div className="text-2xl mb-3">{f.icon}</div>
+            <h3 className="text-sm font-semibold text-ink-primary mb-1">{f.title}</h3>
+            <p className="text-xs text-ink-muted leading-relaxed">{f.desc}</p>
           </div>
-          <div className="flex gap-6">
-            <Link
-              href="/privacy-policy"
-              className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-            >
-              Privacy Policy
-            </Link>
-          </div>
+        ))}
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border-subtle px-6 py-4 flex justify-between items-center text-xs text-ink-faint">
+        <span>© {new Date().getFullYear()} SyntaxLab</span>
+        <div className="flex gap-4">
+          <Link href="/privacy-policy" className="hover:text-ink-muted transition-colors">Privacy</Link>
+          <a href="https://github.com" className="hover:text-ink-muted transition-colors">GitHub</a>
         </div>
       </footer>
     </div>
