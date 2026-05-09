@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { ExpandBottom } from "./icons";
 
 const CustomInput = ({
@@ -10,12 +9,12 @@ const CustomInput = ({
   position: "top" | "bottom";
 }) => {
   return (
-    <>
-      <div className="w-full bg-slate-200 dark:bg-slate-800 flex justify-between items-center px-3 border-b border-t border-gray-200 dark:border-gray-700">
-        <span className="text-[13px] font-mono font-semibold">
+    <div className="flex flex-col border-t border-border-default">
+      <div className="flex items-center justify-between px-3 py-1.5 bg-obsidian-surface border-b border-border-default shrink-0">
+        <span className="text-xs text-ink-muted uppercase tracking-wider font-mono">
           Custom Input
         </span>
-        <button className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
+        <button className="p-1 hover:bg-obsidian-overlay rounded text-ink-faint hover:text-ink-primary transition-colors">
           <ExpandBottom className="w-4 h-4" />
         </button>
       </div>
@@ -23,11 +22,9 @@ const CustomInput = ({
         rows={8}
         value={customInput}
         onChange={(e) => setCustomInput(e.target.value)}
-        className={clsx(
-          "focus:outline-none w-full border border-gray-300 z-10 px-4 py-2 transition duration-200 bg-slate-50 mb-4 dark:bg-[#011727] dark:text-white dark:border-gray-700"
-        )}
+        className="w-full flex-1 resize-none bg-obsidian-base text-ink-primary text-xs font-mono p-3 placeholder:text-ink-faint focus:outline-none border-none"
       ></textarea>
-    </>
+    </div>
   );
 };
 

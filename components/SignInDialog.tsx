@@ -41,18 +41,18 @@ export function SignInDialog({ redirectPath = "/editor" }: SignInDialogProps) {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
-          className="w-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-full md:rounded-md"
-          variant="outline"
+          className="gap-2"
+          variant="ghost"
         >
           <SignInIcon className="w-8 h-8 md:w-6 md:h-6" />
           <p className="hidden md:block">Sign In</p>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-slate-200 dark:bg-[#011727]">
+      <DialogContent>
         <div className="flex flex-col items-center justify-center">
           <div className="flex justify-center mb-8 gap-2 items-center">
             <SyntaxLabIcon width={32} height={32} />
-            <p className="text-xl font-bold text-gray-900 dark:text-white">
+            <p className="text-xl font-bold text-ink-primary">
               SyntaxLab
             </p>
           </div>
@@ -61,7 +61,7 @@ export function SignInDialog({ redirectPath = "/editor" }: SignInDialogProps) {
             <Button
               onClick={() => handleOAuthSignIn("google")}
               disabled={isOAuthLoading.google}
-              className="w-full inline-flex items-center gap-2 justify-center py-2 px-4 h-10 border border-gray-300 dark:border-slate-600 rounded-md shadow-sm bg-white dark:bg-slate-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-600"
+              className="w-full flex items-center gap-3 justify-center px-4 py-2 rounded border border-border-default bg-obsidian-overlay text-ink-primary text-sm hover:bg-obsidian-surface transition-colors"
             >
               <GoogleIcon width={24} height={24} />
               Sign in with Google
@@ -69,25 +69,25 @@ export function SignInDialog({ redirectPath = "/editor" }: SignInDialogProps) {
             <Button
               onClick={() => handleOAuthSignIn("github")}
               disabled={isOAuthLoading.github}
-              className="w-full inline-flex items-center gap-2 justify-center py-2 px-4 h-10 border border-gray-300 dark:border-slate-600 rounded-md shadow-sm bg-white dark:bg-slate-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-600"
+              className="w-full flex items-center gap-3 justify-center px-4 py-2 rounded border border-border-default bg-obsidian-overlay text-ink-primary text-sm hover:bg-obsidian-surface transition-colors"
             >
-              <GithubIcon className="dark:fill-white" />
+              <GithubIcon />
               Sign in with GitHub
             </Button>
           </div>
 
-          <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-6 text-center text-xs text-ink-faint">
             By signing in, you agree to our{" "}
             <a
               href="#"
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+              className="text-brand-blue hover:underline"
             >
               Terms of Service
             </a>{" "}
             and{" "}
             <a
               href="#"
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+              className="text-brand-blue hover:underline"
             >
               Privacy Policy
             </a>

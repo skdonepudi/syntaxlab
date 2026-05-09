@@ -3,22 +3,22 @@ import React from "react";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const OutputDetails = ({ outputDetails }: any) => {
   return (
-    <div className="metrics-container mt-4 flex flex-col space-y-3 text-sm p-2">
-      <p className="text-sm">
+    <div className="flex items-center gap-4 px-3 py-2 bg-obsidian-surface border-t border-border-default text-xs shrink-0">
+      <p className="text-ink-faint">
         Status:{" "}
-        <span className="font-semibold px-2 py-1 rounded-md bg-gray-50 dark:bg-slate-900 dark:text-white">
+        <span className="text-ink-primary font-mono ml-1">
           {outputDetails?.status?.description}
         </span>
       </p>
-      <p className="text-sm">
+      <p className="text-ink-faint">
         Memory:{" "}
-        <span className="font-semibold px-2 py-1 rounded-md bg-gray-50 dark:bg-slate-900 dark:text-white">
+        <span className="text-ink-primary font-mono ml-1">
           {outputDetails?.memory}
         </span>
       </p>
-      <p className="text-sm">
+      <p className="text-ink-faint">
         Time:{" "}
-        <span className="font-semibold px-2 py-1 rounded-md bg-gray-50 dark:bg-slate-900 dark:text-white">
+        <span className="text-ink-primary font-mono ml-1">
           {outputDetails?.time}
         </span>
       </p>
