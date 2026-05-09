@@ -20,23 +20,23 @@
     /* shadcn bridge tokens → Obsidian values */
     --background: 216 28% 7%;
     --foreground: 213 27% 92%;
-    --card: 215 28% 9%;
+    --card: 215 21% 11%;
     --card-foreground: 213 27% 92%;
-    --popover: 215 28% 9%;
+    --popover: 215 21% 11%;
     --popover-foreground: 213 27% 92%;
-    --primary: 213 93% 68%;
+    --primary: 212 100% 67%;
     --primary-foreground: 216 28% 7%;
-    --secondary: 215 20% 16%;
+    --secondary: 215 14% 15%;
     --secondary-foreground: 213 27% 92%;
-    --muted: 215 20% 16%;
-    --muted-foreground: 215 14% 60%;
-    --accent: 215 20% 16%;
+    --muted: 215 14% 15%;
+    --muted-foreground: 215 12% 58%;
+    --accent: 215 14% 15%;
     --accent-foreground: 213 27% 92%;
-    --destructive: 4 77% 72%;
+    --destructive: 3 100% 72%;
     --destructive-foreground: 216 28% 7%;
-    --border: 215 15% 20%;
-    --input: 215 15% 20%;
-    --ring: 213 93% 68%;
+    --border: 215 12% 21%;
+    --input: 215 12% 21%;
+    --ring: 212 100% 67%;
   }
 }
 
