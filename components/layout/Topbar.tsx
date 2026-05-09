@@ -11,6 +11,8 @@ import ThemeDropdown from "@/components/ThemeDropdown";
 import ColorModeToggle from "@/components/ColorModeToggle";
 import { UserMenu } from "@/components/UserMenu";
 import { SignInDialog } from "@/components/SignInDialog";
+import { SaveSnippetPopover } from "@/components/SaveSnippetPopover";
+import { Snippet } from "@/lib/snippets";
 
 interface TopbarProps {
   language: Language;
@@ -20,11 +22,17 @@ interface TopbarProps {
   onLanguageChange: (lang: Language) => void;
   onThemeChange: (theme: string) => void;
   handleCompileClick: () => void;
+  currentSnippet: Snippet | null;
+  saveTriggered: number;
+  onSnippetSaved: (s: Snippet) => void;
+  onSnippetsClick: () => void;
+  onSignInRequired: () => void;
 }
 
 export function Topbar({
   language, theme, code, isProcessing,
   onLanguageChange, onThemeChange, handleCompileClick,
+  currentSnippet, saveTriggered, onSnippetSaved, onSnippetsClick, onSignInRequired,
 }: TopbarProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +56,21 @@ export function Topbar({
 
       {/* Right: actions + user */}
       <div className="flex items-center gap-2">
+        {user && (
+          <>
+            <SaveSnippetPopover
+              code={code}
+              language={language}
+              currentSnippet={currentSnippet}
+              onSaved={onSnippetSaved}
+              onSignInRequired={onSignInRequired}
+              saveTriggered={saveTriggered}
+            />
+            <Button variant="ghost" size="sm" onClick={onSnippetsClick}>
+              Snippets
+            </Button>
+          </>
+        )}
         <Button
           variant="run"
           size="sm"

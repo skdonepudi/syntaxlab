@@ -15,6 +15,8 @@ import { handleCompile, checkStatus } from "@/lib/compilerUtils";
 import { defineTheme } from "@/lib/defineTheme";
 import { languages } from "@/constants/languages";
 import { getDefaultCode } from "@/constants/defaultCode";
+import { Snippet } from "@/lib/snippets";
+import { SnippetsSheet } from "@/components/SnippetsSheet";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
 
@@ -30,6 +32,11 @@ export default function EditorPage() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ line: 1, column: 1 });
   const [judgeStatus, setJudgeStatus] = useState<string | undefined>();
+  const [currentSnippet, setCurrentSnippet] = useState<Snippet | null>(null);
+  const [snippetsOpen, setSnippetsOpen] = useState(false);
+  const [saveTriggered, setSaveTriggered] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [signInOpen, setSignInOpen] = useState(false);
 
   useEffect(() => {
     if (resolvedTheme === "dark") {
@@ -42,6 +49,10 @@ export default function EditorPage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "Enter") handleCompileClick();
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+        e.preventDefault();
+        setSaveTriggered((v) => v + 1);
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -96,6 +107,11 @@ export default function EditorPage() {
           onLanguageChange={handleLanguageChange}
           onThemeChange={handleThemeChange}
           handleCompileClick={handleCompileClick}
+          currentSnippet={currentSnippet}
+          saveTriggered={saveTriggered}
+          onSnippetSaved={setCurrentSnippet}
+          onSnippetsClick={() => setSnippetsOpen(true)}
+          onSignInRequired={() => setSignInOpen(true)}
         />
       )}
 
@@ -135,6 +151,16 @@ export default function EditorPage() {
         language={language}
         cursorPosition={cursorPosition}
         judgeStatus={judgeStatus}
+      />
+
+      <SnippetsSheet
+        isOpen={snippetsOpen}
+        onClose={() => setSnippetsOpen(false)}
+        onLoad={(snippet, lang) => {
+          setCurrentSnippet(snippet);
+          setLanguage(lang);
+          setCode(snippet.code);
+        }}
       />
 
       <ToastContainer
