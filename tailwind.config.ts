@@ -39,7 +39,11 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        border: "hsl(var(--border))",
+        border: {
+          DEFAULT: "hsl(var(--border))",
+          subtle:  "#21262d",
+          default: "#30363d",
+        },
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {
