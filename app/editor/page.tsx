@@ -18,6 +18,8 @@ import { getDefaultCode } from "@/constants/defaultCode";
 import { Snippet } from "@/lib/snippets";
 import { SnippetsSheet } from "@/components/SnippetsSheet";
 import { RoomProvider } from "@/lib/liveblocks";
+import { AICommandBar } from "@/components/AICommandBar";
+import { OutputTabs } from "@/components/OutputTabs";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
 
@@ -38,6 +40,9 @@ export default function EditorPage() {
   const [saveTriggered, setSaveTriggered] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [signInOpen, setSignInOpen] = useState(false);
+  const [aiCommandOpen, setAiCommandOpen] = useState(false);
+  const [aiResponse, setAiResponse] = useState<string>("");
+  const [outputTab, setOutputTab] = useState<"output" | "ai">("output");
 
   const roomId = typeof window !== "undefined"
     ? new URLSearchParams(window.location.search).get("room")
@@ -57,6 +62,10 @@ export default function EditorPage() {
       if ((e.metaKey || e.ctrlKey) && e.key === "s") {
         e.preventDefault();
         setSaveTriggered((v) => v + 1);
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setAiCommandOpen((v) => !v);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -130,7 +139,7 @@ export default function EditorPage() {
 
       <div className="flex flex-grow overflow-hidden">
         {/* Editor */}
-        <div className={`flex flex-col ${isFullScreen ? "w-full" : "w-full md:w-[68%]"} overflow-hidden`}>
+        <div className={`relative flex flex-col ${isFullScreen ? "w-full" : "w-full md:w-[68%]"} overflow-hidden`}>
           <div className="flex-grow overflow-hidden">
             <CodeEditor
               theme={editorTheme}
@@ -142,14 +151,33 @@ export default function EditorPage() {
               roomId={roomId ?? undefined}
             />
           </div>
+          <AICommandBar
+            isOpen={aiCommandOpen}
+            onClose={() => setAiCommandOpen(false)}
+            code={code}
+            language={language}
+            output={outputDetails?.stdout ? atob(outputDetails.stdout) : outputDetails?.stderr ? atob(outputDetails.stderr) : undefined}
+            stdin={customInput}
+            onResponse={(text) => { setAiResponse(text); setOutputTab("ai"); }}
+          />
         </div>
 
         {/* Output panel */}
         {!isFullScreen && (
           <div className="hidden md:flex flex-col w-[32%] border-l border-border-default bg-obsidian-base">
-            <OutputWindow outputDetails={outputDetails} position="top" />
-            <CustomInput customInput={customInput} setCustomInput={setCustomInput} position="bottom" />
-            {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+            <OutputTabs activeTab={outputTab} onTabChange={setOutputTab} hasAIResponse={!!aiResponse}>
+              {outputTab === "output" ? (
+                <>
+                  <OutputWindow outputDetails={outputDetails} position="top" />
+                  <CustomInput customInput={customInput} setCustomInput={setCustomInput} position="bottom" />
+                  {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+                </>
+              ) : (
+                <div className="p-3 overflow-y-auto h-full">
+                  <pre className="text-xs text-ink-primary whitespace-pre-wrap font-mono leading-relaxed">{aiResponse}</pre>
+                </div>
+              )}
+            </OutputTabs>
           </div>
         )}
       </div>
