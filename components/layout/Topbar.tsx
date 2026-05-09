@@ -13,6 +13,8 @@ import { UserMenu } from "@/components/UserMenu";
 import { SignInDialog } from "@/components/SignInDialog";
 import { SaveSnippetPopover } from "@/components/SaveSnippetPopover";
 import { Snippet } from "@/lib/snippets";
+import { CollaborateButton } from "@/components/CollaborateButton";
+import { PresenceAvatars } from "@/components/PresenceAvatars";
 
 interface TopbarProps {
   language: Language;
@@ -27,12 +29,14 @@ interface TopbarProps {
   onSnippetSaved: (s: Snippet) => void;
   onSnippetsClick: () => void;
   onSignInRequired: () => void;
+  roomId?: string | null;
 }
 
 export function Topbar({
   language, theme, code, isProcessing,
   onLanguageChange, onThemeChange, handleCompileClick,
   currentSnippet, saveTriggered, onSnippetSaved, onSnippetsClick, onSignInRequired,
+  roomId,
 }: TopbarProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +60,8 @@ export function Topbar({
 
       {/* Right: actions + user */}
       <div className="flex items-center gap-2">
+        {roomId !== undefined && <PresenceAvatars />}
+        <CollaborateButton roomId={roomId ?? null} />
         {user && (
           <>
             <SaveSnippetPopover

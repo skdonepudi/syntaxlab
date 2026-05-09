@@ -17,6 +17,7 @@ import { languages } from "@/constants/languages";
 import { getDefaultCode } from "@/constants/defaultCode";
 import { Snippet } from "@/lib/snippets";
 import { SnippetsSheet } from "@/components/SnippetsSheet";
+import { RoomProvider } from "@/lib/liveblocks";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
 
@@ -37,6 +38,10 @@ export default function EditorPage() {
   const [saveTriggered, setSaveTriggered] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [signInOpen, setSignInOpen] = useState(false);
+
+  const roomId = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("room")
+    : null;
 
   useEffect(() => {
     if (resolvedTheme === "dark") {
@@ -96,7 +101,7 @@ export default function EditorPage() {
 
   const toggleFullScreen = useCallback(() => setIsFullScreen((v) => !v), []);
 
-  return (
+  const editorContent = (
     <div className="flex flex-col h-screen bg-obsidian-base text-ink-primary overflow-hidden">
       {!isFullScreen && (
         <Topbar
@@ -112,6 +117,7 @@ export default function EditorPage() {
           onSnippetSaved={setCurrentSnippet}
           onSnippetsClick={() => setSnippetsOpen(true)}
           onSignInRequired={() => setSignInOpen(true)}
+          roomId={roomId}
         />
       )}
 
@@ -133,6 +139,7 @@ export default function EditorPage() {
               isFullScreen={isFullScreen}
               onChange={(v) => setCode(v || "")}
               onCursorChange={setCursorPosition}
+              roomId={roomId ?? undefined}
             />
           </div>
         </div>
@@ -172,4 +179,13 @@ export default function EditorPage() {
       />
     </div>
   );
+
+  if (roomId) {
+    return (
+      <RoomProvider id={roomId} initialPresence={{ cursor: null, name: "", color: "" }}>
+        {editorContent}
+      </RoomProvider>
+    );
+  }
+  return editorContent;
 }

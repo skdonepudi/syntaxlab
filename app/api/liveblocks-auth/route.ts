@@ -1,6 +1,5 @@
 import { Liveblocks } from "@liveblocks/node";
 import { createClient } from "@/utils/supabase/server";
-import { NextRequest } from "next/server";
 
 const liveblocks = new Liveblocks({ secret: process.env.LIVEBLOCKS_SECRET_KEY! });
 
@@ -13,12 +12,12 @@ function randomColor() {
   return PRESENCE_COLORS[Math.floor(Math.random() * PRESENCE_COLORS.length)];
 }
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   const { status, body } = await liveblocks.identifyUser(
-    { userId: user?.id ?? `guest-${Math.random().toString(36).slice(2)}` },
+    user?.id ?? `guest-${Math.random().toString(36).slice(2)}`,
     {
       userInfo: {
         name: user?.user_metadata?.full_name ?? user?.email?.split("@")[0] ?? "Guest",
