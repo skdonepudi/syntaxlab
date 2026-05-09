@@ -4,11 +4,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOutUser } from "@/utils/authUtils";
 import { User } from "@supabase/supabase-js";
-import { LogOut, User as UserIcon, Settings } from "lucide-react";
+import { LogOut, User as UserIcon, Settings, LayoutDashboard, Code2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 type UserMenuProps = {
@@ -28,7 +29,7 @@ export function UserMenu({ user, setUser }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar className="ring-2 ring-slate-300 w-8 h-8">
+        <Avatar className="ring-1 ring-border-default w-8 h-8">
           <AvatarImage
             className="object-cover"
             src={user?.user_metadata?.avatar_url || "/default-avatar.png"}
@@ -38,6 +39,15 @@ export function UserMenu({ user, setUser }: UserMenuProps) {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => router.push("/dashboard")}>
+          <LayoutDashboard className="mr-2 h-4 w-4" />
+          <span>Dashboard</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/dashboard/snippets")}>
+          <Code2 className="mr-2 h-4 w-4" />
+          <span>My Snippets</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem>
           <UserIcon className="mr-2 h-4 w-4" />
           <span>Profile</span>
