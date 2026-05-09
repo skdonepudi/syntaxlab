@@ -49,6 +49,22 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        obsidian: {
+          base:    "#0d1117",
+          surface: "#161b22",
+          overlay: "#21262d",
+        },
+        ink: {
+          primary: "#e6edf3",
+          muted:   "#8b949e",
+          faint:   "#6e7681",
+        },
+        brand: {
+          blue:   "#58a6ff",
+          green:  "#3fb950",
+          red:    "#ff7b72",
+          purple: "#d2a8ff",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
