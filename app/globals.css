@@ -194,3 +194,16 @@
 .landing-stat-block:hover::after {
   animation: landing-stat-shimmer 0.65s ease-out forwards;
 }
+
+/* ── y-monaco remote cursors ── */
+.yRemoteSelection {
+  border-radius: 1px;
+  opacity: 0.8;
+}
+.yRemoteSelectionHead {
+  position: absolute;
+  border-left: 2px solid;
+  height: 100%;
+  box-sizing: border-box;
+  pointer-events: none;
+}

@@ -15,6 +15,7 @@ type Storage = Record<string, never>;
 
 export const {
   RoomProvider,
+  useRoom,
   useOthers,
   useUpdateMyPresence,
   useSelf,
