@@ -246,8 +246,206 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* RIGHT — placeholder, filled in Task 4 */}
-        <div />
+        {/* RIGHT — Editor window */}
+        <div style={{ perspective: "1000px", animation: "landing-slideInRight 0.75s 0.1s cubic-bezier(.22,1,.36,1) both" }}>
+          {/* Gradient border wrapper */}
+          <div
+            className="rounded-xl p-px"
+            style={{ background: "linear-gradient(135deg, #58a6ff35 0%, transparent 40%, #7c3aed20 100%)" }}
+          >
+            <div
+              ref={editorRef}
+              className="rounded-xl overflow-hidden"
+              style={{
+                background: "#0d1117",
+                boxShadow: "0 0 0 1px #58a6ff12, 0 24px 64px rgba(0,0,0,.55), 0 0 50px #58a6ff08",
+                transition: "box-shadow 0.3s",
+              }}
+            >
+              {/* Toolbar */}
+              <div
+                className="flex items-center gap-2.5 px-3.5"
+                style={{ height: 40, background: "#161b22", borderBottom: "1px solid #21262d" }}
+              >
+                {/* Traffic lights */}
+                <div className="flex gap-1.5">
+                  <span className="rounded-full" style={{ width: 10, height: 10, background: "#ff5f57", display: "block" }} />
+                  <span className="rounded-full" style={{ width: 10, height: 10, background: "#febc2e", display: "block" }} />
+                  <span className="rounded-full" style={{ width: 10, height: 10, background: "#28c840", display: "block" }} />
+                </div>
+                {/* Tabs */}
+                <div className="flex gap-px ml-2 flex-1">
+                  {[
+                    { name: "solution.py", active: true },
+                    { name: "utils.js",    active: false },
+                    { name: "README.md",   active: false },
+                  ].map((tab) => (
+                    <div
+                      key={tab.name}
+                      className="text-xs px-3"
+                      style={{
+                        padding: "3px 12px",
+                        borderRadius: "4px 4px 0 0",
+                        color: tab.active ? "#e6edf3" : "#6e7681",
+                        background: tab.active ? "#0d1117" : "transparent",
+                        border: tab.active ? "1px solid #30363d" : "none",
+                        borderBottom: tab.active ? "1px solid #0d1117" : "none",
+                        marginBottom: tab.active ? -1 : 0,
+                      }}
+                    >
+                      {tab.name}
+                    </div>
+                  ))}
+                </div>
+                {/* Presence avatars */}
+                <div className="flex items-center ml-auto">
+                  {[
+                    { label: "Y", color: "#58a6ff", ringClass: "landing-av-ring landing-av-ring-blue" },
+                    { label: "S", color: "#d2a8ff", ringClass: "landing-av-ring landing-av-ring-purple" },
+                    { label: "K", color: "#3fb950", ringClass: "" },
+                  ].map((av, i) => (
+                    <div
+                      key={av.label}
+                      className={`relative flex items-center justify-center rounded-full text-xs font-bold cursor-pointer transition-transform hover:-translate-y-0.5 hover:scale-110 ${av.ringClass}`}
+                      style={{
+                        width: 22, height: 22,
+                        background: av.color,
+                        color: "#0d1117",
+                        border: "2px solid #161b22",
+                        marginLeft: i === 0 ? 0 : -7,
+                        zIndex: 3 - i,
+                        fontSize: 9,
+                      }}
+                      title={av.label === "Y" ? "You" : av.label === "S" ? "Sarah" : "Kai"}
+                    >
+                      {av.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Code body */}
+              <div className="flex" style={{ minHeight: 220 }}>
+                {/* Line numbers */}
+                <div
+                  className="flex flex-col select-none"
+                  style={{
+                    background: "#0d1117", borderRight: "1px solid #21262d",
+                    padding: "14px 8px 14px 14px", minWidth: 40,
+                    fontFamily: "var(--font-geist-mono), monospace", fontSize: 11.5,
+                  }}
+                >
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        textAlign: "right", lineHeight: "22px",
+                        color: i === 2 ? "#6e7681" : "#3d444d",
+                      }}
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Code */}
+                <div style={{ padding: "14px 16px", flex: 1, overflow: "hidden", fontFamily: "var(--font-geist-mono), monospace", fontSize: 12 }}>
+                  {/* Row 1 */}
+                  <div style={{ display: "flex", alignItems: "center", height: 22, whiteSpace: "nowrap" }}>
+                    <span style={{ color: "#ff7b72" }}>def</span>&nbsp;
+                    <span style={{ color: "#d2a8ff" }}>binary_search</span>
+                    <span style={{ color: "#e6edf3" }}>(</span>
+                    <span style={{ color: "#ffa657" }}>arr</span>
+                    <span style={{ color: "#e6edf3" }}>,&nbsp;</span>
+                    <span style={{ color: "#ffa657" }}>target</span>
+                    <span style={{ color: "#e6edf3" }}>):</span>
+                  </div>
+                  {/* Row 2 — remote cursor typing line */}
+                  <div style={{ display: "flex", alignItems: "center", height: 22, whiteSpace: "nowrap", background: "#d2a8ff09", borderRadius: 2, margin: "0 -8px", padding: "0 8px" }}>
+                    <span ref={remoteRef} style={{ color: "#3d444d" }}>{"    "}</span>
+                    {/* Remote cursor — Sarah */}
+                    <span
+                      style={{
+                        display: "inline-block", width: 2, height: 14,
+                        background: "#d2a8ff", marginLeft: 1,
+                        verticalAlign: "middle", borderRadius: 1,
+                        position: "relative",
+                      }}
+                    >
+                      <span
+                        style={{
+                          position: "absolute", bottom: 17, left: 0,
+                          background: "#d2a8ff", color: "#0d1117",
+                          fontSize: 9, fontWeight: 700, padding: "1px 5px",
+                          borderRadius: "3px 3px 3px 0", whiteSpace: "nowrap",
+                          fontFamily: "var(--font-geist-sans), sans-serif",
+                        }}
+                      >
+                        Sarah
+                      </span>
+                    </span>
+                  </div>
+                  {/* Row 3 — active line with own cursor */}
+                  <div style={{ display: "flex", alignItems: "center", height: 22, whiteSpace: "nowrap", background: "#58a6ff0a", borderRadius: 2, margin: "0 -8px", padding: "0 8px" }}>
+                    <span style={{ color: "#e6edf3" }}>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span style={{ color: "#ffa657" }}>lo</span>
+                    <span style={{ color: "#e6edf3" }}>,&nbsp;</span>
+                    <span style={{ color: "#ffa657" }}>hi</span>
+                    <span style={{ color: "#e6edf3" }}>&nbsp;=&nbsp;</span>
+                    <span style={{ color: "#79c0ff" }}>0</span>
+                    <span style={{ color: "#e6edf3" }}>,&nbsp;</span>
+                    <span style={{ color: "#d2a8ff" }}>len</span>
+                    <span style={{ color: "#e6edf3" }}>(</span>
+                    <span style={{ color: "#ffa657" }}>arr</span>
+                    <span style={{ color: "#e6edf3" }}>)&nbsp;-&nbsp;</span>
+                    <span style={{ color: "#79c0ff" }}>1</span>
+                    <span style={{ display: "inline-block", width: 2, height: 14, background: "#58a6ff", marginLeft: 1, verticalAlign: "middle", borderRadius: 1, animation: "landing-blink 1.1s step-end infinite" }} />
+                  </div>
+                  {/* Rows 4-12 — remaining code */}
+                  {[
+                    [["#ff7b72","    while "],["#ffa657","lo"],["#e6edf3"," <= "],["#ffa657","hi"],["#e6edf3",":"]],
+                    [["#e6edf3","        "],["#ffa657","mid"],["#e6edf3"," = ("],["#ffa657","lo"],["#e6edf3"," + "],["#ffa657","hi"],["#e6edf3",") // "],["#79c0ff","2"]],
+                    [["#ff7b72","        if "],["#ffa657","arr"],["#e6edf3","["],["#ffa657","mid"],["#e6edf3","] == "],["#ffa657","target"],["#e6edf3",":"]],
+                    [["#ff7b72","            return "],["#ffa657","mid"]],
+                    [["#ff7b72","        elif "],["#ffa657","arr"],["#e6edf3","["],["#ffa657","mid"],["#e6edf3","] < "],["#ffa657","target"],["#e6edf3",":"]],
+                    [["#e6edf3","            "],["#ffa657","lo"],["#e6edf3"," = "],["#ffa657","mid"],["#e6edf3"," + "],["#79c0ff","1"]],
+                    [["#ff7b72","        else"],["#e6edf3",":"]],
+                    [["#e6edf3","            "],["#ffa657","hi"],["#e6edf3"," = "],["#ffa657","mid"],["#e6edf3"," - "],["#79c0ff","1"]],
+                    [["#ff7b72","    return "],["#e6edf3","-"],["#79c0ff","1"]],
+                  ].map((row, ri) => (
+                    <div key={ri} style={{ display: "flex", alignItems: "center", height: 22, whiteSpace: "nowrap" }}>
+                      {row.map(([color, text], ci) => (
+                        <span key={ci} style={{ color }}>{text}</span>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Status bar */}
+              <div
+                className="flex items-center gap-3 px-3.5"
+                style={{ height: 28, background: "#161b22", borderTop: "1px solid #21262d" }}
+              >
+                <div className="flex items-center gap-1.5">
+                  <div
+                    className="rounded-full"
+                    style={{ width: 6, height: 6, background: "#3fb950", animation: "landing-pulse-dot 2s ease-in-out infinite", boxShadow: "0 0 6px #3fb950" }}
+                  />
+                  <span style={{ fontSize: 10.5, color: "#6e7681" }}>Connected · 3 online</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Code2 size={10} color="#6e7681" />
+                  <span style={{ fontSize: 10.5, color: "#6e7681" }}>Python 3.12</span>
+                </div>
+                <span ref={flashRef} className="landing-run-flash" />
+                <div className="flex items-center ml-auto">
+                  <span style={{ fontSize: 10.5, color: "#6e7681" }}>Ln 3, Col 28 · UTF-8</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Pills + footer will be added in Task 6 */}
