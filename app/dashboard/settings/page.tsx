@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+import Image from "next/image";
 import { DeleteAllSnippetsButton } from "@/components/dashboard/DeleteAllSnippetsButton";
 import { SignOutButton } from "@/components/dashboard/SignOutButton";
 import { User, Mail, Shield, TriangleAlert } from "lucide-react";
@@ -30,10 +31,12 @@ export default async function SettingsPage() {
         {/* Avatar row */}
         <div className="px-6 pb-6 -mt-8 flex items-end gap-4">
           {user.user_metadata?.avatar_url ? (
-            <img
+            <Image
               src={user.user_metadata.avatar_url}
               alt={fullName}
-              className="w-16 h-16 rounded-full object-cover ring-4 ring-obsidian-surface"
+              width={64}
+              height={64}
+              className="rounded-full object-cover ring-4 ring-obsidian-surface"
             />
           ) : (
             <div

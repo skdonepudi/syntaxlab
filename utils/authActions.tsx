@@ -16,7 +16,7 @@ export async function signInWithOAuth(provider: Provider, next: string) {
   });
 
   if (error) {
-    console.error("OAuth error:", error);
+
     throw error;
   }
 

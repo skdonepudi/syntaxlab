@@ -40,8 +40,7 @@ export default function EditorPage() {
   const [currentSnippet, setCurrentSnippet] = useState<Snippet | null>(null);
   const [snippetsOpen, setSnippetsOpen] = useState(false);
   const [saveTriggered, setSaveTriggered] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [signInOpen, setSignInOpen] = useState(false);
+
   const [aiCommandOpen, setAiCommandOpen] = useState(false);
   const [aiResponse, setAiResponse] = useState<string>("");
   const [outputTab, setOutputTab] = useState<"output" | "ai">("output");
@@ -52,13 +51,29 @@ export default function EditorPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (searchParams.get("signed_in") === "1") {
+    const params = new URLSearchParams(searchParams.toString());
+
+    // Handle sign-in toast after OAuth redirect
+    if (params.get("signed_in") === "1") {
       toast.success("Signed in successfully");
-      const params = new URLSearchParams(searchParams.toString());
       params.delete("signed_in");
-      const newUrl = params.toString() ? `?${params}` : window.location.pathname;
-      router.replace(newUrl, { scroll: false });
     }
+
+    // Handle forked snippet: load code + language from URL params
+    const forkedCode = params.get("code");
+    const forkedLangId = params.get("langId");
+    if (forkedCode && forkedLangId) {
+      const lang = languages.find((l) => l.id === Number(forkedLangId));
+      if (lang) {
+        setLanguage(lang);
+        setCode(decodeURIComponent(forkedCode));
+      }
+      params.delete("code");
+      params.delete("langId");
+    }
+
+    const newUrl = params.toString() ? `?${params}` : window.location.pathname;
+    router.replace(newUrl, { scroll: false });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
