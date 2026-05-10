@@ -151,7 +151,7 @@ export default function LandingPage() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(#58a6ff1e 1px, transparent 1px), linear-gradient(90deg, #58a6ff1e 1px, transparent 1px)",
+            "linear-gradient(#58a6ff0d 1px, transparent 1px), linear-gradient(90deg, #58a6ff0d 1px, transparent 1px)",
           backgroundSize: "44px 44px",
         }}
       />
@@ -281,9 +281,12 @@ export default function LandingPage() {
         >
           {/* Badge */}
           <div
-            className="landing-badge inline-flex items-center gap-2 w-fit mb-7 rounded-full"
+            className="landing-badge inline-flex items-center gap-2 w-fit mb-7 rounded-full cursor-default"
             style={{ border: "1px solid #58a6ff28", padding: "5px 14px 5px 10px",
-              background: "linear-gradient(135deg, #58a6ff0a, transparent)" }}
+              background: "linear-gradient(135deg, #58a6ff0a, transparent)",
+              transition: "border-color 0.2s, box-shadow 0.2s, transform 0.2s" }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "#58a6ff60"; el.style.boxShadow = "0 0 12px #58a6ff20"; el.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "#58a6ff28"; el.style.boxShadow = "none"; el.style.transform = ""; }}
           >
             <div
               className="landing-live-dot rounded-full flex-shrink-0"
@@ -346,10 +349,10 @@ export default function LandingPage() {
             </Link>
             <a
               href="#"
-              className="inline-flex items-center gap-1.5 text-sm transition-colors"
-              style={{ color: "#8b949e" }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#e6edf3")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8b949e")}
+              className="inline-flex items-center gap-1.5 text-sm"
+              style={{ color: "#8b949e", transition: "color 0.2s" }}
+              onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.textDecoration = "underline"; el.style.textDecorationStyle = "dotted"; el.style.textUnderlineOffset = "3px"; }}
+              onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.textDecoration = "none"; }}
             >
               <PlayCircle size={14} />
               Watch demo
@@ -407,7 +410,7 @@ export default function LandingPage() {
               willChange: "transform",
             }}
 
-            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "0 0 0 1px #58a6ff45, 0 32px 80px rgba(0,0,0,.8), 0 0 90px #58a6ff30, 0 0 50px #7c3aed22"; el.style.background = "linear-gradient(135deg, #58a6ff90 0%, #58a6ff40 30%, transparent 55%, #7c3aed55 100%)"; }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "0 0 0 1px #58a6ff35, 0 32px 80px rgba(0,0,0,.78), 0 0 70px #58a6ff22, 0 0 35px #7c3aed16"; el.style.background = "linear-gradient(135deg, #58a6ff80 0%, #58a6ff38 30%, transparent 55%, #7c3aed48 100%)"; }}
             onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "0 0 0 1px #58a6ff20, 0 32px 80px rgba(0,0,0,.75), 0 0 60px #58a6ff18, 0 0 30px #7c3aed12"; el.style.background = "linear-gradient(135deg, #58a6ff70 0%, #58a6ff30 30%, transparent 55%, #7c3aed40 100%)"; }}
           >
             <div
