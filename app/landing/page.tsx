@@ -481,12 +481,12 @@ export default function LandingPage() {
                 {/* Code */}
                 <div style={{ padding: "14px 16px", flex: 1, overflow: "hidden", fontFamily: "var(--font-geist-mono), monospace", fontSize: 13 }}>
                   {/* Row 1 */}
-                  <div style={{ display: "flex", alignItems: "center", height: 24, whiteSpace: "nowrap" }}>
-                    <span style={{ color: "#ff7b72" }}>def</span>&nbsp;
+                  <div style={{ height: 24, lineHeight: "24px", whiteSpace: "pre" }}>
+                    <span style={{ color: "#ff7b72" }}>{"def "}</span>
                     <span style={{ color: "#d2a8ff" }}>binary_search</span>
                     <span style={{ color: "#e6edf3" }}>(</span>
                     <span style={{ color: "#ffa657" }}>arr</span>
-                    <span style={{ color: "#e6edf3" }}>,&nbsp;</span>
+                    <span style={{ color: "#e6edf3" }}>{", "}</span>
                     <span style={{ color: "#ffa657" }}>target</span>
                     <span style={{ color: "#e6edf3" }}>):</span>
                   </div>
@@ -543,7 +543,7 @@ export default function LandingPage() {
                     [["#e6edf3","            "],["#ffa657","hi"],["#e6edf3"," = "],["#ffa657","mid"],["#e6edf3"," - "],["#79c0ff","1"]],
                     [["#ff7b72","    return "],["#e6edf3","-"],["#79c0ff","1"]],
                   ].map((row, ri) => (
-                    <div key={ri} style={{ display: "flex", alignItems: "center", height: 24, whiteSpace: "nowrap" }}>
+                    <div key={ri} style={{ height: 24, lineHeight: "24px", whiteSpace: "pre" }}>
                       {row.map(([color, text], ci) => (
                         <span key={ci} style={{ color }}>{text}</span>
                       ))}
