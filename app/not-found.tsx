@@ -47,10 +47,7 @@ export default function NotFound() {
         <div className="flex items-center gap-3">
           <Link
             href="/editor"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors"
-            style={{ background: "#58a6ff", color: "#0a0d13" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#79c0ff"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#58a6ff"; }}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors bg-[#58a6ff] hover:bg-[#79c0ff] text-[#0a0d13]"
           >
             Open Editor
           </Link>
