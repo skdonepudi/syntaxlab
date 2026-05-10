@@ -621,6 +621,9 @@ export default function LandingPage() {
       {/* ── Languages Marquee ── */}
       <LanguagesMarquee />
 
+      {/* ── AI Spotlight ── */}
+      <AISpotlight />
+
       {/* ── Footer note ── */}
       <div
         className="relative z-10 text-center pb-6"
@@ -1184,5 +1187,203 @@ function LanguagesMarquee() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   AI SPOTLIGHT
+────────────────────────────────────────────────────────── */
+
+function AISpotlight() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const targets = el.querySelectorAll<HTMLElement>(".landing-fade-up");
+            targets.forEach((t, i) => {
+              t.style.animationDelay = `${i * 0.08}s`;
+              t.classList.add("landing-visible");
+            });
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const features = [
+    {
+      Icon: AlertCircle,
+      title: "Error explanation",
+      desc: "Explains runtime errors in plain English with a one-click fix.",
+    },
+    {
+      Icon: Code2,
+      title: "Output-aware suggestions",
+      desc: "Sees what your code actually printed, not just what you wrote.",
+    },
+    {
+      Icon: MessageSquare,
+      title: "Natural language commands",
+      desc: '"Optimise this for large inputs" — and it actually does it.',
+    },
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative z-10 w-full"
+      style={{
+        padding: "96px 80px",
+        background: "#0a0d13",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: 72,
+        alignItems: "center",
+      }}
+    >
+      {/* ambient right glow */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          right: 0, top: "50%", transform: "translateY(-50%)",
+          width: 500, height: 500,
+          background: "radial-gradient(ellipse, #7c3aed14 0%, transparent 65%)",
+        }}
+      />
+
+      {/* Left column */}
+      <div style={{ position: "relative" }}>
+        <div
+          className="landing-fade-up flex items-center gap-2 mb-3"
+          style={{ fontSize: 11, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#d2a8ff" }}
+        >
+          <span style={{ width: 20, height: 1, background: "#d2a8ff60", display: "inline-block" }} />
+          AI-powered
+        </div>
+        <h2
+          className="landing-fade-up font-extrabold"
+          style={{ fontSize: 38, letterSpacing: "-1.2px", lineHeight: 1.08, marginBottom: 16 }}
+        >
+          An AI that<br />sees your output
+        </h2>
+        <p
+          className="landing-fade-up"
+          style={{ fontSize: 15, color: "#8b949e", lineHeight: 1.75, marginBottom: 28 }}
+        >
+          Most coding assistants only see your code. SyntaxLab&apos;s AI sees the full
+          picture — your code, your output, and your errors — so suggestions are actually useful.
+        </p>
+        <div className="landing-fade-up flex flex-col gap-2.5">
+          {features.map(({ Icon, title, desc }) => (
+            <AIFeatureRow key={title} Icon={Icon} title={title} desc={desc} />
+          ))}
+        </div>
+      </div>
+
+      {/* Right column — floating window */}
+      <div
+        className="landing-fade-up"
+        style={{
+          borderRadius: 14,
+          overflow: "hidden",
+          background: "#0d1117",
+          border: "1px solid #30363d",
+          boxShadow: "0 0 0 1px #7c3aed25, 0 32px 80px rgba(0,0,0,.65), 0 0 60px #7c3aed14",
+          animation: "landing-float 5s ease-in-out infinite",
+        }}
+      >
+        {/* Toolbar */}
+        <div
+          className="flex items-center gap-2 px-3.5"
+          style={{ height: 40, background: "#161b22", borderBottom: "1px solid #21262d" }}
+        >
+          <div className="flex gap-1.5">
+            {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
+              <span key={c} className="rounded-full block" style={{ width: 9, height: 9, background: c }} />
+            ))}
+          </div>
+          <span style={{ fontSize: 11, color: "#6e7681", marginLeft: 6 }}>solution.py — AI Assistant</span>
+        </div>
+
+        {/* Body */}
+        <div style={{ padding: "18px 18px 18px", fontFamily: "var(--font-geist-mono), monospace", fontSize: 12 }}>
+          <div style={{ lineHeight: "22px", color: "#6e7681" }}>Output:</div>
+          <div style={{ lineHeight: "22px", color: "#ff7b72" }}>IndexError: list index out of range</div>
+          <div style={{ lineHeight: "22px", color: "#6e7681" }}>&nbsp;&nbsp;at line 8, in binary_search</div>
+
+          {/* AI panel */}
+          <div
+            style={{
+              marginTop: 14,
+              background: "#7c3aed10",
+              border: "1px solid #7c3aed28",
+              borderRadius: 10,
+              padding: 14,
+            }}
+          >
+            <div
+              className="flex items-center gap-1.5 mb-2"
+              style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: "#d2a8ff" }}
+            >
+              <Sparkles size={10} strokeWidth={2} />
+              AI Analysis
+            </div>
+            <div style={{ fontFamily: "var(--font-geist-sans), sans-serif", fontSize: 12, color: "#8b949e", lineHeight: 1.65 }}>
+              The while loop exits before checking the last element. Your{" "}
+              <code style={{ color: "#d2a8ff", fontFamily: "var(--font-geist-mono), monospace" }}>hi</code>{" "}
+              boundary is off by one when the array has an even length.
+            </div>
+            <div
+              style={{
+                marginTop: 10, background: "#0a0d13", borderRadius: 7,
+                padding: "8px 12px", fontFamily: "var(--font-geist-mono), monospace", fontSize: 11,
+              }}
+            >
+              <div style={{ color: "#ff7b72" }}>- while lo &lt; hi:</div>
+              <div style={{ color: "#3fb950" }}>+ while lo &lt;= hi:</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AIFeatureRow({ Icon, title, desc }: { Icon: React.ElementType; title: string; desc: string }) {
+  const [hovered, setHovered] = React.useState(false);
+  return (
+    <div
+      className="flex gap-3.5 items-start rounded-xl"
+      style={{
+        padding: "14px 16px",
+        border: `1px solid ${hovered ? "#7c3aed35" : "#21262d"}`,
+        background: hovered ? "#110d1c" : "#0d1117",
+        transform: hovered ? "translateX(4px)" : "translateX(0)",
+        transition: "all 0.25s cubic-bezier(.22,1,.36,1)",
+        cursor: "default",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div
+        className="flex items-center justify-center rounded-lg flex-shrink-0"
+        style={{ width: 32, height: 32, background: hovered ? "#7c3aed30" : "#7c3aed1e", color: "#d2a8ff", transition: "background 0.25s" }}
+      >
+        <Icon size={15} strokeWidth={2} />
+      </div>
+      <div>
+        <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 3 }}>{title}</div>
+        <div style={{ fontSize: 12, color: "#8b949e", lineHeight: 1.55 }}>{desc}</div>
+      </div>
+    </div>
   );
 }
