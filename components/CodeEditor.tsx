@@ -11,11 +11,10 @@ interface CodeEditorProps {
   onChange: (value: string | undefined) => void;
   onCursorChange?: (pos: { line: number; column: number }) => void;
   options?: Record<string, unknown>;
-  roomId?: string;
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
-  language, theme, value, isFullScreen, onChange, onCursorChange, options, roomId,
+  language, theme, value, isFullScreen, onChange, onCursorChange, options,
 }) => {
   const handleMount: OnMount = (editor) => {
     if (onCursorChange) {
@@ -30,7 +29,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       <Editor
         className="w-full h-full"
         language={language.value}
-        value={roomId ? undefined : value}
+        value={value}
         theme={theme}
         onChange={onChange}
         onMount={handleMount}
