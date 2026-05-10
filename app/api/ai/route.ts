@@ -43,8 +43,8 @@ export async function POST(request: NextRequest) {
   const result = await streamText({
     model: anthropic(model),
     prompt,
-    maxTokens: 1024,
+    maxOutputTokens: 1024,
   });
 
-  return result.toDataStreamResponse();
+  return result.toTextStreamResponse();
 }
