@@ -351,7 +351,7 @@ export default function LandingPage() {
               href="#"
               className="inline-flex items-center gap-1.5 text-sm"
               style={{ color: "#8b949e", transition: "color 0.2s" }}
-              onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.textDecoration = "underline"; el.style.textDecorationStyle = "dotted"; el.style.textUnderlineOffset = "3px"; }}
+              onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.textDecoration = "underline"; el.style.textUnderlineOffset = "3px"; }}
               onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.textDecoration = "none"; }}
             >
               <PlayCircle size={14} />
