@@ -1,5 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
+export const dynamic = "force-dynamic";
+import nextDynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useState, useEffect, useCallback } from "react";
@@ -22,8 +23,8 @@ import { RoomProvider, useErrorListener } from "@/lib/liveblocks";
 import { AICommandBar } from "@/components/AICommandBar";
 import { OutputTabs } from "@/components/OutputTabs";
 
-const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
-const CollaborativeEditor = dynamic(() => import("@/components/CollaborativeEditor"), { ssr: false });
+const CodeEditor = nextDynamic(() => import("@/components/CodeEditor"), { ssr: false });
+const CollaborativeEditor = nextDynamic(() => import("@/components/CollaborativeEditor"), { ssr: false });
 
 function RoomErrorBoundary({ router }: { router: ReturnType<typeof useRouter> }) {
   useErrorListener((err) => {
