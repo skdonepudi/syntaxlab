@@ -151,7 +151,7 @@ export default function LandingPage() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(#58a6ff06 1px, transparent 1px), linear-gradient(90deg, #58a6ff06 1px, transparent 1px)",
+            "linear-gradient(#58a6ff12 1px, transparent 1px), linear-gradient(90deg, #58a6ff12 1px, transparent 1px)",
           backgroundSize: "44px 44px",
         }}
       />
@@ -160,7 +160,7 @@ export default function LandingPage() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 25%, #0a0d13 80%)",
+            "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 30%, #0a0d13 85%)",
         }}
       />
       {/* Ambient glow — right */}
@@ -197,8 +197,9 @@ export default function LandingPage() {
         className="relative flex items-center justify-between px-8 z-10"
         style={{
           height: 54,
-          borderBottom: "1px solid #ffffff07",
-          backdropFilter: "blur(8px)",
+          background: "rgba(10, 13, 19, 0.75)",
+          borderBottom: "1px solid #30363d30",
+          backdropFilter: "blur(12px)",
         }}
       >
         {/* Logo */}
