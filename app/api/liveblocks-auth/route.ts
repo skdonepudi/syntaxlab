@@ -35,6 +35,19 @@ export async function POST(request: Request) {
 
   const liveblocks = new Liveblocks({ secret: process.env.LIVEBLOCKS_SECRET_KEY });
 
+  // Guests must join a room that already exists (created by an authenticated user).
+  // This prevents arbitrary room IDs from silently creating phantom rooms.
+  if (!user && roomId) {
+    try {
+      await liveblocks.getRoom(roomId);
+    } catch {
+      return new Response(JSON.stringify({ error: "Room not found" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  }
+
   const userId = user?.id ?? `guest-${Math.random().toString(36).slice(2)}`;
 
   const session = liveblocks.prepareSession(userId, {

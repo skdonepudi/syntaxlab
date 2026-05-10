@@ -18,12 +18,26 @@ import { languages } from "@/constants/languages";
 import { getDefaultCode } from "@/constants/defaultCode";
 import { Snippet } from "@/lib/snippets";
 import { SnippetsSheet } from "@/components/SnippetsSheet";
-import { RoomProvider } from "@/lib/liveblocks";
+import { RoomProvider, useErrorListener } from "@/lib/liveblocks";
 import { AICommandBar } from "@/components/AICommandBar";
 import { OutputTabs } from "@/components/OutputTabs";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
 const CollaborativeEditor = dynamic(() => import("@/components/CollaborativeEditor"), { ssr: false });
+
+function RoomErrorBoundary({ router }: { router: ReturnType<typeof useRouter> }) {
+  useErrorListener((err) => {
+    const isNotFound = err.message?.includes("Room not found");
+    toast.error(
+      isNotFound
+        ? "That room doesn't exist or the link has expired."
+        : "Failed to connect to collaboration room.",
+      { toastId: "room-error" }
+    );
+    router.replace("/editor");
+  });
+  return null;
+}
 
 export default function EditorPage() {
   const { resolvedTheme } = useTheme();
@@ -249,6 +263,7 @@ export default function EditorPage() {
   if (roomId) {
     return (
       <RoomProvider id={roomId} initialPresence={{ cursor: null, name: "", color: "" }}>
+        <RoomErrorBoundary router={router} />
         {editorContent}
       </RoomProvider>
     );
