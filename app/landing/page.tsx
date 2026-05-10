@@ -131,8 +131,126 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero, pills, footer will be added in subsequent tasks */}
-      <main className="flex-grow" />
+      {/* ── Hero ── */}
+      <div
+        ref={heroRef}
+        className="relative z-10 grid items-center gap-12 px-8 mx-auto w-full"
+        style={{
+          gridTemplateColumns: "1fr 1fr",
+          maxWidth: 1100,
+          paddingTop: 64,
+          paddingBottom: 48,
+        }}
+      >
+        {/* LEFT */}
+        <div
+          className="flex flex-col"
+          style={{ animation: "landing-slideInLeft 0.7s cubic-bezier(.22,1,.36,1) both" }}
+        >
+          {/* Badge */}
+          <div
+            className="landing-badge inline-flex items-center gap-2 w-fit mb-7 rounded-full"
+            style={{ border: "1px solid #58a6ff28", padding: "5px 14px 5px 10px",
+              background: "linear-gradient(135deg, #58a6ff0a, transparent)" }}
+          >
+            <div
+              className="landing-live-dot rounded-full flex-shrink-0"
+              style={{ width: 6, height: 6, background: "#3fb950",
+                animation: "landing-pulse-dot 2s ease-in-out infinite",
+                boxShadow: "0 0 6px #3fb950" }}
+            />
+            <span className="text-xs" style={{ color: "#8b949e" }}>
+              <strong style={{ color: "#58a6ff" }}>New</strong> — AI assistant with output context
+            </span>
+          </div>
+
+          {/* Headline */}
+          <div
+            className="font-extrabold mb-5"
+            style={{ fontSize: 50, lineHeight: 1.05, letterSpacing: "-1.8px" }}
+          >
+            <span className="block" style={{ color: "#e6edf3" }}>Write code.</span>
+            <span
+              className="block"
+              style={{
+                backgroundImage: "linear-gradient(90deg, #58a6ff 0%, #a78bfa 35%, #58a6ff 70%, #a78bfa 100%)",
+                backgroundSize: "300% auto",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                animation: "landing-gradflow 5s linear infinite",
+              }}
+            >
+              Run anything.
+            </span>
+            <span className="block" style={{ color: "#e6edf3" }}>Ship together.</span>
+          </div>
+
+          {/* Subtitle */}
+          <p
+            className="mb-8"
+            style={{ fontSize: 15, color: "#8b949e", lineHeight: 1.7, maxWidth: 400 }}
+          >
+            A professional-grade editor in your browser. 60+ languages, real-time
+            collaboration with live cursors, and an AI that sees your output.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex items-center gap-3 mb-9">
+            <Link
+              href="/editor"
+              className="inline-flex items-center gap-2 rounded-lg font-bold text-sm"
+              style={{
+                background: "#58a6ff", color: "#0a0d13",
+                padding: "11px 24px",
+                boxShadow: "0 4px 24px #58a6ff35",
+                animation: "landing-ctabreathe 3s ease-in-out infinite",
+              }}
+            >
+              <Play size={14} fill="currentColor" strokeWidth={0} />
+              Start coding free
+            </Link>
+            <a
+              href="#"
+              className="inline-flex items-center gap-1.5 text-sm transition-colors"
+              style={{ color: "#8b949e" }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#e6edf3")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8b949e")}
+            >
+              <PlayCircle size={14} />
+              Watch demo
+            </a>
+          </div>
+
+          {/* Stats row */}
+          <div className="flex items-center gap-5">
+            <div className="flex items-center gap-1.5">
+              <span ref={stat1Ref} className="text-sm font-bold" style={{ color: "#e6edf3" }}>0</span>
+              <span className="text-xs" style={{ color: "#6e7681" }}>+ languages</span>
+            </div>
+            <div style={{ width: 1, height: 16, background: "#30363d" }} />
+            <div className="flex items-center gap-1.5">
+              <span ref={stat2Ref} className="text-sm font-bold" style={{ color: "#e6edf3" }}>0</span>
+              <span className="text-xs" style={{ color: "#6e7681" }}>ms avg run</span>
+            </div>
+            <div style={{ width: 1, height: 16, background: "#30363d" }} />
+            <div className="flex items-center gap-1.5">
+              <div
+                className="landing-live-dot rounded-full"
+                style={{ width: 7, height: 7, background: "#3fb950",
+                  animation: "landing-pulse-dot 2s ease-in-out infinite",
+                  boxShadow: "0 0 6px #3fb950" }}
+              />
+              <span className="text-sm font-bold" style={{ color: "#e6edf3", marginLeft: 4 }}>Live</span>
+              <span className="text-xs" style={{ color: "#6e7681" }}>collab</span>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT — placeholder, filled in Task 4 */}
+        <div />
+      </div>
+
+      {/* Pills + footer will be added in Task 6 */}
     </div>
   );
 }
