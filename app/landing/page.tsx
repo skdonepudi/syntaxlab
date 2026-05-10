@@ -151,7 +151,7 @@ export default function LandingPage() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(#58a6ff0d 1px, transparent 1px), linear-gradient(90deg, #58a6ff0d 1px, transparent 1px)",
+            "linear-gradient(#58a6ff08 1px, transparent 1px), linear-gradient(90deg, #58a6ff08 1px, transparent 1px)",
           backgroundSize: "44px 44px",
         }}
       />
@@ -358,6 +358,11 @@ export default function LandingPage() {
               Watch demo
             </a>
           </div>
+
+          {/* Trust line */}
+          <p style={{ fontSize: 11, color: "#3d444d", letterSpacing: "0.3px", marginBottom: 20 }}>
+            No account required &nbsp;·&nbsp; Free to use &nbsp;·&nbsp; Open in seconds
+          </p>
 
           {/* Stats row */}
           <div className="flex items-center gap-5">
@@ -1003,14 +1008,18 @@ function AISuggestionDemo() {
         {text}
         <span style={{ display: "inline-block", width: 1.5, height: 12, background: "#d2a8ff", verticalAlign: "middle", marginLeft: 1, animation: "landing-blink 0.9s step-end infinite" }} />
       </div>
-      {showFix && (
-        <div
-          className="mt-2 rounded-lg font-mono"
-          style={{ background: "#0a0d13", border: "1px solid #21262d", padding: "6px 10px", fontSize: 11, color: "#3fb950", animation: "landing-slide-up 0.3s ease both" }}
-        >
-          hi = mid - 1 <span style={{ color: "#6e7681" }}>← fix</span>
-        </div>
-      )}
+      <div
+        className="mt-2 rounded-lg font-mono"
+        style={{
+          background: "#0a0d13", border: "1px solid #21262d",
+          padding: "6px 10px", fontSize: 11, color: "#3fb950",
+          opacity: showFix ? 1 : 0,
+          transition: "opacity 0.3s ease",
+          minHeight: 30,
+        }}
+      >
+        hi = mid - 1
+      </div>
     </div>
   );
 }
@@ -1050,39 +1059,82 @@ function CollabDemo() {
 
   return (
     <div
-      className="rounded-xl font-mono"
+      className="rounded-xl overflow-hidden font-mono"
       style={{
         background: "linear-gradient(135deg, #58a6ff35 0%, transparent 40%, #7c3aed20 100%), #0d1117",
-        border: "1px solid #21262d",
-        padding: "12px 14px",
+        border: "1px solid #30363d",
         fontSize: 11.5,
       }}
     >
-      {/* Line 1 — your cursor */}
-      <div className="flex items-center gap-1 rounded" style={{ lineHeight: "22px", background: "#58a6ff0a", padding: "0 4px" }}>
-        <span style={{ fontSize: 8, fontWeight: 700, padding: "1px 6px", borderRadius: 3, background: "#58a6ff", color: "#0d1117", flexShrink: 0 }}>You</span>
-        <span style={{ color: "#ff7b72" }}>while </span>
-        <span style={{ color: "#ffa657" }}>lo</span>
-        <span style={{ color: "#e6edf3" }}> &lt;= </span>
-        <span style={{ color: "#ffa657" }}>hi</span>
-        <span style={{ color: "#e6edf3" }}>:</span>
-        <span style={{ display: "inline-block", width: 1.5, height: 12, background: "#58a6ff", verticalAlign: "middle", marginLeft: 1, animation: "landing-blink 1.1s step-end infinite" }} />
+      {/* Toolbar */}
+      <div
+        className="flex items-center gap-2"
+        style={{ height: 32, background: "#161b22", borderBottom: "1px solid #21262d", padding: "0 10px" }}
+      >
+        <div className="flex gap-1">
+          {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
+            <span key={c} style={{ width: 8, height: 8, borderRadius: "50%", background: c, display: "block" }} />
+          ))}
+        </div>
+        <span style={{ fontSize: 10, color: "#6e7681", marginLeft: 6 }}>solution.py</span>
+        <div className="flex items-center ml-auto">
+          {[{ label: "Y", color: "#58a6ff" }, { label: "S", color: "#d2a8ff" }].map((av, i) => (
+            <div
+              key={av.label}
+              style={{
+                width: 18, height: 18, borderRadius: "50%", background: av.color,
+                color: "#0d1117", fontSize: 8, fontWeight: 700,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                border: "2px solid #161b22", marginLeft: i === 0 ? 0 : -5, zIndex: 2 - i,
+              }}
+            >{av.label}</div>
+          ))}
+        </div>
       </div>
-      {/* Line 2 — Sarah typing */}
-      <div className="flex items-center gap-1 rounded" style={{ lineHeight: "22px", background: "#d2a8ff09", padding: "0 4px" }}>
-        <span style={{ fontSize: 8, fontWeight: 700, padding: "1px 6px", borderRadius: 3, background: "#d2a8ff", color: "#0d1117", flexShrink: 0 }}>Sarah</span>
-        <span ref={remoteRef} style={{ color: "#6e7681" }}>{"    "}</span>
-        <span style={{ display: "inline-block", width: 1.5, height: 12, background: "#d2a8ff", verticalAlign: "middle", marginLeft: 1, animation: "landing-blink 0.9s step-end infinite" }} />
+
+      {/* Code body */}
+      <div className="flex">
+        <div style={{
+          background: "#0d1117", borderRight: "1px solid #1e242d",
+          padding: "10px 6px 10px 8px", color: "#3d444d",
+          fontSize: 10, lineHeight: "20px", textAlign: "right", userSelect: "none",
+        }}>
+          {[5, 6, 7, 8].map(n => <div key={n}>{n}</div>)}
+        </div>
+        <div style={{ padding: "10px 10px", flex: 1, overflow: "hidden" }}>
+          {/* Line 5 — you */}
+          <div style={{ height: 20, lineHeight: "20px", background: "#58a6ff08", borderLeft: "2px solid #58a6ff50", paddingLeft: 6, marginLeft: -10 }}>
+            <span style={{ color: "#ff7b72" }}>while </span>
+            <span style={{ color: "#ffa657" }}>lo</span>
+            <span style={{ color: "#e6edf3" }}> &lt;= </span>
+            <span style={{ color: "#ffa657" }}>hi</span>
+            <span style={{ color: "#e6edf3" }}>:</span>
+            <span style={{ display: "inline-block", width: 1.5, height: 11, background: "#58a6ff", verticalAlign: "middle", marginLeft: 1, animation: "landing-blink 1.1s step-end infinite" }} />
+          </div>
+          {/* Line 6 — Sarah */}
+          <div style={{ height: 20, lineHeight: "20px", background: "#d2a8ff06", borderLeft: "2px solid #d2a8ff40", paddingLeft: 6, marginLeft: -10 }}>
+            <span ref={remoteRef} style={{ color: "#6e7681" }}>{"    "}</span>
+            <span style={{ display: "inline-block", width: 1.5, height: 11, background: "#d2a8ff", verticalAlign: "middle", marginLeft: 1, animation: "landing-blink 0.9s step-end infinite" }} />
+          </div>
+          {/* Line 7 */}
+          <div style={{ height: 20, lineHeight: "20px" }}>
+            <span style={{ color: "#ffa657" }}>    mid</span>
+            <span style={{ color: "#e6edf3" }}> = (</span>
+            <span style={{ color: "#ffa657" }}>lo</span>
+            <span style={{ color: "#e6edf3" }}> + </span>
+            <span style={{ color: "#ffa657" }}>hi</span>
+            <span style={{ color: "#e6edf3" }}>) // </span>
+            <span style={{ color: "#79c0ff" }}>2</span>
+          </div>
+          {/* Line 8 */}
+          <div style={{ height: 20, lineHeight: "20px", color: "#3d444d" }}>{"    ..."}</div>
+        </div>
       </div>
-      {/* Line 3 */}
-      <div style={{ lineHeight: "22px", padding: "0 4px" }}>
-        <span style={{ color: "#ffa657" }}>    mid</span>
-        <span style={{ color: "#e6edf3" }}> = (</span>
-        <span style={{ color: "#ffa657" }}>lo</span>
-        <span style={{ color: "#e6edf3" }}> + </span>
-        <span style={{ color: "#ffa657" }}>hi</span>
-        <span style={{ color: "#e6edf3" }}>) // </span>
-        <span style={{ color: "#79c0ff" }}>2</span>
+
+      {/* Status bar */}
+      <div className="flex items-center gap-2" style={{ padding: "5px 12px", borderTop: "1px solid #1e242d", fontSize: 10, color: "#6e7681" }}>
+        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#3fb950", boxShadow: "0 0 5px #3fb950", animation: "landing-pulse-dot 2s ease-in-out infinite", flexShrink: 0 }} />
+        2 collaborators editing
       </div>
     </div>
   );
@@ -1291,8 +1343,8 @@ function AISpotlight() {
       </div>
 
       {/* Right column — floating window */}
+      <div className="landing-fade-up">
       <div
-        className="landing-fade-up"
         style={{
           borderRadius: 14,
           overflow: "hidden",
@@ -1354,6 +1406,7 @@ function AISpotlight() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
