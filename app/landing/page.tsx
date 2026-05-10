@@ -196,37 +196,37 @@ export default function LandingPage() {
       <nav
         className="relative flex items-center justify-between px-8 z-10"
         style={{
-          height: 54,
+          height: 68,
           background: "rgba(10, 13, 19, 0.75)",
           borderBottom: "1px solid #30363d30",
           backdropFilter: "blur(12px)",
         }}
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-3">
           <div
             className="flex items-center justify-center rounded-lg"
             style={{
-              width: 28, height: 28,
+              width: 36, height: 36,
               background: "linear-gradient(135deg, #58a6ff, #7c3aed)",
-              boxShadow: "0 4px 12px #58a6ff25",
+              boxShadow: "0 4px 14px #58a6ff30",
             }}
           >
-            <Code2 size={14} color="white" strokeWidth={2.5} />
+            <Code2 size={18} color="white" strokeWidth={2.5} />
           </div>
-          <span className="text-sm font-bold tracking-tight" style={{ letterSpacing: "-0.3px" }}>
+          <span className="font-bold tracking-tight" style={{ fontSize: 17, letterSpacing: "-0.4px" }}>
             SyntaxLab
           </span>
         </Link>
 
         {/* Centre links */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-8">
           {["Features", "Languages", "Docs"].map((l) => (
             <a
               key={l}
               href="#"
-              className="text-sm transition-colors"
-              style={{ color: "#8b949e" }}
+              className="transition-colors"
+              style={{ fontSize: 15, color: "#8b949e" }}
               onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#e6edf3")}
               onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#8b949e")}
             >
@@ -236,18 +236,20 @@ export default function LandingPage() {
         </div>
 
         {/* Right actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           <Link
             href="/editor"
-            className="text-sm px-3.5 py-1.5 rounded-lg transition-colors"
-            style={{ color: "#8b949e", border: "1px solid #30363d" }}
+            className="rounded-lg transition-colors"
+            style={{ fontSize: 15, padding: "8px 18px", color: "#8b949e", border: "1px solid #30363d" }}
           >
             Sign in
           </Link>
           <Link
             href="/editor"
-            className="text-sm font-semibold px-4 py-1.5 rounded-lg"
+            className="font-semibold rounded-lg"
             style={{
+              fontSize: 15,
+              padding: "8px 20px",
               background: "#58a6ff",
               color: "#0a0d13",
               animation: "landing-ctabreathe 3s ease-in-out infinite",
