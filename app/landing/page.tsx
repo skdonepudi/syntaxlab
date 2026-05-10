@@ -1517,17 +1517,8 @@ function SocialProof() {
     <section
       ref={sectionRef}
       className="relative z-10 w-full"
-      style={{ padding: "72px 80px", background: "#0d1117" }}
+      style={{ padding: "0", background: "#0d1117" }}
     >
-      <div
-        className="landing-fade-up flex items-center justify-center gap-2 mb-10"
-        style={{ fontSize: 11, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#6e7681" }}
-      >
-        <span style={{ width: 20, height: 1, background: "#6e7681", display: "inline-block" }} />
-        What developers say
-        <span style={{ width: 20, height: 1, background: "#6e7681", display: "inline-block" }} />
-      </div>
-
       {/* Testimonials — minimal pull-quote strip */}
       <div
         className="landing-fade-up"
