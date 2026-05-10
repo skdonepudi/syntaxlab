@@ -618,6 +618,9 @@ export default function LandingPage() {
       {/* ── Bento Features ── */}
       <BentoSection />
 
+      {/* ── Languages Marquee ── */}
+      <LanguagesMarquee />
+
       {/* ── Footer note ── */}
       <div
         className="relative z-10 text-center pb-6"
@@ -1111,5 +1114,75 @@ function CopyButton() {
         {copied ? "Copied!" : "Copy"}
       </button>
     </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   LANGUAGES MARQUEE
+────────────────────────────────────────────────────────── */
+
+const LANGUAGES: [string, string][] = [
+  ["Python", "#3776ab"], ["Go", "#00acd7"], ["Rust", "#dea584"],
+  ["TypeScript", "#3178c6"], ["JavaScript", "#f7df1e"], ["Java", "#b07219"],
+  ["C#", "#239120"], ["Swift", "#ef4035"], ["Kotlin", "#7F52FF"],
+  ["Haskell", "#a97bff"], ["Ruby", "#cc342d"], ["PHP", "#4f5d95"],
+  ["C++", "#00599c"], ["Scala", "#dc322f"], ["Dart", "#0175c2"],
+  ["Elixir", "#6e4a7e"], ["R", "#276dc3"], ["Lua", "#000080"],
+  ["Bash", "#4eaa25"], ["Clojure", "#5881d8"], ["Erlang", "#a90533"],
+  ["F#", "#378bba"], ["Julia", "#9558b2"], ["Perl", "#39457e"],
+];
+
+function LanguagesMarquee() {
+  // duplicate for seamless infinite loop
+  const items = [...LANGUAGES, ...LANGUAGES];
+
+  return (
+    <section
+      className="relative z-10 w-full overflow-hidden"
+      style={{
+        padding: "56px 0",
+        background: "#0d1117",
+        borderTop: "1px solid #21262d",
+        borderBottom: "1px solid #21262d",
+      }}
+    >
+      <div
+        className="text-center mb-6"
+        style={{ fontSize: 11, color: "#6e7681", letterSpacing: "2px", textTransform: "uppercase" }}
+      >
+        Runs on every major runtime
+      </div>
+
+      {/* mask-image fades edges */}
+      <div
+        style={{
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+          maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+        }}
+      >
+        <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", animation: "landing-marquee 30s linear infinite" }}>
+            {items.map(([name, color], i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2"
+                style={{
+                  padding: "10px 24px",
+                  borderRight: "1px solid #21262d",
+                  whiteSpace: "nowrap",
+                  transition: "background 0.2s",
+                  cursor: "default",
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#161b22"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+              >
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: color, display: "inline-block", flexShrink: 0 }} />
+                <span style={{ fontSize: 13, color: "#8b949e", fontWeight: 500 }}>{name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
