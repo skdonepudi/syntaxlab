@@ -167,9 +167,9 @@ export default function LandingPage() {
       <div
         className="absolute pointer-events-none"
         style={{
-          top: 40, right: -60, width: 700, height: 600,
+          top: 40, right: -60, width: 560, height: 480,
           background:
-            "radial-gradient(ellipse at 65% 35%, #58a6ff22 0%, #7c3aed14 45%, transparent 70%)",
+            "radial-gradient(ellipse at 65% 35%, #58a6ff10 0%, #7c3aed08 45%, transparent 70%)",
         }}
       />
       {/* Ambient glow — left */}
