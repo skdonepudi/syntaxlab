@@ -1601,78 +1601,36 @@ function SocialProof() {
         ))}
       </div>
 
-      {/* Testimonials */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
-        {TESTIMONIALS.map(({ quote, name, role, initials, gradient, ringColor }, i) => (
-          <TestimonialCard
+      {/* Testimonials — minimal pull-quote strip */}
+      <div
+        className="landing-fade-up"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          borderTop: "1px solid #21262d",
+          borderBottom: "1px solid #21262d",
+        }}
+      >
+        {TESTIMONIALS.map(({ quote, name, role }, i) => (
+          <div
             key={name}
-            quote={quote}
-            name={name}
-            role={role}
-            initials={initials}
-            gradient={gradient}
-            ringColor={ringColor}
-            delay={i * 0.1}
-          />
+            style={{
+              padding: "28px 32px",
+              borderRight: i < 2 ? "1px solid #21262d" : "none",
+            }}
+          >
+            <p style={{ fontSize: 13.5, color: "#8b949e", lineHeight: 1.65, marginBottom: 16, fontStyle: "italic" }}>
+              &ldquo;{quote}&rdquo;
+            </p>
+            <div style={{ fontSize: 12, color: "#6e7681" }}>
+              <span style={{ color: "#e6edf3", fontWeight: 500 }}>{name}</span>
+              <span style={{ margin: "0 6px", color: "#3d444d" }}>·</span>
+              {role}
+            </div>
+          </div>
         ))}
       </div>
     </section>
-  );
-}
-
-function TestimonialCard({
-  quote, name, role, initials, gradient, ringColor, delay,
-}: {
-  quote: string; name: string; role: string; initials: string;
-  gradient: string; ringColor: string; delay: number;
-}) {
-  const [hovered, setHovered] = React.useState(false);
-  return (
-    <div
-      className="landing-fade-up relative rounded-2xl overflow-hidden cursor-default"
-      data-delay={String(delay)}
-      style={{
-        padding: 24,
-        background: "#0d1117",
-        border: `1px solid ${hovered ? "#30363d" : "#21262d"}`,
-        boxShadow: hovered ? "0 16px 48px rgba(0,0,0,.5)" : "none",
-        transform: hovered ? "translateY(-5px)" : "translateY(0)",
-        transition: "transform 0.25s cubic-bezier(.22,1,.36,1), border-color 0.25s, box-shadow 0.25s",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {/* decorative big quote mark */}
-      <div
-        className="absolute pointer-events-none select-none"
-        style={{ top: -10, left: 16, fontSize: 80, color: "#58a6ff10", fontFamily: "Georgia, serif", lineHeight: 1 }}
-      >
-        &ldquo;
-      </div>
-      <p style={{ fontSize: 14, color: "#8b949e", lineHeight: 1.72, marginBottom: 20, fontStyle: "italic", position: "relative" }}>
-        {quote}
-      </p>
-      <div className="flex items-center gap-3">
-        <div
-          className="relative flex items-center justify-center rounded-full font-bold flex-shrink-0"
-          style={{ width: 36, height: 36, background: gradient, color: "#0d1117", fontSize: 12 }}
-        >
-          {initials}
-          {/* ring ping */}
-          <div
-            className="absolute inset-0 rounded-full"
-            style={{
-              border: `1px solid ${ringColor}`,
-              animation: "landing-avring 3s ease-out infinite",
-            }}
-          />
-        </div>
-        <div>
-          <div style={{ fontSize: 13, fontWeight: 600 }}>{name}</div>
-          <div style={{ fontSize: 11, color: "#6e7681", marginTop: 2 }}>{role}</div>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -1796,43 +1754,43 @@ function CTABanner() {
 ────────────────────────────────────────────────────────── */
 
 function LandingFooter() {
-  const links = [
+  const navLinks = [
+    { label: "Docs",    href: "#" },
     { label: "Privacy", href: "/privacy-policy" },
     { label: "Terms",   href: "#" },
-    { label: "GitHub",  href: "https://github.com/syntaxlab", external: true },
-    { label: "Docs",    href: "#" },
   ];
 
   return (
     <footer
-      className="relative z-10 flex items-center justify-between"
-      style={{ padding: "20px 80px", background: "#0d1117", borderTop: "1px solid #21262d" }}
+      className="relative z-10"
+      style={{ background: "#0d1117" }}
     >
-      <Link href="/" className="flex items-center gap-2.5">
-        <div
-          className="flex items-center justify-center rounded-lg"
-          style={{ width: 28, height: 28, background: "linear-gradient(135deg, #58a6ff, #7c3aed)", boxShadow: "0 2px 10px #58a6ff30" }}
-        >
-          <Code2 size={14} color="white" strokeWidth={2.5} />
-        </div>
-        <span className="font-bold" style={{ fontSize: 15, letterSpacing: "-0.3px" }}>SyntaxLab</span>
-      </Link>
+      {/* Gradient separator */}
+      <div style={{ height: 1, background: "linear-gradient(90deg, transparent, #30363d 20%, #30363d 80%, transparent)" }} />
 
-      <nav className="flex gap-7">
-        {links.map(({ label, href, external }) =>
-          external ? (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontSize: 12, color: "#6e7681", textDecoration: "none", transition: "color 0.2s" }}
-              onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "#8b949e"; }}
-              onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "#6e7681"; }}
-            >
-              {label}
-            </a>
-          ) : (
+      <div
+        className="flex items-center justify-between"
+        style={{ padding: "20px 80px" }}
+      >
+        {/* Brand */}
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div
+            className="flex items-center justify-center rounded-lg"
+            style={{ width: 26, height: 26, background: "linear-gradient(135deg, #58a6ff, #7c3aed)", boxShadow: "0 2px 8px #58a6ff25", flexShrink: 0 }}
+          >
+            <Code2 size={13} color="white" strokeWidth={2.5} />
+          </div>
+          <span className="font-semibold" style={{ fontSize: 14, letterSpacing: "-0.3px", color: "#8b949e", transition: "color 0.2s" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#e6edf3"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#8b949e"; }}
+          >
+            SyntaxLab
+          </span>
+        </Link>
+
+        {/* Nav links */}
+        <nav className="flex items-center gap-6">
+          {navLinks.map(({ label, href }) => (
             <Link
               key={label}
               href={href}
@@ -1842,11 +1800,35 @@ function LandingFooter() {
             >
               {label}
             </Link>
-          )
-        )}
-      </nav>
+          ))}
 
-      <div style={{ fontSize: 11, color: "#3d444d" }}>© 2026 SyntaxLab. All rights reserved.</div>
+          {/* Divider */}
+          <div style={{ width: 1, height: 14, background: "#30363d" }} />
+
+          {/* GitHub icon link */}
+          <a
+            href="https://github.com/syntaxlab"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center rounded-lg"
+            style={{
+              width: 30, height: 30,
+              border: "1px solid #21262d",
+              color: "#6e7681",
+              transition: "border-color 0.2s, color 0.2s, background 0.2s",
+            }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "#30363d"; el.style.color = "#e6edf3"; el.style.background = "#21262d"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "#21262d"; el.style.color = "#6e7681"; el.style.background = "transparent"; }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+        </nav>
+
+        {/* Copyright */}
+        <span style={{ fontSize: 11, color: "#3d444d" }}>© 2026 SyntaxLab</span>
+      </div>
     </footer>
   );
 }
