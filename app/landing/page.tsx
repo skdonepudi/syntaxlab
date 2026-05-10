@@ -624,6 +624,9 @@ export default function LandingPage() {
       {/* ── AI Spotlight ── */}
       <AISpotlight />
 
+      {/* ── Social Proof ── */}
+      <SocialProof />
+
       {/* ── Footer note ── */}
       <div
         className="relative z-10 text-center pb-6"
@@ -1383,6 +1386,219 @@ function AIFeatureRow({ Icon, title, desc }: { Icon: React.ElementType; title: s
       <div>
         <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 3 }}>{title}</div>
         <div style={{ fontSize: 12, color: "#8b949e", lineHeight: 1.55 }}>{desc}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   SOCIAL PROOF
+────────────────────────────────────────────────────────── */
+
+const STATS = [
+  { id: "s1", target: 12000, suffix: "k+", label: "developers using SyntaxLab", fmt: (v: number) => String(Math.round(v / 1000)) },
+  { id: "s2", target: 60,    suffix: "+",  label: "languages supported",         fmt: (v: number) => String(Math.round(v)) },
+  { id: "s3", target: 340,   suffix: "ms", label: "average execution time",      fmt: (v: number) => String(Math.round(v)) },
+  { id: "s4", target: 99.9,  suffix: "%",  label: "uptime SLA",                  fmt: (v: number) => v.toFixed(1) },
+];
+
+const TESTIMONIALS = [
+  {
+    quote: "Finally a browser editor that doesn't feel like a toy. The collab features alone saved our team hours during code review sessions.",
+    name: "Marcus K.", role: "Senior Engineer, Stripe", initials: "MK",
+    gradient: "linear-gradient(135deg, #58a6ff, #3b82f6)",
+    ringColor: "#58a6ff50",
+  },
+  {
+    quote: "I use it for every interview prep session. The AI explaining my errors in plain English is a game-changer when you're under pressure.",
+    name: "Priya L.", role: "Software Engineer, Notion", initials: "PL",
+    gradient: "linear-gradient(135deg, #3fb950, #059669)",
+    ringColor: "#3fb95050",
+  },
+  {
+    quote: "Switched from Replit. Faster, cleaner, and the Rust support is actually good. Hasn't let me down once.",
+    name: "Tom R.", role: "Systems Dev, Cloudflare", initials: "TR",
+    gradient: "linear-gradient(135deg, #d2a8ff, #7c3aed)",
+    ringColor: "#d2a8ff50",
+  },
+];
+
+function SocialProof() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const statRefs   = useRef<(HTMLSpanElement | null)[]>([]);
+  const [counted, setCounted] = React.useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    // fade-up entrance
+    const fadeObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            el.querySelectorAll<HTMLElement>(".landing-fade-up").forEach((t, i) => {
+              t.style.animationDelay = `${i * 0.08}s`;
+              t.classList.add("landing-visible");
+            });
+            fadeObs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    fadeObs.observe(el);
+
+    // count-up trigger
+    const countObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !counted) {
+            setCounted(true);
+            STATS.forEach(({ target, fmt }, i) => {
+              const statEl = statRefs.current[i];
+              if (!statEl) return;
+              const duration = [1400, 900, 1000, 800][i];
+              const start = performance.now();
+              const step = (now: number) => {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                statEl.textContent = fmt(eased * target);
+                if (p < 1) requestAnimationFrame(step);
+              };
+              requestAnimationFrame(step);
+            });
+            countObs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    countObs.observe(el);
+
+    return () => { fadeObs.disconnect(); countObs.disconnect(); };
+  }, [counted]);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative z-10 w-full"
+      style={{ padding: "96px 80px", background: "#0d1117" }}
+    >
+      {/* Header */}
+      <div style={{ textAlign: "center", marginBottom: 52 }}>
+        <div
+          className="landing-fade-up flex items-center justify-center gap-2 mb-3"
+          style={{ fontSize: 11, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#58a6ff" }}
+        >
+          <span style={{ width: 20, height: 1, background: "#58a6ff60", display: "inline-block" }} />
+          Loved by developers
+        </div>
+        <h2
+          className="landing-fade-up font-extrabold"
+          style={{ fontSize: 38, letterSpacing: "-1.3px", lineHeight: 1.08 }}
+        >
+          Numbers that speak<br />for themselves
+        </h2>
+      </div>
+
+      {/* Stats */}
+      <div
+        className="landing-fade-up"
+        style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 48 }}
+      >
+        {STATS.map(({ id, suffix, label }, i) => (
+          <div
+            key={id}
+            className="landing-stat-block rounded-2xl text-center cursor-default"
+            style={{
+              padding: "32px 24px",
+              border: "1px solid #21262d",
+              background: "#0d1117",
+              transition: "border-color 0.25s, transform 0.25s",
+            }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "#30363d"; el.style.transform = "translateY(-3px)"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "#21262d"; el.style.transform = "translateY(0)"; }}
+          >
+            <div style={{ fontSize: 44, fontWeight: 800, letterSpacing: "-2px", lineHeight: 1, color: "#e6edf3" }}>
+              <span ref={(el) => { statRefs.current[i] = el; }}>0</span>
+              <span style={{ color: "#58a6ff", fontSize: 28 }}>{suffix}</span>
+            </div>
+            <div style={{ fontSize: 12, color: "#6e7681", marginTop: 8 }}>{label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Testimonials */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+        {TESTIMONIALS.map(({ quote, name, role, initials, gradient, ringColor }, i) => (
+          <TestimonialCard
+            key={name}
+            quote={quote}
+            name={name}
+            role={role}
+            initials={initials}
+            gradient={gradient}
+            ringColor={ringColor}
+            delay={i * 0.1}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TestimonialCard({
+  quote, name, role, initials, gradient, ringColor, delay,
+}: {
+  quote: string; name: string; role: string; initials: string;
+  gradient: string; ringColor: string; delay: number;
+}) {
+  const [hovered, setHovered] = React.useState(false);
+  return (
+    <div
+      className="landing-fade-up relative rounded-2xl overflow-hidden cursor-default"
+      data-delay={String(delay)}
+      style={{
+        padding: 24,
+        background: "#0d1117",
+        border: `1px solid ${hovered ? "#30363d" : "#21262d"}`,
+        boxShadow: hovered ? "0 16px 48px rgba(0,0,0,.5)" : "none",
+        transform: hovered ? "translateY(-5px)" : "translateY(0)",
+        transition: "transform 0.25s cubic-bezier(.22,1,.36,1), border-color 0.25s, box-shadow 0.25s",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* decorative big quote mark */}
+      <div
+        className="absolute pointer-events-none select-none"
+        style={{ top: -10, left: 16, fontSize: 80, color: "#58a6ff10", fontFamily: "Georgia, serif", lineHeight: 1 }}
+      >
+        &ldquo;
+      </div>
+      <p style={{ fontSize: 14, color: "#8b949e", lineHeight: 1.72, marginBottom: 20, fontStyle: "italic", position: "relative" }}>
+        {quote}
+      </p>
+      <div className="flex items-center gap-3">
+        <div
+          className="relative flex items-center justify-center rounded-full font-bold flex-shrink-0"
+          style={{ width: 36, height: 36, background: gradient, color: "#0d1117", fontSize: 12 }}
+        >
+          {initials}
+          {/* ring ping */}
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              border: `1px solid ${ringColor}`,
+              animation: "landing-avring 3s ease-out infinite",
+            }}
+          />
+        </div>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 600 }}>{name}</div>
+          <div style={{ fontSize: 11, color: "#6e7681", marginTop: 2 }}>{role}</div>
+        </div>
       </div>
     </div>
   );
