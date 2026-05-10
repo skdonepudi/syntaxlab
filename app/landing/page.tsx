@@ -1467,12 +1467,6 @@ function AIFeatureRow({ Icon, title, desc }: { Icon: React.ElementType; title: s
    SOCIAL PROOF
 ────────────────────────────────────────────────────────── */
 
-const STATS = [
-  { id: "s1", target: 12000, suffix: "k+", label: "developers using SyntaxLab", fmt: (v: number) => String(Math.round(v / 1000)) },
-  { id: "s2", target: 60,    suffix: "+",  label: "languages supported",         fmt: (v: number) => String(Math.round(v)) },
-  { id: "s3", target: 340,   suffix: "ms", label: "average execution time",      fmt: (v: number) => String(Math.round(v)) },
-  { id: "s4", target: 99.9,  suffix: "%",  label: "uptime SLA",                  fmt: (v: number) => v.toFixed(1) },
-];
 
 const TESTIMONIALS = [
   {
@@ -1497,15 +1491,11 @@ const TESTIMONIALS = [
 
 function SocialProof() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const statRefs   = useRef<(HTMLSpanElement | null)[]>([]);
-  const [counted, setCounted] = React.useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-
-    // fade-up entrance
-    const fadeObs = new IntersectionObserver(
+    const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -1513,92 +1503,29 @@ function SocialProof() {
               t.style.animationDelay = `${i * 0.08}s`;
               t.classList.add("landing-visible");
             });
-            fadeObs.disconnect();
+            obs.disconnect();
           }
         });
       },
       { threshold: 0.1 }
     );
-    fadeObs.observe(el);
-
-    // count-up trigger
-    const countObs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !counted) {
-            setCounted(true);
-            STATS.forEach(({ target, fmt }, i) => {
-              const statEl = statRefs.current[i];
-              if (!statEl) return;
-              const duration = [1400, 900, 1000, 800][i];
-              const start = performance.now();
-              const step = (now: number) => {
-                const p = Math.min((now - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - p, 3);
-                statEl.textContent = fmt(eased * target);
-                if (p < 1) requestAnimationFrame(step);
-              };
-              requestAnimationFrame(step);
-            });
-            countObs.disconnect();
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    countObs.observe(el);
-
-    return () => { fadeObs.disconnect(); countObs.disconnect(); };
-  }, [counted]);
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <section
       ref={sectionRef}
       className="relative z-10 w-full"
-      style={{ padding: "96px 80px", background: "#0d1117" }}
+      style={{ padding: "72px 80px", background: "#0d1117" }}
     >
-      {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: 52 }}>
-        <div
-          className="landing-fade-up flex items-center justify-center gap-2 mb-3"
-          style={{ fontSize: 11, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#58a6ff" }}
-        >
-          <span style={{ width: 20, height: 1, background: "#58a6ff60", display: "inline-block" }} />
-          Loved by developers
-        </div>
-        <h2
-          className="landing-fade-up font-extrabold"
-          style={{ fontSize: 38, letterSpacing: "-1.3px", lineHeight: 1.08 }}
-        >
-          Numbers that speak<br />for themselves
-        </h2>
-      </div>
-
-      {/* Stats */}
       <div
-        className="landing-fade-up"
-        style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 48 }}
+        className="landing-fade-up flex items-center justify-center gap-2 mb-10"
+        style={{ fontSize: 11, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#6e7681" }}
       >
-        {STATS.map(({ id, suffix, label }, i) => (
-          <div
-            key={id}
-            className="landing-stat-block rounded-2xl text-center cursor-default"
-            style={{
-              padding: "32px 24px",
-              border: "1px solid #21262d",
-              background: "#0d1117",
-              transition: "border-color 0.25s, transform 0.25s",
-            }}
-            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "#30363d"; el.style.transform = "translateY(-3px)"; }}
-            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "#21262d"; el.style.transform = "translateY(0)"; }}
-          >
-            <div style={{ fontSize: 44, fontWeight: 800, letterSpacing: "-2px", lineHeight: 1, color: "#e6edf3" }}>
-              <span ref={(el) => { statRefs.current[i] = el; }}>0</span>
-              <span style={{ color: "#58a6ff", fontSize: 28 }}>{suffix}</span>
-            </div>
-            <div style={{ fontSize: 12, color: "#6e7681", marginTop: 8 }}>{label}</div>
-          </div>
-        ))}
+        <span style={{ width: 20, height: 1, background: "#6e7681", display: "inline-block" }} />
+        What developers say
+        <span style={{ width: 20, height: 1, background: "#6e7681", display: "inline-block" }} />
       </div>
 
       {/* Testimonials — minimal pull-quote strip */}
