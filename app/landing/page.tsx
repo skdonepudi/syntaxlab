@@ -620,7 +620,7 @@ export default function LandingPage() {
       </div>
 
       {/* ── Trust line ── */}
-      <p className="relative z-10 text-center" style={{ fontSize: 11, color: "#3d444d", letterSpacing: "0.3px", marginTop: -16, marginBottom: 24 }}>
+      <p className="relative z-10 text-center" style={{ fontSize: 11, color: "#3d444d", letterSpacing: "0.3px", marginTop: 12, marginBottom: 24 }}>
         No account required &nbsp;·&nbsp; Free to use &nbsp;·&nbsp; Open in seconds
       </p>
 
@@ -1383,11 +1383,11 @@ function AISpotlight() {
         {/* Body */}
         <div style={{ padding: "14px 16px", fontFamily: "var(--font-geist-mono), monospace", fontSize: 12 }}>
           {/* Code snippet */}
-          <div style={{ marginBottom: 12, lineHeight: "20px" }}>
+          <div style={{ marginBottom: 12, lineHeight: "20px", whiteSpace: "pre" }}>
             <div><span style={{ color: "#ff7b72" }}>def </span><span style={{ color: "#d2a8ff" }}>binary_search</span><span style={{ color: "#e6edf3" }}>(arr, target):</span></div>
-            <div><span style={{ color: "#e6edf3" }}>{"    "}</span><span style={{ color: "#ffa657" }}>lo</span><span style={{ color: "#e6edf3" }}>, </span><span style={{ color: "#ffa657" }}>hi</span><span style={{ color: "#e6edf3" }}> = 0, len(arr) - 1</span></div>
-            <div style={{ background: "#ff7b7212", borderLeft: "2px solid #ff7b7260", paddingLeft: 6, marginLeft: -2 }}>
-              <span style={{ color: "#ff7b72" }}>{"    "}while </span><span style={{ color: "#ffa657" }}>lo</span><span style={{ color: "#e6edf3" }}> &lt; </span><span style={{ color: "#ffa657" }}>hi</span><span style={{ color: "#e6edf3" }}>:</span>
+            <div style={{ paddingLeft: 20 }}><span style={{ color: "#ffa657" }}>lo</span><span style={{ color: "#e6edf3" }}>, </span><span style={{ color: "#ffa657" }}>hi</span><span style={{ color: "#e6edf3" }}> = 0, len(arr) - 1</span></div>
+            <div style={{ paddingLeft: 20, background: "#ff7b7212", borderLeft: "2px solid #ff7b7260" }}>
+              <span style={{ color: "#ff7b72" }}>while </span><span style={{ color: "#ffa657" }}>lo</span><span style={{ color: "#e6edf3" }}> &lt; </span><span style={{ color: "#ffa657" }}>hi</span><span style={{ color: "#e6edf3" }}>:</span>
             </div>
           </div>
           <div style={{ marginBottom: 4, fontSize: 10, fontWeight: 700, letterSpacing: "0.5px", color: "#3d444d", textTransform: "uppercase" }}>Output</div>
