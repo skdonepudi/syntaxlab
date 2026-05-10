@@ -899,17 +899,24 @@ function TerminalDemo() {
   const times = ["0.18s", "0.23s", "0.31s", "0.19s", "0.27s"];
 
   useEffect(() => {
+    let cancelled = false;
     let tid: ReturnType<typeof setTimeout>;
     const cycle = () => {
+      if (cancelled) return;
       setPhase("running");
       tid = setTimeout(() => {
+        if (cancelled) return;
         setTime(times[Math.floor(Math.random() * times.length)]);
         setPhase("done");
-        tid = setTimeout(() => { setPhase("idle"); tid = setTimeout(cycle, 800); }, 3000);
+        tid = setTimeout(() => {
+          if (cancelled) return;
+          setPhase("idle");
+          tid = setTimeout(cycle, 800);
+        }, 3000);
       }, 900);
     };
     tid = setTimeout(cycle, 1200);
-    return () => clearTimeout(tid);
+    return () => { cancelled = true; clearTimeout(tid); };
   }, []);
 
   return (
@@ -963,8 +970,9 @@ function AISuggestionDemo() {
         setText(FULL.slice(0, idx++));
         tid = setTimeout(typeChar, 28);
       } else {
-        tid = setTimeout(() => { if (!cancelled) setShowFix(true); }, 300);
+        const fixTid = setTimeout(() => { if (!cancelled) setShowFix(true); }, 300);
         tid = setTimeout(() => {
+          clearTimeout(fixTid);
           if (cancelled) return;
           idx = 0; setText(""); setShowFix(false);
           tid = setTimeout(typeChar, 400);
@@ -1084,6 +1092,9 @@ function CopyButton() {
       <Share2 size={11} color="#6e7681" strokeWidth={2} />
       syntaxlab.dev/s/xk9mf2
       <button
+        type="button"
+        aria-live="polite"
+        aria-label={copied ? "Copied to clipboard" : "Copy link"}
         className="ml-auto rounded-md"
         style={{
           fontSize: 10, padding: "4px 10px",
