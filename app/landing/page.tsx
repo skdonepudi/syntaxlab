@@ -151,7 +151,7 @@ export default function LandingPage() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(#58a6ff12 1px, transparent 1px), linear-gradient(90deg, #58a6ff12 1px, transparent 1px)",
+            "linear-gradient(#58a6ff1e 1px, transparent 1px), linear-gradient(90deg, #58a6ff1e 1px, transparent 1px)",
           backgroundSize: "44px 44px",
         }}
       />
@@ -225,8 +225,7 @@ export default function LandingPage() {
             <a
               key={l}
               href="#"
-              className="transition-colors"
-              style={{ fontSize: 15, color: "#8b949e" }}
+              style={{ fontSize: 15, color: "#8b949e", transition: "color 0.2s" }}
               onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#e6edf3")}
               onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#8b949e")}
             >
@@ -239,8 +238,10 @@ export default function LandingPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/editor"
-            className="rounded-lg transition-colors"
-            style={{ fontSize: 15, padding: "8px 18px", color: "#8b949e", border: "1px solid #30363d" }}
+            className="rounded-lg"
+            style={{ fontSize: 15, padding: "8px 18px", color: "#8b949e", border: "1px solid #30363d", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.borderColor = "#58a6ff50"; el.style.background = "#21262d"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.borderColor = "#30363d"; el.style.background = "transparent"; }}
           >
             Sign in
           </Link>
@@ -253,7 +254,10 @@ export default function LandingPage() {
               background: "#58a6ff",
               color: "#0a0d13",
               animation: "landing-ctabreathe 3s ease-in-out infinite",
+              transition: "transform 0.2s, box-shadow 0.2s, background 0.2s",
             }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#79c0ff"; el.style.transform = "translateY(-1px)"; el.style.boxShadow = "0 6px 20px #58a6ff50"; el.style.animation = "none"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#58a6ff"; el.style.transform = ""; el.style.boxShadow = ""; el.style.animation = "landing-ctabreathe 3s ease-in-out infinite"; }}
           >
             Open Editor
           </Link>
@@ -332,7 +336,10 @@ export default function LandingPage() {
                 padding: "11px 24px",
                 boxShadow: "0 4px 24px #58a6ff35",
                 animation: "landing-ctabreathe 3s ease-in-out infinite",
+                transition: "transform 0.2s, box-shadow 0.2s, background 0.2s",
               }}
+              onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#79c0ff"; el.style.transform = "translateY(-2px)"; el.style.boxShadow = "0 8px 32px #58a6ff60"; el.style.animation = "none"; }}
+              onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#58a6ff"; el.style.transform = ""; el.style.boxShadow = "0 4px 24px #58a6ff35"; el.style.animation = "landing-ctabreathe 3s ease-in-out infinite"; }}
             >
               <Play size={14} fill="currentColor" strokeWidth={0} />
               Start coding free
@@ -396,9 +403,12 @@ export default function LandingPage() {
               zIndex: 1,
               background: "linear-gradient(135deg, #58a6ff70 0%, #58a6ff30 30%, transparent 55%, #7c3aed40 100%)",
               boxShadow: "0 0 0 1px #58a6ff20, 0 32px 80px rgba(0,0,0,.75), 0 0 60px #58a6ff18, 0 0 30px #7c3aed12",
-              transition: "box-shadow 0.35s, transform 0.35s",
+              transition: "box-shadow 0.35s, transform 0.35s, background 0.35s",
               willChange: "transform",
             }}
+
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "0 0 0 1px #58a6ff45, 0 32px 80px rgba(0,0,0,.8), 0 0 90px #58a6ff30, 0 0 50px #7c3aed22"; el.style.background = "linear-gradient(135deg, #58a6ff90 0%, #58a6ff40 30%, transparent 55%, #7c3aed55 100%)"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.boxShadow = "0 0 0 1px #58a6ff20, 0 32px 80px rgba(0,0,0,.75), 0 0 60px #58a6ff18, 0 0 30px #7c3aed12"; el.style.background = "linear-gradient(135deg, #58a6ff70 0%, #58a6ff30 30%, transparent 55%, #7c3aed40 100%)"; }}
           >
             <div
               className="rounded-xl overflow-hidden"
