@@ -142,7 +142,7 @@ export default function LandingPage() {
   return (
     <div
       ref={landingRef}
-      className="min-h-screen flex flex-col relative overflow-hidden"
+      className="min-h-screen flex flex-col relative overflow-x-hidden"
       style={{ background: "#0a0d13", color: "#e6edf3" }}
     >
       {/* ── Background layers ── */}
@@ -260,12 +260,13 @@ export default function LandingPage() {
       {/* ── Hero ── */}
       <div
         ref={heroRef}
-        className="relative z-10 grid items-center gap-12 px-8 mx-auto w-full"
+        className="relative z-10 grid items-center gap-16 px-12 mx-auto w-full flex-1"
         style={{
           gridTemplateColumns: "1fr 1fr",
-          maxWidth: 1100,
-          paddingTop: 64,
-          paddingBottom: 48,
+          maxWidth: 1280,
+          minHeight: "calc(100vh - 54px)",
+          paddingTop: 80,
+          paddingBottom: 64,
         }}
       >
         {/* LEFT */}
@@ -293,7 +294,7 @@ export default function LandingPage() {
           {/* Headline */}
           <div
             className="font-extrabold mb-5"
-            style={{ fontSize: 50, lineHeight: 1.05, letterSpacing: "-1.8px" }}
+            style={{ fontSize: 58, lineHeight: 1.04, letterSpacing: "-2px" }}
           >
             <span className="block" style={{ color: "#e6edf3" }}>Write code.</span>
             <span
@@ -314,7 +315,7 @@ export default function LandingPage() {
           {/* Subtitle */}
           <p
             className="mb-8"
-            style={{ fontSize: 15, color: "#8b949e", lineHeight: 1.7, maxWidth: 400 }}
+            style={{ fontSize: 16, color: "#8b949e", lineHeight: 1.7, maxWidth: 460 }}
           >
             A professional-grade editor in your browser. 60+ languages, real-time
             collaboration with live cursors, and an AI that sees your output.
@@ -577,7 +578,7 @@ export default function LandingPage() {
       {/* ── Feature pills ── */}
       <div
         className="relative z-10 flex flex-wrap justify-center gap-2.5 px-8 pb-9"
-        style={{ maxWidth: 1100, margin: "0 auto", width: "100%" }}
+        style={{ maxWidth: 1280, margin: "0 auto", width: "100%" }}
       >
         {PILLS.map(({ Icon, label, hoverColor, delay }) => (
           <PillItem key={label} Icon={Icon} label={label} hoverColor={hoverColor} delay={delay} />
