@@ -60,7 +60,7 @@ export function Topbar({
 
       {/* Right: actions + user */}
       <div className="flex items-center gap-2">
-        {roomId !== undefined && <PresenceAvatars />}
+        {!!roomId && <PresenceAvatars />}
         <CollaborateButton roomId={roomId ?? null} />
         {user && (
           <>
