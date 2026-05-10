@@ -31,7 +31,7 @@ export default function LandingPage() {
       const r = hero.getBoundingClientRect();
       const dx = (e.clientX - (r.left + r.width  / 2)) / r.width;
       const dy = (e.clientY - (r.top  + r.height / 2)) / r.height;
-      editor.style.transform  = `rotateX(${-dy * 6}deg) rotateY(${dx * 8}deg) translateZ(8px)`;
+      editor.style.transform  = `rotateX(${-dy * 10}deg) rotateY(${dx * 14}deg) translateZ(16px)`;
       editor.style.transition = "transform 0.08s linear";
     };
     const onLeave = () => {
@@ -375,18 +375,21 @@ export default function LandingPage() {
 
         {/* RIGHT — Editor window */}
         <div style={{ perspective: "1000px", animation: "landing-slideInRight 0.75s 0.1s cubic-bezier(.22,1,.36,1) both" }}>
-          {/* Gradient border wrapper */}
+          {/* Gradient border wrapper — ref for parallax tilt */}
           <div
+            ref={editorRef}
             className="rounded-xl p-px"
-            style={{ background: "linear-gradient(135deg, #58a6ff35 0%, transparent 40%, #7c3aed20 100%)" }}
+            style={{
+              background: "linear-gradient(135deg, #58a6ff35 0%, transparent 40%, #7c3aed20 100%)",
+              boxShadow: "0 0 0 1px #58a6ff12, 0 24px 64px rgba(0,0,0,.55), 0 0 50px #58a6ff08",
+              transition: "box-shadow 0.3s",
+              willChange: "transform",
+            }}
           >
             <div
-              ref={editorRef}
               className="rounded-xl overflow-hidden"
               style={{
                 background: "#0d1117",
-                boxShadow: "0 0 0 1px #58a6ff12, 0 24px 64px rgba(0,0,0,.55), 0 0 50px #58a6ff08",
-                transition: "box-shadow 0.3s",
               }}
             >
               {/* Toolbar */}
