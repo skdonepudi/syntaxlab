@@ -264,8 +264,8 @@ export default function LandingPage() {
         style={{
           gridTemplateColumns: "1fr 1fr",
           maxWidth: 1280,
-          paddingTop: 72,
-          paddingBottom: 56,
+          paddingTop: 96,
+          paddingBottom: 72,
         }}
       >
         {/* LEFT */}
@@ -293,7 +293,7 @@ export default function LandingPage() {
           {/* Headline */}
           <div
             className="font-extrabold mb-5"
-            style={{ fontSize: 58, lineHeight: 1.04, letterSpacing: "-2px" }}
+            style={{ fontSize: 68, lineHeight: 1.03, letterSpacing: "-2.5px" }}
           >
             <span className="block" style={{ color: "#e6edf3" }}>Write code.</span>
             <span
@@ -314,7 +314,7 @@ export default function LandingPage() {
           {/* Subtitle */}
           <p
             className="mb-8"
-            style={{ fontSize: 16, color: "#8b949e", lineHeight: 1.7, maxWidth: 460 }}
+            style={{ fontSize: 17, color: "#8b949e", lineHeight: 1.7, maxWidth: 480 }}
           >
             A professional-grade editor in your browser. 60+ languages, real-time
             collaboration with live cursors, and an AI that sees your output.
@@ -451,21 +451,21 @@ export default function LandingPage() {
               </div>
 
               {/* Code body */}
-              <div className="flex" style={{ minHeight: 220 }}>
+              <div className="flex" style={{ minHeight: 300 }}>
                 {/* Line numbers */}
                 <div
                   className="flex flex-col select-none"
                   style={{
                     background: "#0d1117", borderRight: "1px solid #21262d",
                     padding: "14px 8px 14px 14px", minWidth: 40,
-                    fontFamily: "var(--font-geist-mono), monospace", fontSize: 11.5,
+                    fontFamily: "var(--font-geist-mono), monospace", fontSize: 12.5,
                   }}
                 >
                   {Array.from({ length: 12 }, (_, i) => (
                     <div
                       key={i}
                       style={{
-                        textAlign: "right", lineHeight: "22px",
+                        textAlign: "right", lineHeight: "24px",
                         color: i === 2 ? "#6e7681" : "#3d444d",
                       }}
                     >
@@ -475,9 +475,9 @@ export default function LandingPage() {
                 </div>
 
                 {/* Code */}
-                <div style={{ padding: "14px 16px", flex: 1, overflow: "hidden", fontFamily: "var(--font-geist-mono), monospace", fontSize: 12 }}>
+                <div style={{ padding: "14px 16px", flex: 1, overflow: "hidden", fontFamily: "var(--font-geist-mono), monospace", fontSize: 13 }}>
                   {/* Row 1 */}
-                  <div style={{ display: "flex", alignItems: "center", height: 22, whiteSpace: "nowrap" }}>
+                  <div style={{ display: "flex", alignItems: "center", height: 24, whiteSpace: "nowrap" }}>
                     <span style={{ color: "#ff7b72" }}>def</span>&nbsp;
                     <span style={{ color: "#d2a8ff" }}>binary_search</span>
                     <span style={{ color: "#e6edf3" }}>(</span>
@@ -487,7 +487,7 @@ export default function LandingPage() {
                     <span style={{ color: "#e6edf3" }}>):</span>
                   </div>
                   {/* Row 2 — remote cursor typing line */}
-                  <div style={{ display: "flex", alignItems: "center", height: 22, whiteSpace: "nowrap", background: "#d2a8ff09", borderRadius: 2, margin: "0 -8px", padding: "0 8px" }}>
+                  <div style={{ display: "flex", alignItems: "center", height: 24, whiteSpace: "nowrap", background: "#d2a8ff09", borderRadius: 2, margin: "0 -8px", padding: "0 8px" }}>
                     <span ref={remoteRef} style={{ color: "#3d444d" }}>{"    "}</span>
                     {/* Remote cursor — Sarah */}
                     <span
@@ -512,7 +512,7 @@ export default function LandingPage() {
                     </span>
                   </div>
                   {/* Row 3 — active line with own cursor */}
-                  <div style={{ display: "flex", alignItems: "center", height: 22, whiteSpace: "nowrap", background: "#58a6ff0a", borderRadius: 2, margin: "0 -8px", padding: "0 8px" }}>
+                  <div style={{ display: "flex", alignItems: "center", height: 24, whiteSpace: "nowrap", background: "#58a6ff0a", borderRadius: 2, margin: "0 -8px", padding: "0 8px" }}>
                     <span style={{ color: "#e6edf3" }}>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <span style={{ color: "#ffa657" }}>lo</span>
                     <span style={{ color: "#e6edf3" }}>,&nbsp;</span>
@@ -539,7 +539,7 @@ export default function LandingPage() {
                     [["#e6edf3","            "],["#ffa657","hi"],["#e6edf3"," = "],["#ffa657","mid"],["#e6edf3"," - "],["#79c0ff","1"]],
                     [["#ff7b72","    return "],["#e6edf3","-"],["#79c0ff","1"]],
                   ].map((row, ri) => (
-                    <div key={ri} style={{ display: "flex", alignItems: "center", height: 22, whiteSpace: "nowrap" }}>
+                    <div key={ri} style={{ display: "flex", alignItems: "center", height: 24, whiteSpace: "nowrap" }}>
                       {row.map(([color, text], ci) => (
                         <span key={ci} style={{ color }}>{text}</span>
                       ))}
