@@ -1,88 +1,138 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
-import { SyntaxLabIcon } from "@/components/icons";
-import ColorModeToggle from "@/components/ColorModeToggle";
-
-const features = [
-  { icon: "⬡", title: "60+ Languages", desc: "JavaScript, Python, Rust, Go, Java, and 55 more. Every language runs on the same Judge0 backend." },
-  { icon: "⚡", title: "Instant Execution", desc: "Submit code and get output in seconds. Stdin support, execution time, and memory usage included." },
-  { icon: "👥", title: "Real-time Collab", desc: "Share a room link and code together with live cursors and presence avatars." },
-  { icon: "🤖", title: "AI Assistant", desc: "Press Cmd+K to explain, fix, optimize, or translate your code — with full awareness of your output." },
-  { icon: "📎", title: "Snippet Sharing", desc: "Save snippets to your profile and share a public URL. Anyone can view and fork your code." },
-  { icon: "🎨", title: "Custom Themes", desc: "25+ Monaco themes. Switch on the fly. Preferences saved to your account." },
-];
+import { Code2, Zap, Users, Sparkles, Upload, Sun, Play, PlayCircle } from "lucide-react";
 
 export default function LandingPage() {
-  return (
-    <div className="min-h-screen flex flex-col bg-obsidian-base text-ink-primary">
-      {/* Grid background */}
-      <svg className="absolute inset-0 -z-10 h-full w-full stroke-white/[0.04] [mask-image:radial-gradient(60%_40%_at_50%_0%,white,transparent)]" aria-hidden="true">
-        <defs>
-          <pattern id="grid" width="80" height="80" x="50%" y="-1" patternUnits="userSpaceOnUse">
-            <path d="M.5 200V.5H200" fill="none" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" strokeWidth="0" fill="url(#grid)" />
-      </svg>
+  const heroRef    = useRef<HTMLDivElement>(null);
+  const editorRef  = useRef<HTMLDivElement>(null);
+  const stat1Ref   = useRef<HTMLSpanElement>(null);
+  const stat2Ref   = useRef<HTMLSpanElement>(null);
+  const remoteRef  = useRef<HTMLSpanElement>(null);
+  const flashRef   = useRef<HTMLSpanElement>(null);
+  const landingRef = useRef<HTMLDivElement>(null);
 
-      {/* Header */}
-      <header className="flex justify-between items-center px-6 py-4 border-b border-border-subtle">
-        <div className="flex items-center gap-2">
-          <SyntaxLabIcon width={28} height={28} />
-          <span className="text-lg font-semibold">SyntaxLab</span>
+  return (
+    <div
+      ref={landingRef}
+      className="min-h-screen flex flex-col relative overflow-hidden"
+      style={{ background: "#0a0d13", color: "#e6edf3" }}
+    >
+      {/* ── Background layers ── */}
+      {/* Grid lines */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(#58a6ff06 1px, transparent 1px), linear-gradient(90deg, #58a6ff06 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+      />
+      {/* Radial edge fade */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 25%, #0a0d13 80%)",
+        }}
+      />
+      {/* Ambient glow — right */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: 40, right: -60, width: 560, height: 480,
+          background:
+            "radial-gradient(ellipse at 65% 35%, #58a6ff10 0%, #7c3aed08 45%, transparent 70%)",
+        }}
+      />
+      {/* Ambient glow — left */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: -80, left: -80, width: 400, height: 400,
+          background: "radial-gradient(ellipse, #58a6ff07 0%, transparent 65%)",
+        }}
+      />
+      {/* Grid scan line */}
+      <div
+        className="absolute left-0 right-0 pointer-events-none"
+        style={{
+          height: 200,
+          background:
+            "linear-gradient(to bottom, transparent, #58a6ff03 40%, #58a6ff05 50%, #58a6ff03 60%, transparent)",
+          animation: "landing-scan 12s linear infinite",
+          zIndex: 1,
+        }}
+      />
+
+      {/* ── Navigation ── */}
+      <nav
+        className="relative flex items-center justify-between px-8 z-10"
+        style={{
+          height: 54,
+          borderBottom: "1px solid #ffffff07",
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2.5">
+          <div
+            className="flex items-center justify-center rounded-lg"
+            style={{
+              width: 28, height: 28,
+              background: "linear-gradient(135deg, #58a6ff, #7c3aed)",
+              boxShadow: "0 4px 12px #58a6ff25",
+            }}
+          >
+            <Code2 size={14} color="white" strokeWidth={2.5} />
+          </div>
+          <span className="text-sm font-bold tracking-tight" style={{ letterSpacing: "-0.3px" }}>
+            SyntaxLab
+          </span>
+        </Link>
+
+        {/* Centre links */}
+        <div className="hidden md:flex items-center gap-6">
+          {["Features", "Languages", "Docs"].map((l) => (
+            <a
+              key={l}
+              href="#"
+              className="text-sm transition-colors"
+              style={{ color: "#8b949e" }}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#e6edf3")}
+              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#8b949e")}
+            >
+              {l}
+            </a>
+          ))}
         </div>
-        <div className="flex items-center gap-3">
-          <ColorModeToggle className="text-ink-muted hover:text-ink-primary" />
+
+        {/* Right actions */}
+        <div className="flex items-center gap-2.5">
           <Link
             href="/editor"
-            className="text-sm px-4 py-1.5 rounded bg-brand-blue text-obsidian-base font-semibold hover:bg-brand-blue/90 transition-colors"
+            className="text-sm px-3.5 py-1.5 rounded-lg transition-colors"
+            style={{ color: "#8b949e", border: "1px solid #30363d" }}
+          >
+            Sign in
+          </Link>
+          <Link
+            href="/editor"
+            className="text-sm font-semibold px-4 py-1.5 rounded-lg"
+            style={{
+              background: "#58a6ff",
+              color: "#0a0d13",
+              animation: "landing-ctabreathe 3s ease-in-out infinite",
+            }}
           >
             Open Editor
           </Link>
         </div>
-      </header>
+      </nav>
 
-      {/* Hero */}
-      <main className="flex-grow flex flex-col items-center justify-center text-center px-4 pt-24 pb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border-default text-ink-faint text-xs mb-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse" />
-          Now with AI code assistance
-        </div>
-
-        <h1 className="text-5xl sm:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-b from-ink-primary to-ink-muted bg-clip-text text-transparent leading-none">
-          Code, Collaborate,<br />Create Together
-        </h1>
-
-        <p className="text-ink-muted text-lg sm:text-xl max-w-2xl mb-10 leading-relaxed">
-          A professional-grade web editor for developers. 60+ languages, real-time collaboration, AI assistance, and instant shareable snippets.
-        </p>
-
-        <Link
-          href="/editor"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-brand-blue text-obsidian-base font-semibold text-sm hover:bg-brand-blue/90 transition-colors shadow-lg shadow-brand-blue/20"
-        >
-          Start Coding →
-        </Link>
-      </main>
-
-      {/* Features */}
-      <section className="max-w-5xl mx-auto w-full px-6 pb-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {features.map((f) => (
-          <div key={f.title} className="rounded-lg border border-border-default bg-obsidian-surface p-5">
-            <div className="text-2xl mb-3">{f.icon}</div>
-            <h3 className="text-sm font-semibold text-ink-primary mb-1">{f.title}</h3>
-            <p className="text-xs text-ink-muted leading-relaxed">{f.desc}</p>
-          </div>
-        ))}
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-border-subtle px-6 py-4 flex justify-between items-center text-xs text-ink-faint">
-        <span>© {new Date().getFullYear()} SyntaxLab</span>
-        <div className="flex gap-4">
-          <Link href="/privacy-policy" className="hover:text-ink-muted transition-colors">Privacy</Link>
-          <a href="https://github.com" className="hover:text-ink-muted transition-colors">GitHub</a>
-        </div>
-      </footer>
+      {/* Hero, pills, footer will be added in subsequent tasks */}
+      <main className="flex-grow" />
     </div>
   );
 }
