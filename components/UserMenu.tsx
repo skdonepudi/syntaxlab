@@ -9,8 +9,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOutUser } from "@/utils/authUtils";
 import { User } from "@supabase/supabase-js";
-import { LogOut, User as UserIcon, Settings, LayoutDashboard, Code2 } from "lucide-react";
+import { LogOut, LayoutDashboard, Code2, Settings } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type UserMenuProps = {
   user: User | null;
@@ -23,6 +24,7 @@ export function UserMenu({ user, setUser }: UserMenuProps) {
   const handleSignOut = async () => {
     await signOutUser();
     setUser(null);
+    toast.success("Signed out successfully");
     router.push("/editor");
   };
 
@@ -47,15 +49,11 @@ export function UserMenu({ user, setUser }: UserMenuProps) {
           <Code2 className="mr-2 h-4 w-4" />
           <span>My Snippets</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <UserIcon className="mr-2 h-4 w-4" />
-          <span>Profile</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/dashboard/settings")}>
           <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Sign out</span>

@@ -6,17 +6,26 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/editor";
 
-  if (code) {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      const redirectUrl = `${process.env.NEXT_PUBLIC_SITE_URL}${next}`;
-      return NextResponse.redirect(redirectUrl);
-    } else {
-      console.error("Auth error:", error);
-      throw error;
-    }
+  // Prevent open redirect — only allow relative paths
+  const safePath = next.startsWith("/") ? next : "/editor";
+
+  if (!code) {
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_SITE_URL}/landing?error=missing_code`
+    );
   }
 
-  throw new Error("No authentication code provided");
+  const supabase = await createClient();
+  const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+  if (error) {
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_SITE_URL}/landing?error=auth_failed`
+    );
+  }
+
+  const sep = safePath.includes("?") ? "&" : "?";
+  return NextResponse.redirect(
+    `${process.env.NEXT_PUBLIC_SITE_URL}${safePath}${sep}signed_in=1`
+  );
 }

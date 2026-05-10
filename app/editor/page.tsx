@@ -1,6 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
+import { useSearchParams, useRouter } from "next/navigation";
 import React, { useState, useEffect, useCallback } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,7 +12,7 @@ import OutputWindow from "@/components/OutputWindow";
 import CustomInput from "@/components/CustomInput";
 import OutputDetails from "@/components/OutputDetails";
 import { Language } from "@/types/language";
-import { handleCompile, checkStatus } from "@/lib/compilerUtils";
+import { handleCompile } from "@/lib/compilerUtils";
 import { defineTheme } from "@/lib/defineTheme";
 import { languages } from "@/constants/languages";
 import { getDefaultCode } from "@/constants/defaultCode";
@@ -22,6 +23,7 @@ import { AICommandBar } from "@/components/AICommandBar";
 import { OutputTabs } from "@/components/OutputTabs";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
+const CollaborativeEditor = dynamic(() => import("@/components/CollaborativeEditor"), { ssr: false });
 
 export default function EditorPage() {
   const { resolvedTheme } = useTheme();
@@ -44,10 +46,20 @@ export default function EditorPage() {
   const [aiResponse, setAiResponse] = useState<string>("");
   const [outputTab, setOutputTab] = useState<"output" | "ai">("output");
 
-  const [roomId, setRoomId] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const roomId = searchParams.get("room");
+
+  const router = useRouter();
 
   useEffect(() => {
-    setRoomId(new URLSearchParams(window.location.search).get("room"));
+    if (searchParams.get("signed_in") === "1") {
+      toast.success("Signed in successfully");
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("signed_in");
+      const newUrl = params.toString() ? `?${params}` : window.location.pathname;
+      router.replace(newUrl, { scroll: false });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -94,9 +106,7 @@ export default function EditorPage() {
     toast.promise(
       (async () => {
         try {
-          const token = await handleCompile(language, code, customInput);
-          setJudgeStatus("Running...");
-          const result = await checkStatus(token);
+          const result = await handleCompile(language, code, customInput);
           setOutputDetails(result);
           setJudgeStatus(undefined);
         } catch (error) {
@@ -127,6 +137,7 @@ export default function EditorPage() {
           saveTriggered={saveTriggered}
           onSnippetSaved={setCurrentSnippet}
           onSnippetsClick={() => setSnippetsOpen(true)}
+          onNewSnippet={() => { setCurrentSnippet(null); setCode(getDefaultCode(language.value)); }}
           onSignInRequired={() => setSignInOpen(true)}
           roomId={roomId}
         />
@@ -143,15 +154,24 @@ export default function EditorPage() {
         {/* Editor */}
         <div className={`relative flex flex-col ${isFullScreen ? "w-full" : "w-full md:w-[68%]"} overflow-hidden`}>
           <div className="flex-grow overflow-hidden">
-            <CodeEditor
-              theme={editorTheme}
-              language={language}
-              value={code}
-              isFullScreen={isFullScreen}
-              onChange={(v) => setCode(v || "")}
-              onCursorChange={setCursorPosition}
-              roomId={roomId ?? undefined}
-            />
+            {roomId ? (
+              <CollaborativeEditor
+                theme={editorTheme}
+                language={language}
+                isFullScreen={isFullScreen}
+                onChange={(v) => setCode(v || "")}
+                onCursorChange={setCursorPosition}
+              />
+            ) : (
+              <CodeEditor
+                theme={editorTheme}
+                language={language}
+                value={code}
+                isFullScreen={isFullScreen}
+                onChange={(v) => setCode(v || "")}
+                onCursorChange={setCursorPosition}
+              />
+            )}
           </div>
           <AICommandBar
             isOpen={aiCommandOpen}
@@ -197,6 +217,7 @@ export default function EditorPage() {
           setCurrentSnippet(snippet);
           setLanguage(lang);
           setCode(snippet.code);
+          toast.success(`Loaded: ${snippet.title}`, { autoClose: 1500 });
         }}
       />
 

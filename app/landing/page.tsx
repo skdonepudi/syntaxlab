@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Code2, Zap, Users, Sparkles, Upload, Sun, Play, PlayCircle, Globe, Share2, AlertCircle, MessageSquare } from "lucide-react";
+import { SignInDialog } from "@/components/SignInDialog";
+import { getCurrentUser } from "@/utils/authUtils";
+import { User } from "@supabase/supabase-js";
+import Image from "next/image";
 
 const PILLS: { Icon: React.ElementType; label: string; hoverColor: string; delay: number }[] = [
   { Icon: Code2,    label: "60+ Languages",    hoverColor: "#58a6ff", delay: 0.55 },
@@ -21,6 +25,9 @@ export default function LandingPage() {
   const remoteRef  = useRef<HTMLSpanElement>(null);
   const flashRef   = useRef<HTMLSpanElement>(null);
   const landingRef = useRef<HTMLDivElement>(null);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => { getCurrentUser().then(setUser); }, []);
 
   // ── 1. Mouse parallax on editor window
   useEffect(() => {
@@ -240,15 +247,31 @@ export default function LandingPage() {
 
         {/* Right actions */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/editor"
-            className="rounded-lg"
-            style={{ fontSize: 15, padding: "8px 18px", color: "#8b949e", border: "1px solid #30363d", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
-            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.borderColor = "#58a6ff50"; el.style.background = "#21262d"; }}
-            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.borderColor = "#30363d"; el.style.background = "transparent"; }}
-          >
-            Sign in
-          </Link>
+          {user ? (
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-2 rounded-lg"
+              style={{ fontSize: 15, padding: "8px 18px", color: "#8b949e", border: "1px solid #30363d", background: "transparent", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
+              onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.borderColor = "#58a6ff50"; el.style.background = "#21262d"; }}
+              onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.borderColor = "#30363d"; el.style.background = "transparent"; }}
+            >
+              {user.user_metadata?.avatar_url && (
+                <Image src={user.user_metadata.avatar_url} alt="" width={20} height={20} className="rounded-full object-cover" />
+              )}
+              Dashboard
+            </Link>
+          ) : (
+            <SignInDialog redirectPath="/editor">
+              <button
+                className="rounded-lg"
+                style={{ fontSize: 15, padding: "8px 18px", color: "#8b949e", border: "1px solid #30363d", background: "transparent", cursor: "pointer", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
+                onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.borderColor = "#58a6ff50"; el.style.background = "#21262d"; }}
+                onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.borderColor = "#30363d"; el.style.background = "transparent"; }}
+              >
+                Sign in
+              </button>
+            </SignInDialog>
+          )}
           <Link
             href="/editor"
             className="font-semibold rounded-lg"
@@ -634,7 +657,7 @@ export default function LandingPage() {
       <AISpotlight />
 
       {/* ── Social Proof ── */}
-      <SocialProof />
+      <UseCases />
 
       {/* ── CTA Banner ── */}
       <CTABanner />
@@ -1468,29 +1491,39 @@ function AIFeatureRow({ Icon, title, desc }: { Icon: React.ElementType; title: s
 ────────────────────────────────────────────────────────── */
 
 
-const TESTIMONIALS = [
+const USE_CASES = [
   {
-    quote: "Finally a browser editor that doesn't feel like a toy. The collab features alone saved our team hours during code review sessions.",
-    name: "Marcus K.", role: "Senior Engineer, Stripe", initials: "MK",
-    gradient: "linear-gradient(135deg, #58a6ff, #3b82f6)",
-    ringColor: "#58a6ff50",
+    Icon: Zap,
+    color: "#ffa657",
+    glow: "#ffa65718",
+    border: "#ffa65745",
+    tag: "Interview prep",
+    title: "Ace your next coding interview",
+    description: "Practice problems in 60+ languages with instant execution and AI-powered hints. No setup, no IDE downloads — just open and code.",
   },
   {
-    quote: "I use it for every interview prep session. The AI explaining my errors in plain English is a game-changer when you're under pressure.",
-    name: "Priya L.", role: "Software Engineer, Notion", initials: "PL",
-    gradient: "linear-gradient(135deg, #3fb950, #059669)",
-    ringColor: "#3fb95050",
+    Icon: Users,
+    color: "#3fb950",
+    glow: "#3fb95018",
+    border: "#3fb95045",
+    tag: "Team workflows",
+    title: "Review code together, live",
+    description: "Share a session link, paste a snippet, and walk through it in real time. Cursors, edits, and execution all visible to everyone.",
   },
   {
-    quote: "Switched from Replit. Faster, cleaner, and the Rust support is actually good. Hasn't let me down once.",
-    name: "Tom R.", role: "Systems Dev, Cloudflare", initials: "TR",
-    gradient: "linear-gradient(135deg, #d2a8ff, #7c3aed)",
-    ringColor: "#d2a8ff50",
+    Icon: Sparkles,
+    color: "#d2a8ff",
+    glow: "#d2a8ff18",
+    border: "#d2a8ff45",
+    tag: "Education",
+    title: "Teach with runnable examples",
+    description: "Explain concepts live with code that actually runs. Students can fork your snippet, modify it, and ask the AI follow-up questions inline.",
   },
 ];
 
-function SocialProof() {
+function UseCases() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -1500,7 +1533,7 @@ function SocialProof() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             el.querySelectorAll<HTMLElement>(".landing-fade-up").forEach((t, i) => {
-              t.style.animationDelay = `${i * 0.08}s`;
+              t.style.animationDelay = `${i * 0.1}s`;
               t.classList.add("landing-visible");
             });
             obs.disconnect();
@@ -1517,34 +1550,92 @@ function SocialProof() {
     <section
       ref={sectionRef}
       className="relative z-10 w-full"
-      style={{ padding: "0", background: "#0d1117" }}
+      style={{ padding: "80px 80px", background: "#0d1117" }}
     >
-      {/* Testimonials — minimal pull-quote strip */}
+      {/* Section label */}
+      <div className="landing-fade-up" style={{ textAlign: "center", marginBottom: 48 }}>
+        <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#6e7681", marginBottom: 12 }}>
+          Built for every workflow
+        </p>
+        <h2 style={{ fontSize: 28, fontWeight: 700, color: "#e6edf3", letterSpacing: "-0.5px", lineHeight: 1.2 }}>
+          One editor. Endless uses.
+        </h2>
+      </div>
+
+      {/* Cards */}
       <div
-        className="landing-fade-up"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
-          borderTop: "1px solid #21262d",
-          borderBottom: "1px solid #21262d",
+          gap: 20,
+          maxWidth: 1040,
+          margin: "0 auto",
         }}
       >
-        {TESTIMONIALS.map(({ quote, name, role }, i) => (
+        {USE_CASES.map(({ Icon, color, glow, border, tag, title, description }, i) => (
           <div
-            key={name}
+            key={tag}
+            className="landing-fade-up"
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
             style={{
-              padding: "28px 32px",
-              borderRight: i < 2 ? "1px solid #21262d" : "none",
+              position: "relative",
+              padding: "32px 28px",
+              borderRadius: 12,
+              border: `1px solid ${hovered === i ? border : "#21262d"}`,
+              background: hovered === i
+                ? `radial-gradient(ellipse at 20% 0%, ${glow} 0%, #0d1117 60%)`
+                : "#0d1117",
+              transform: hovered === i ? "translateY(-4px)" : "translateY(0)",
+              transition: "transform 0.22s ease, border-color 0.22s ease, background 0.22s ease",
+              cursor: "default",
             }}
           >
-            <p style={{ fontSize: 13.5, color: "#8b949e", lineHeight: 1.65, marginBottom: 16, fontStyle: "italic" }}>
-              &ldquo;{quote}&rdquo;
-            </p>
-            <div style={{ fontSize: 12, color: "#6e7681" }}>
-              <span style={{ color: "#e6edf3", fontWeight: 500 }}>{name}</span>
-              <span style={{ margin: "0 6px", color: "#3d444d" }}>·</span>
-              {role}
+            {/* Icon */}
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 10,
+                background: `${color}18`,
+                border: `1px solid ${color}35`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}
+            >
+              <Icon size={18} color={color} />
             </div>
+
+            {/* Tag */}
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 10,
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color,
+                background: `${color}18`,
+                border: `1px solid ${color}30`,
+                borderRadius: 4,
+                padding: "2px 8px",
+                marginBottom: 12,
+              }}
+            >
+              {tag}
+            </div>
+
+            {/* Title */}
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: "#e6edf3", lineHeight: 1.35, marginBottom: 10 }}>
+              {title}
+            </h3>
+
+            {/* Description */}
+            <p style={{ fontSize: 13.5, color: "#8b949e", lineHeight: 1.65 }}>
+              {description}
+            </p>
           </div>
         ))}
       </div>
