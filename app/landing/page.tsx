@@ -261,12 +261,11 @@ export default function LandingPage() {
       {/* ── Hero ── */}
       <div
         ref={heroRef}
-        className="relative z-10 grid items-center gap-16 px-12 mx-auto w-full"
+        className="relative z-10 grid items-center gap-12 px-16 w-full"
         style={{
           gridTemplateColumns: "1fr 1fr",
-          maxWidth: 1280,
-          paddingTop: 96,
-          paddingBottom: 72,
+          paddingTop: 88,
+          paddingBottom: 64,
         }}
       >
         {/* LEFT */}
@@ -594,7 +593,7 @@ export default function LandingPage() {
       {/* ── Feature pills ── */}
       <div
         className="relative z-10 flex flex-wrap justify-center gap-2.5 px-8 pb-9"
-        style={{ maxWidth: 1280, margin: "0 auto", width: "100%" }}
+        style={{ width: "100%" }}
       >
         {PILLS.map(({ Icon, label, hoverColor, delay }) => (
           <PillItem key={label} Icon={Icon} label={label} hoverColor={hoverColor} delay={delay} />
