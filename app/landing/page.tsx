@@ -1734,7 +1734,7 @@ function CTABanner() {
           Start coding free
         </Link>
         <a
-          href="https://github.com/syntaxlab"
+          href="https://github.com/skdonepudi/syntaxlab"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-xl"
@@ -1816,7 +1816,7 @@ function LandingFooter() {
 
           {/* GitHub icon link */}
           <a
-            href="https://github.com/syntaxlab"
+            href="https://github.com/skdonepudi/syntaxlab"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center rounded-lg"
