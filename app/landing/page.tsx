@@ -627,13 +627,11 @@ export default function LandingPage() {
       {/* ── Social Proof ── */}
       <SocialProof />
 
-      {/* ── Footer note ── */}
-      <div
-        className="relative z-10 text-center pb-6"
-        style={{ fontSize: 11, color: "#3d444d", letterSpacing: "0.3px" }}
-      >
-        No account required &nbsp;·&nbsp; Free to use &nbsp;·&nbsp; Open in seconds
-      </div>
+      {/* ── CTA Banner ── */}
+      <CTABanner />
+
+      {/* ── Footer ── */}
+      <LandingFooter />
     </div>
   );
 }
@@ -1601,5 +1599,180 @@ function TestimonialCard({
         </div>
       </div>
     </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   CTA BANNER
+────────────────────────────────────────────────────────── */
+
+function CTABanner() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            el.querySelectorAll<HTMLElement>(".landing-fade-up").forEach((t, i) => {
+              t.style.animationDelay = `${i * 0.1}s`;
+              t.classList.add("landing-visible");
+            });
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative z-10 w-full overflow-hidden text-center"
+      style={{ padding: "100px 80px", background: "#0a0d13", borderTop: "1px solid #21262d" }}
+    >
+      {/* grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(#58a6ff07 1px, transparent 1px), linear-gradient(90deg, #58a6ff07 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+          WebkitMaskImage: "radial-gradient(ellipse 60% 80% at 50% 50%, black 10%, transparent 70%)",
+          maskImage: "radial-gradient(ellipse 60% 80% at 50% 50%, black 10%, transparent 70%)",
+        }}
+      />
+      {/* glows */}
+      <div className="absolute pointer-events-none" style={{ top: -60, left: "50%", transform: "translateX(-50%)", width: 600, height: 400, background: "radial-gradient(ellipse, #58a6ff1e 0%, transparent 65%)" }} />
+      <div className="absolute pointer-events-none" style={{ bottom: -80, left: "50%", transform: "translateX(-50%)", width: 400, height: 300, background: "radial-gradient(ellipse, #7c3aed14 0%, transparent 65%)" }} />
+
+      <h2
+        className="landing-fade-up font-extrabold"
+        style={{ fontSize: 48, letterSpacing: "-2px", lineHeight: 1.05, marginBottom: 14, position: "relative" }}
+      >
+        Start writing{" "}
+        <span
+          style={{
+            backgroundImage: "linear-gradient(90deg, #58a6ff 0%, #a78bfa 35%, #58a6ff 70%, #a78bfa 100%)",
+            backgroundSize: "300% auto",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            animation: "landing-gradflow 5s linear infinite",
+          }}
+        >
+          better code
+        </span>{" "}
+        today.
+      </h2>
+      <p
+        className="landing-fade-up"
+        style={{ fontSize: 16, color: "#8b949e", marginBottom: 36, position: "relative" }}
+      >
+        No account required. Open your first file in under 10 seconds.
+      </p>
+      <div className="landing-fade-up flex items-center justify-center gap-3" style={{ position: "relative" }}>
+        <Link
+          href="/editor"
+          className="inline-flex items-center gap-2 rounded-xl font-bold"
+          style={{
+            padding: "13px 28px",
+            background: "#58a6ff",
+            color: "#0a0d13",
+            fontSize: 15,
+            animation: "landing-ctabreathe 3s ease-in-out infinite",
+            transition: "transform 0.2s, background 0.2s, box-shadow 0.2s",
+          }}
+          onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#79c0ff"; el.style.transform = "translateY(-2px)"; el.style.boxShadow = "0 8px 32px #58a6ff50"; el.style.animation = "none"; }}
+          onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#58a6ff"; el.style.transform = ""; el.style.boxShadow = ""; el.style.animation = "landing-ctabreathe 3s ease-in-out infinite"; }}
+        >
+          <Play size={14} fill="currentColor" strokeWidth={0} />
+          Start coding free
+        </Link>
+        <a
+          href="https://github.com/syntaxlab"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-xl"
+          style={{
+            padding: "13px 22px",
+            color: "#8b949e",
+            fontSize: 15,
+            border: "1px solid #30363d",
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.borderColor = "#58a6ff50"; el.style.background = "#21262d"; }}
+          onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.borderColor = "#30363d"; el.style.background = "transparent"; }}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+    </section>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   FOOTER
+────────────────────────────────────────────────────────── */
+
+function LandingFooter() {
+  const links = [
+    { label: "Privacy", href: "/privacy-policy" },
+    { label: "Terms",   href: "#" },
+    { label: "GitHub",  href: "https://github.com/syntaxlab", external: true },
+    { label: "Docs",    href: "#" },
+  ];
+
+  return (
+    <footer
+      className="relative z-10 flex items-center justify-between"
+      style={{ padding: "20px 80px", background: "#0d1117", borderTop: "1px solid #21262d" }}
+    >
+      <Link href="/" className="flex items-center gap-2.5">
+        <div
+          className="flex items-center justify-center rounded-lg"
+          style={{ width: 28, height: 28, background: "linear-gradient(135deg, #58a6ff, #7c3aed)", boxShadow: "0 2px 10px #58a6ff30" }}
+        >
+          <Code2 size={14} color="white" strokeWidth={2.5} />
+        </div>
+        <span className="font-bold" style={{ fontSize: 15, letterSpacing: "-0.3px" }}>SyntaxLab</span>
+      </Link>
+
+      <nav className="flex gap-7">
+        {links.map(({ label, href, external }) =>
+          external ? (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: 12, color: "#6e7681", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "#8b949e"; }}
+              onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "#6e7681"; }}
+            >
+              {label}
+            </a>
+          ) : (
+            <Link
+              key={label}
+              href={href}
+              style={{ fontSize: 12, color: "#6e7681", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#8b949e"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#6e7681"; }}
+            >
+              {label}
+            </Link>
+          )
+        )}
+      </nav>
+
+      <div style={{ fontSize: 11, color: "#3d444d" }}>© 2026 SyntaxLab. All rights reserved.</div>
+    </footer>
   );
 }
