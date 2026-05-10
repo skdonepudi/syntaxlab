@@ -51,3 +51,98 @@
     font-family: var(--font-geist-mono), monospace;
   }
 }
+
+/* ── Landing page animations ── */
+@keyframes landing-shimmer {
+  0%   { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+@keyframes landing-scan {
+  0%   { top: -200px; }
+  100% { top: 100%; }
+}
+@keyframes landing-ctabreathe {
+  0%, 100% { box-shadow: 0 0 12px 0 #58a6ff30; }
+  50%       { box-shadow: 0 0 22px 4px #58a6ff40; }
+}
+@keyframes landing-gradflow {
+  to { background-position: 300% center; }
+}
+@keyframes landing-blink {
+  50% { opacity: 0; }
+}
+@keyframes landing-pulse-dot {
+  0%, 100% { box-shadow: 0 0 6px #3fb950; }
+  50%       { box-shadow: 0 0 12px #3fb95080; }
+}
+@keyframes landing-liveping {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes landing-avring {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes landing-slideInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes landing-slideInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes landing-pillIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes landing-sparkle-fade {
+  0%   { opacity: 0.9; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(2.5); }
+}
+
+/* Badge shimmer — needs ::before */
+.landing-badge {
+  position: relative;
+  overflow: hidden;
+}
+.landing-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, #58a6ff20 50%, transparent 100%);
+  transform: translateX(-100%);
+  animation: landing-shimmer 2.8s ease-in-out infinite;
+}
+
+/* Live presence dot ring */
+.landing-live-dot {
+  position: relative;
+}
+.landing-live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid #3fb95060;
+  animation: landing-liveping 2s ease-out infinite;
+}
+
+/* Avatar ring ping */
+.landing-av-ring::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  animation: landing-avring 2.5s ease-out infinite;
+}
+.landing-av-ring-blue::after  { border-color: #58a6ff50; }
+.landing-av-ring-purple::after { border-color: #d2a8ff50; animation-delay: 0.4s; }
+
+/* Run flash transition */
+.landing-run-flash {
+  opacity: 0;
+  transition: opacity 0.3s;
+  color: #3fb950;
+  font-size: 10.5px;
+}
