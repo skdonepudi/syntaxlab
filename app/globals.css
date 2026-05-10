@@ -128,6 +128,9 @@
 }
 
 /* Avatar ring ping */
+.landing-av-ring {
+  position: relative;
+}
 .landing-av-ring::after {
   content: '';
   position: absolute;
