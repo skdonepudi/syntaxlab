@@ -4,6 +4,15 @@ import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Code2, Zap, Users, Sparkles, Upload, Sun, Play, PlayCircle } from "lucide-react";
 
+const PILLS: { Icon: React.ElementType; label: string; hoverColor: string; delay: number }[] = [
+  { Icon: Code2,    label: "60+ Languages",    hoverColor: "#58a6ff", delay: 0.55 },
+  { Icon: Zap,      label: "Instant Execution", hoverColor: "#ffa657", delay: 0.62 },
+  { Icon: Users,    label: "Real-time Collab",  hoverColor: "#3fb950", delay: 0.69 },
+  { Icon: Sparkles, label: "AI Assistant",      hoverColor: "#d2a8ff", delay: 0.76 },
+  { Icon: Upload,   label: "Snippet Sharing",   hoverColor: "#ff7b72", delay: 0.83 },
+  { Icon: Sun,      label: "25+ Themes",        hoverColor: "#79c0ff", delay: 0.90 },
+];
+
 export default function LandingPage() {
   const heroRef    = useRef<HTMLDivElement>(null);
   const editorRef  = useRef<HTMLDivElement>(null);
@@ -565,7 +574,62 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Pills + footer will be added in Task 6 */}
+      {/* ── Feature pills ── */}
+      <div
+        className="relative z-10 flex flex-wrap justify-center gap-2.5 px-8 pb-9"
+        style={{ maxWidth: 1100, margin: "0 auto", width: "100%" }}
+      >
+        {PILLS.map(({ Icon, label, hoverColor, delay }) => (
+          <PillItem key={label} Icon={Icon} label={label} hoverColor={hoverColor} delay={delay} />
+        ))}
+      </div>
+
+      {/* ── Footer note ── */}
+      <div
+        className="relative z-10 text-center pb-6"
+        style={{ fontSize: 11, color: "#3d444d", letterSpacing: "0.3px" }}
+      >
+        No account required &nbsp;·&nbsp; Free to use &nbsp;·&nbsp; Open in seconds
+      </div>
+    </div>
+  );
+}
+
+function PillItem({
+  Icon, label, hoverColor, delay,
+}: {
+  Icon: React.ElementType;
+  label: string;
+  hoverColor: string;
+  delay: number;
+}) {
+  const [hovered, setHovered] = React.useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="inline-flex items-center gap-1.5 rounded-full text-xs cursor-default select-none"
+      style={{
+        border: `1px solid ${hovered ? "#58a6ff50" : "#21262d"}`,
+        padding: "7px 16px",
+        background: hovered ? "#1a2233" : "#161b22",
+        color: hovered ? "#e6edf3" : "#8b949e",
+        boxShadow: hovered ? "0 0 14px #58a6ff18" : "none",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        transition: "all 0.2s",
+        animation: `landing-pillIn 0.5s ${delay}s both`,
+      }}
+    >
+      <Icon
+        size={13}
+        style={{
+          color: hovered ? hoverColor : "#58a6ff80",
+          transform: hovered ? "scale(1.15) rotate(-5deg)" : "scale(1) rotate(0deg)",
+          transition: "all 0.2s",
+          flexShrink: 0,
+        }}
+      />
+      {label}
     </div>
   );
 }
