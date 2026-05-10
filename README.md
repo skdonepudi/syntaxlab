@@ -2,7 +2,7 @@
 
 A modern, production-grade online code editor — write, execute, and collaborate on code in real time.
 
-Live at **[syntaxlab.dev](https://syntaxlab.dev)** · [Open Editor](https://syntaxlab.dev/editor)
+Live at **[syntaxlab.vercel.app](https://syntaxlab.vercel.app/landing)** · [Open Editor](https://syntaxlab.vercel.app/editor)
 
 ---
 
