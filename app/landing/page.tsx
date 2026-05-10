@@ -221,15 +221,19 @@ export default function LandingPage() {
 
         {/* Centre links */}
         <div className="hidden md:flex items-center gap-8">
-          {["Features", "Languages", "Docs"].map((l) => (
+          {[
+            { label: "Features", href: "#features" },
+            { label: "Languages", href: "#languages" },
+            { label: "AI", href: "#ai-spotlight" },
+          ].map(({ label, href }) => (
             <a
-              key={l}
-              href="#"
+              key={label}
+              href={href}
               style={{ fontSize: 15, color: "#8b949e", transition: "color 0.2s" }}
               onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "#e6edf3")}
               onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "#8b949e")}
             >
-              {l}
+              {label}
             </a>
           ))}
         </div>
@@ -358,11 +362,6 @@ export default function LandingPage() {
               Watch demo
             </a>
           </div>
-
-          {/* Trust line */}
-          <p style={{ fontSize: 11, color: "#3d444d", letterSpacing: "0.3px", marginBottom: 20 }}>
-            No account required &nbsp;·&nbsp; Free to use &nbsp;·&nbsp; Open in seconds
-          </p>
 
           {/* Stats row */}
           <div className="flex items-center gap-5">
@@ -620,6 +619,11 @@ export default function LandingPage() {
         ))}
       </div>
 
+      {/* ── Trust line ── */}
+      <p className="relative z-10 text-center" style={{ fontSize: 11, color: "#3d444d", letterSpacing: "0.3px", marginTop: -16, marginBottom: 24 }}>
+        No account required &nbsp;·&nbsp; Free to use &nbsp;·&nbsp; Open in seconds
+      </p>
+
       {/* ── Bento Features ── */}
       <BentoSection />
 
@@ -712,6 +716,7 @@ function BentoSection() {
 
   return (
     <section
+      id="features"
       ref={sectionRef}
       className="relative z-10 w-full"
       style={{ padding: "96px 80px", background: "#0a0d13" }}
@@ -829,7 +834,7 @@ function BentoSection() {
               Python, Go, Rust, TypeScript, Java and many more — all major runtimes supported.
             </div>
             <div className="flex flex-wrap gap-1.5 mt-4">
-              {["Python", "Go", "Rust", "TypeScript", "Java", "C#", "+54 more"].map((l) => (
+              {["Python", "Go", "Rust", "TypeScript", "Java", "C#", "Swift", "Kotlin", "Ruby", "+49 more"].map((l) => (
                 <span
                   key={l}
                   style={{
@@ -957,9 +962,15 @@ function TerminalDemo() {
         </div>
       )}
       {phase === "done" && (
-        <div className="flex items-center gap-2" style={{ lineHeight: "22px", animation: "landing-slide-up 0.3s ease both" }}>
-          <span style={{ color: "#3fb950" }}>✓ Exited</span>
-          <span style={{ color: "#ffa657" }}>· {time}</span>
+        <div style={{ animation: "landing-slide-up 0.3s ease both" }}>
+          <div style={{ lineHeight: "22px", color: "#8b949e" }}>
+            Result: <span style={{ color: "#e6edf3" }}>index 4</span>
+            <span style={{ color: "#6e7681" }}> (found in 3 steps)</span>
+          </div>
+          <div className="flex items-center gap-2" style={{ lineHeight: "22px" }}>
+            <span style={{ color: "#3fb950" }}>✓ Exited</span>
+            <span style={{ color: "#ffa657" }}>· {time}</span>
+          </div>
         </div>
       )}
     </div>
@@ -1194,6 +1205,7 @@ function LanguagesMarquee() {
 
   return (
     <section
+      id="languages"
       className="relative z-10 w-full overflow-hidden"
       style={{
         padding: "56px 0",
@@ -1292,6 +1304,7 @@ function AISpotlight() {
 
   return (
     <section
+      id="ai-spotlight"
       ref={sectionRef}
       className="relative z-10 w-full"
       style={{
@@ -1343,7 +1356,7 @@ function AISpotlight() {
       </div>
 
       {/* Right column — floating window */}
-      <div className="landing-fade-up">
+      <div className="landing-fade-up" style={{ alignSelf: "center" }}>
       <div
         style={{
           borderRadius: 14,
@@ -1368,10 +1381,18 @@ function AISpotlight() {
         </div>
 
         {/* Body */}
-        <div style={{ padding: "18px 18px 18px", fontFamily: "var(--font-geist-mono), monospace", fontSize: 12 }}>
-          <div style={{ lineHeight: "22px", color: "#6e7681" }}>Output:</div>
-          <div style={{ lineHeight: "22px", color: "#ff7b72" }}>IndexError: list index out of range</div>
-          <div style={{ lineHeight: "22px", color: "#6e7681" }}>&nbsp;&nbsp;at line 8, in binary_search</div>
+        <div style={{ padding: "14px 16px", fontFamily: "var(--font-geist-mono), monospace", fontSize: 12 }}>
+          {/* Code snippet */}
+          <div style={{ marginBottom: 12, lineHeight: "20px" }}>
+            <div><span style={{ color: "#ff7b72" }}>def </span><span style={{ color: "#d2a8ff" }}>binary_search</span><span style={{ color: "#e6edf3" }}>(arr, target):</span></div>
+            <div><span style={{ color: "#e6edf3" }}>{"    "}</span><span style={{ color: "#ffa657" }}>lo</span><span style={{ color: "#e6edf3" }}>, </span><span style={{ color: "#ffa657" }}>hi</span><span style={{ color: "#e6edf3" }}> = 0, len(arr) - 1</span></div>
+            <div style={{ background: "#ff7b7212", borderLeft: "2px solid #ff7b7260", paddingLeft: 6, marginLeft: -2 }}>
+              <span style={{ color: "#ff7b72" }}>{"    "}while </span><span style={{ color: "#ffa657" }}>lo</span><span style={{ color: "#e6edf3" }}> &lt; </span><span style={{ color: "#ffa657" }}>hi</span><span style={{ color: "#e6edf3" }}>:</span>
+            </div>
+          </div>
+          <div style={{ marginBottom: 4, fontSize: 10, fontWeight: 700, letterSpacing: "0.5px", color: "#3d444d", textTransform: "uppercase" }}>Output</div>
+          <div style={{ lineHeight: "20px", color: "#ff7b72" }}>IndexError: list index out of range</div>
+          <div style={{ lineHeight: "20px", color: "#6e7681", marginBottom: 10 }}>&nbsp;&nbsp;at line 8, in binary_search</div>
 
           {/* AI panel */}
           <div
