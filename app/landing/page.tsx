@@ -260,13 +260,12 @@ export default function LandingPage() {
       {/* ── Hero ── */}
       <div
         ref={heroRef}
-        className="relative z-10 grid items-center gap-16 px-12 mx-auto w-full flex-1"
+        className="relative z-10 grid items-center gap-16 px-12 mx-auto w-full"
         style={{
           gridTemplateColumns: "1fr 1fr",
           maxWidth: 1280,
-          minHeight: "calc(100vh - 54px)",
-          paddingTop: 80,
-          paddingBottom: 64,
+          paddingTop: 72,
+          paddingBottom: 56,
         }}
       >
         {/* LEFT */}
