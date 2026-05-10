@@ -160,24 +160,24 @@ export default function LandingPage() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 30%, #0a0d13 85%)",
+            "radial-gradient(ellipse 75% 65% at 50% 40%, transparent 35%, #0a0d13 82%)",
         }}
       />
       {/* Ambient glow — right */}
       <div
         className="absolute pointer-events-none"
         style={{
-          top: 40, right: -60, width: 560, height: 480,
+          top: 40, right: -60, width: 700, height: 600,
           background:
-            "radial-gradient(ellipse at 65% 35%, #58a6ff10 0%, #7c3aed08 45%, transparent 70%)",
+            "radial-gradient(ellipse at 65% 35%, #58a6ff22 0%, #7c3aed14 45%, transparent 70%)",
         }}
       />
       {/* Ambient glow — left */}
       <div
         className="absolute pointer-events-none"
         style={{
-          top: -80, left: -80, width: 400, height: 400,
-          background: "radial-gradient(ellipse, #58a6ff07 0%, transparent 65%)",
+          top: -80, left: -80, width: 500, height: 500,
+          background: "radial-gradient(ellipse, #58a6ff12 0%, transparent 65%)",
         }}
       />
       {/* Grid scan line */}
@@ -374,15 +374,28 @@ export default function LandingPage() {
         </div>
 
         {/* RIGHT — Editor window */}
-        <div style={{ perspective: "1000px", animation: "landing-slideInRight 0.75s 0.1s cubic-bezier(.22,1,.36,1) both" }}>
+        <div style={{ perspective: "1000px", animation: "landing-slideInRight 0.75s 0.1s cubic-bezier(.22,1,.36,1) both", position: "relative" }}>
+          {/* Behind-editor glow orb */}
+          <div
+            className="absolute pointer-events-none"
+            style={{
+              inset: "-40px -60px",
+              background: "radial-gradient(ellipse at 55% 45%, #58a6ff28 0%, #7c3aed18 40%, transparent 70%)",
+              filter: "blur(32px)",
+              zIndex: 0,
+              borderRadius: "50%",
+            }}
+          />
           {/* Gradient border wrapper — ref for parallax tilt */}
           <div
             ref={editorRef}
             className="rounded-xl p-px"
             style={{
-              background: "linear-gradient(135deg, #58a6ff35 0%, transparent 40%, #7c3aed20 100%)",
-              boxShadow: "0 0 0 1px #58a6ff12, 0 24px 64px rgba(0,0,0,.55), 0 0 50px #58a6ff08",
-              transition: "box-shadow 0.3s",
+              position: "relative",
+              zIndex: 1,
+              background: "linear-gradient(135deg, #58a6ff70 0%, #58a6ff30 30%, transparent 55%, #7c3aed40 100%)",
+              boxShadow: "0 0 0 1px #58a6ff20, 0 32px 80px rgba(0,0,0,.75), 0 0 60px #58a6ff18, 0 0 30px #7c3aed12",
+              transition: "box-shadow 0.35s, transform 0.35s",
               willChange: "transform",
             }}
           >
