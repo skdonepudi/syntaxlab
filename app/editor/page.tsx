@@ -44,9 +44,11 @@ export default function EditorPage() {
   const [aiResponse, setAiResponse] = useState<string>("");
   const [outputTab, setOutputTab] = useState<"output" | "ai">("output");
 
-  const roomId = typeof window !== "undefined"
-    ? new URLSearchParams(window.location.search).get("room")
-    : null;
+  const [roomId, setRoomId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setRoomId(new URLSearchParams(window.location.search).get("room"));
+  }, []);
 
   useEffect(() => {
     if (resolvedTheme === "dark") {
