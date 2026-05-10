@@ -73,6 +73,7 @@ export function SnippetsSheet({ isOpen, onClose, onLoad }: SnippetsSheetProps) {
           <h2 className="text-sm font-semibold text-ink-primary">My Snippets</h2>
           <button
             onClick={onClose}
+            aria-label="Close snippets"
             className="text-ink-faint hover:text-ink-primary transition-colors p-1 rounded hover:bg-obsidian-overlay"
           >
             <X size={16} />

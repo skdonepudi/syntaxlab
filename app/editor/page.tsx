@@ -153,7 +153,7 @@ export default function EditorPage() {
           onSnippetSaved={setCurrentSnippet}
           onSnippetsClick={() => setSnippetsOpen(true)}
           onNewSnippet={() => { setCurrentSnippet(null); setCode(getDefaultCode(language.value)); }}
-          onSignInRequired={() => setSignInOpen(true)}
+          onSignInRequired={() => toast.info("Sign in to save snippets")}
           roomId={roomId}
         />
       )}

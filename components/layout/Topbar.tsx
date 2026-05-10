@@ -91,6 +91,7 @@ export function Topbar({
             )}
             <button
               onClick={onSnippetsClick}
+              title="My snippets"
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm text-ink-muted hover:text-ink-primary hover:bg-obsidian-overlay transition-colors"
             >
               <BookOpen size={14} />
