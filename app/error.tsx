@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Code2, TriangleAlert } from "lucide-react";
+import { Code2 } from "lucide-react";
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -35,39 +35,42 @@ export default function Error({ error, reset }: ErrorProps) {
 
       <div className="relative z-10 flex flex-col items-center text-center px-6">
         {/* Logo */}
-        <Link href="/landing" className="flex items-center gap-2 mb-12">
+        <Link href="/landing" className="flex items-center gap-2 mb-14">
           <div style={{ width: 32, height: 32, background: "linear-gradient(135deg, #58a6ff, #7c3aed)", borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 16px #58a6ff30" }}>
             <Code2 size={17} color="white" strokeWidth={2.5} />
           </div>
           <span className="text-base font-semibold text-ink-primary tracking-tight">SyntaxLab</span>
         </Link>
 
-        {/* Icon */}
-        <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style={{ background: "#ff7b7210", border: "1px solid #ff7b7225" }}>
-          <TriangleAlert size={24} style={{ color: "#ff7b72" }} strokeWidth={1.75} />
-        </div>
+        {/* Cheeky eyebrow */}
+        <p className="font-mono text-xs text-ink-faint/70 mb-5 tracking-wide">
+          <span className="text-brand-red/70">throw new</span> <span className="text-brand-blue/60">Error</span><span className="text-ink-faint/50">(</span><span className="text-brand-green/60">&apos;unexpected&apos;</span><span className="text-ink-faint/50">);</span>
+        </p>
 
-        <p className="text-xs font-semibold uppercase tracking-widest text-ink-faint mb-3">Something went wrong</p>
-        <h1 className="text-2xl font-bold text-ink-primary mb-3">Unexpected error</h1>
-        <p className="text-ink-muted text-sm max-w-sm mb-6 leading-relaxed">
-          {error.message || "An unexpected error occurred. You can try again or return to the editor."}
+        {/* Heading */}
+        <h1
+          className="font-extrabold font-mono mb-5 bg-clip-text text-transparent"
+          style={{ fontSize: "clamp(44px, 9vw, 72px)", lineHeight: 1.1, backgroundImage: "linear-gradient(135deg, #ff7b72 0%, #ffa657 100%)" }}
+        >
+          Uncaught<br />Exception
+        </h1>
+
+        <p className="text-ink-muted text-sm max-w-sm mb-3 leading-relaxed">
+          {error.message || "Something broke on our end. The stack trace has been noted — by nobody. You can try again or retreat to safety."}
         </p>
 
         {/* Error digest */}
         {error.digest && (
-          <p className="text-[11px] font-mono text-ink-faint/60 mb-8">
-            digest: {error.digest}
+          <p className="font-mono text-[11px] text-ink-faint/50 mb-8">
+            digest: <span className="text-ink-faint/80">{error.digest}</span>
           </p>
         )}
 
         {/* CTAs */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mt-4">
           <button
             onClick={reset}
-            className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors"
-            style={{ background: "#58a6ff", color: "#0a0d13" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#79c0ff"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#58a6ff"; }}
+            className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors bg-[#58a6ff] hover:bg-[#79c0ff] text-[#0a0d13]"
           >
             Try again
           </button>

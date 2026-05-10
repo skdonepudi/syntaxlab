@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Code2, FileX } from "lucide-react";
+import { Code2 } from "lucide-react";
 
 export default function SnippetNotFound() {
   return (
@@ -23,22 +23,28 @@ export default function SnippetNotFound() {
 
       <div className="relative z-10 flex flex-col items-center text-center px-6">
         {/* Logo */}
-        <Link href="/landing" className="flex items-center gap-2 mb-12">
+        <Link href="/landing" className="flex items-center gap-2 mb-14">
           <div style={{ width: 32, height: 32, background: "linear-gradient(135deg, #58a6ff, #7c3aed)", borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 16px #58a6ff30" }}>
             <Code2 size={17} color="white" strokeWidth={2.5} />
           </div>
           <span className="text-base font-semibold text-ink-primary tracking-tight">SyntaxLab</span>
         </Link>
 
-        {/* Icon */}
-        <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style={{ background: "#58a6ff10", border: "1px solid #58a6ff20" }}>
-          <FileX size={24} className="text-brand-blue" strokeWidth={1.75} />
-        </div>
+        {/* Cheeky eyebrow */}
+        <p className="font-mono text-xs text-ink-faint/70 mb-5 tracking-wide">
+          <span className="text-brand-blue/60">snippet</span><span className="text-ink-faint/50">.</span><span className="text-brand-purple/70">find</span><span className="text-ink-faint/50">(id)</span> <span className="text-ink-faint/50">→</span> <span className="text-brand-red/70">undefined</span>
+        </p>
 
-        <p className="text-xs font-semibold uppercase tracking-widest text-ink-faint mb-3">Snippet not found</p>
-        <h1 className="text-2xl font-bold text-ink-primary mb-3">This snippet doesn&apos;t exist</h1>
+        {/* Heading */}
+        <h1
+          className="font-extrabold font-mono mb-5 bg-clip-text text-transparent"
+          style={{ fontSize: "clamp(36px, 8vw, 60px)", lineHeight: 1.15, backgroundImage: "linear-gradient(135deg, #58a6ff 0%, #7c3aed 100%)" }}
+        >
+          Snippet not found
+        </h1>
+
         <p className="text-ink-muted text-sm max-w-xs mb-10 leading-relaxed">
-          It may have been deleted, made private, or the link is incorrect.
+          This snippet is <code className="font-mono text-brand-red/70 text-xs">null</code>, private, or the link is broken. The author may have deleted it, or you&apos;re looking for something that was never pushed.
         </p>
 
         <div className="flex items-center gap-3">
