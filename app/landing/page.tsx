@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Code2, Zap, Users, Sparkles, Upload, Sun, Play, PlayCircle } from "lucide-react";
+import { Code2, Zap, Users, Sparkles, Upload, Sun, Play, PlayCircle, Globe, Share2, AlertCircle, MessageSquare } from "lucide-react";
 
 const PILLS: { Icon: React.ElementType; label: string; hoverColor: string; delay: number }[] = [
   { Icon: Code2,    label: "60+ Languages",    hoverColor: "#58a6ff", delay: 0.55 },
@@ -133,7 +133,7 @@ export default function LandingPage() {
       });
       container.appendChild(dot);
       setTimeout(() => dot.remove(), 800);
-      tid = setTimeout(sparkle, 600 + Math.random() * 900);
+      tid = setTimeout(sparkle, 150 + Math.random() * 250);
     };
     tid = setTimeout(sparkle, 1000);
     return () => clearTimeout(tid);
@@ -416,7 +416,7 @@ export default function LandingPage() {
             <div
               className="rounded-xl overflow-hidden"
               style={{
-                background: "#0d1117",
+                background: "linear-gradient(135deg, #58a6ff35 0%, transparent 40%, #7c3aed20 100%), #0d1117",
               }}
             >
               {/* Toolbar */}
@@ -615,6 +615,9 @@ export default function LandingPage() {
         ))}
       </div>
 
+      {/* ── Bento Features ── */}
+      <BentoSection />
+
       {/* ── Footer note ── */}
       <div
         className="relative z-10 text-center pb-6"
@@ -661,6 +664,441 @@ function PillItem({
         }}
       />
       {label}
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   BENTO SECTION
+────────────────────────────────────────────────────────── */
+
+function BentoSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const targets = el.querySelectorAll<HTMLElement>(".landing-fade-up");
+            targets.forEach((t, i) => {
+              const base = parseFloat(t.dataset.delay ?? "0");
+              t.style.animationDelay = `${base + i * 0.06}s`;
+              t.classList.add("landing-visible");
+            });
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative z-10 w-full"
+      style={{ padding: "96px 80px", background: "#0a0d13" }}
+    >
+      {/* subtle grid bg */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(#58a6ff08 1px, transparent 1px), linear-gradient(90deg, #58a6ff08 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+          WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%)",
+          maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%)",
+        }}
+      />
+
+      <div style={{ position: "relative" }}>
+        {/* Header */}
+        <div
+          className="landing-fade-up flex items-center gap-2 mb-3"
+          style={{ fontSize: 11, fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: "#58a6ff" }}
+        >
+          <span style={{ width: 20, height: 1, background: "#58a6ff60", display: "inline-block" }} />
+          Everything you need
+        </div>
+        <h2
+          className="landing-fade-up font-extrabold"
+          style={{ fontSize: 42, letterSpacing: "-1.5px", lineHeight: 1.07, marginBottom: 12 }}
+        >
+          Built for developers<br />who move fast
+        </h2>
+        <p
+          className="landing-fade-up"
+          style={{ fontSize: 16, color: "#8b949e", maxWidth: 500, lineHeight: 1.7, marginBottom: 52 }}
+        >
+          Every tool you need to write, run, share and collaborate — in one tab.
+        </p>
+
+        {/* Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 12,
+            maxWidth: 900,
+            margin: "0 auto",
+          }}
+        >
+          {/* Row 1 */}
+          <BentoCard accent="#58a6ff" gradientClass="blue" delay={0.0}>
+            <div
+              className="flex items-center justify-center rounded-xl mb-4 flex-shrink-0"
+              style={{ width: 40, height: 40, background: "#58a6ff1e", color: "#58a6ff", transition: "transform 0.3s cubic-bezier(.22,1,.36,1), background 0.3s" }}
+            >
+              <Zap size={20} strokeWidth={1.75} />
+            </div>
+            <div className="font-bold" style={{ fontSize: 18, marginBottom: 8, letterSpacing: "-0.3px" }}>Instant Execution</div>
+            <div style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.6, maxWidth: 280 }}>
+              Sub-second runs across 60+ runtimes. No setup, no waiting, no config.
+            </div>
+            <TerminalDemo />
+          </BentoCard>
+
+          <BentoCard accent="#d2a8ff" gradientClass="purple" delay={0.06}>
+            <div
+              className="flex items-center justify-center rounded-xl mb-4 flex-shrink-0"
+              style={{ width: 40, height: 40, background: "#7c3aed1e", color: "#d2a8ff", transition: "transform 0.3s cubic-bezier(.22,1,.36,1), background 0.3s" }}
+            >
+              <Sparkles size={20} strokeWidth={1.75} />
+            </div>
+            <div className="font-bold" style={{ fontSize: 18, marginBottom: 8, letterSpacing: "-0.3px" }}>AI Assistant</div>
+            <div style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.6, maxWidth: 280 }}>
+              Context-aware suggestions that see your output and errors — not just your code.
+            </div>
+            <AISuggestionDemo />
+          </BentoCard>
+
+          {/* Row 2 — wide */}
+          <BentoCard accent="#3fb950" gradientClass="green" delay={0.12} wide>
+            <div style={{ display: "flex", gap: 36, alignItems: "flex-start" }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  className="flex items-center justify-center rounded-xl mb-4 flex-shrink-0"
+                  style={{ width: 40, height: 40, background: "#3fb9501e", color: "#3fb950", transition: "transform 0.3s cubic-bezier(.22,1,.36,1), background 0.3s" }}
+                >
+                  <Users size={20} strokeWidth={1.75} />
+                </div>
+                <div className="font-bold" style={{ fontSize: 18, marginBottom: 8, letterSpacing: "-0.3px" }}>Real-time Collaboration</div>
+                <div style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.6 }}>
+                  Live cursors, shared sessions and presence avatars. Code together like you&apos;re in the same room.
+                </div>
+                <div className="flex items-center gap-2 mt-4" style={{ fontSize: 11, color: "#6e7681" }}>
+                  <div
+                    className="rounded-full"
+                    style={{ width: 7, height: 7, background: "#3fb950", boxShadow: "0 0 6px #3fb950", animation: "landing-pulse-dot 2s ease-in-out infinite", flexShrink: 0 }}
+                  />
+                  3 collaborators online now
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <CollabDemo />
+              </div>
+            </div>
+          </BentoCard>
+
+          {/* Row 3 */}
+          <BentoCard accent="#ffa657" gradientClass="orange" delay={0.18}>
+            <div
+              className="flex items-center justify-center rounded-xl mb-4 flex-shrink-0"
+              style={{ width: 40, height: 40, background: "#ffa6571e", color: "#ffa657", transition: "transform 0.3s cubic-bezier(.22,1,.36,1), background 0.3s" }}
+            >
+              <Globe size={20} strokeWidth={1.75} />
+            </div>
+            <div className="font-bold" style={{ fontSize: 18, marginBottom: 8, letterSpacing: "-0.3px" }}>60+ Languages</div>
+            <div style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.6, maxWidth: 280 }}>
+              Python, Go, Rust, TypeScript, Java and many more — all major runtimes supported.
+            </div>
+            <div className="flex flex-wrap gap-1.5 mt-4">
+              {["Python", "Go", "Rust", "TypeScript", "Java", "C#", "+54 more"].map((l) => (
+                <span
+                  key={l}
+                  style={{
+                    fontSize: 10.5, padding: "3px 11px", borderRadius: 20,
+                    border: "1px solid #30363d", color: "#8b949e", background: "#161b22",
+                  }}
+                >
+                  {l}
+                </span>
+              ))}
+            </div>
+          </BentoCard>
+
+          <BentoCard accent="#ff7b72" gradientClass="red" delay={0.24}>
+            <div
+              className="flex items-center justify-center rounded-xl mb-4 flex-shrink-0"
+              style={{ width: 40, height: 40, background: "#ff7b721e", color: "#ff7b72", transition: "transform 0.3s cubic-bezier(.22,1,.36,1), background 0.3s" }}
+            >
+              <Share2 size={20} strokeWidth={1.75} />
+            </div>
+            <div className="font-bold" style={{ fontSize: 18, marginBottom: 8, letterSpacing: "-0.3px" }}>Snippet Sharing</div>
+            <div style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.6, maxWidth: 280 }}>
+              Share runnable code with a single link. Recipients can run it instantly — no account needed.
+            </div>
+            <CopyButton />
+          </BentoCard>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BentoCard({
+  children, accent, gradientClass, delay = 0, wide = false,
+}: {
+  children: React.ReactNode;
+  accent: string;
+  gradientClass: "blue" | "purple" | "green" | "orange" | "red";
+  delay?: number;
+  wide?: boolean;
+}) {
+  const gradients: Record<string, string> = {
+    blue:   "linear-gradient(135deg, #58a6ff12 0%, transparent 55%)",
+    purple: "linear-gradient(135deg, #7c3aed16 0%, transparent 55%)",
+    green:  "linear-gradient(135deg, #3fb95014 0%, transparent 55%)",
+    orange: "linear-gradient(135deg, #ffa65714 0%, transparent 55%)",
+    red:    "linear-gradient(135deg, #ff7b7214 0%, transparent 55%)",
+  };
+
+  const [hovered, setHovered] = React.useState(false);
+
+  return (
+    <div
+      className={`landing-fade-up relative overflow-hidden rounded-2xl`}
+      data-delay={String(delay)}
+      style={{
+        gridColumn: wide ? "1 / 3" : undefined,
+        background: `${gradients[gradientClass]}, #0d1117`,
+        border: `1px solid ${hovered ? `${accent}40` : "#21262d"}`,
+        padding: 28,
+        boxShadow: hovered
+          ? `0 0 0 1px ${accent}18, 0 24px 64px rgba(0,0,0,.5), 0 0 40px ${accent}10`
+          : "0 0 0 1px transparent, 0 8px 32px rgba(0,0,0,.3)",
+        transform: hovered ? "translateY(-5px)" : "translateY(0)",
+        transition: "transform 0.3s cubic-bezier(.22,1,.36,1), border-color 0.3s, box-shadow 0.3s",
+        cursor: "default",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {children}
+    </div>
+  );
+}
+
+function TerminalDemo() {
+  const [phase, setPhase] = React.useState<"idle" | "running" | "done">("idle");
+  const [time, setTime] = React.useState("0.23s");
+  const times = ["0.18s", "0.23s", "0.31s", "0.19s", "0.27s"];
+
+  useEffect(() => {
+    let tid: ReturnType<typeof setTimeout>;
+    const cycle = () => {
+      setPhase("running");
+      tid = setTimeout(() => {
+        setTime(times[Math.floor(Math.random() * times.length)]);
+        setPhase("done");
+        tid = setTimeout(() => { setPhase("idle"); tid = setTimeout(cycle, 800); }, 3000);
+      }, 900);
+    };
+    tid = setTimeout(cycle, 1200);
+    return () => clearTimeout(tid);
+  }, []);
+
+  return (
+    <div
+      className="mt-4 rounded-xl font-mono"
+      style={{ background: "#0a0d13", border: "1px solid #21262d", padding: "12px 14px", fontSize: 11.5 }}
+    >
+      <div className="flex items-center gap-2" style={{ lineHeight: "22px" }}>
+        <span style={{ color: "#58a6ff" }}>▶</span>
+        <span style={{ color: "#e6edf3" }}>python solution.py</span>
+      </div>
+      {phase === "running" && (
+        <div className="flex items-center gap-2" style={{ lineHeight: "22px" }}>
+          <span style={{ color: "#6e7681" }}>Running</span>
+          <span style={{ display: "inline-flex", gap: 2 }}>
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                style={{
+                  width: 3, height: 3, borderRadius: "50%", background: "#6e7681", display: "inline-block",
+                  animation: `landing-blink 1s ${i * 0.3}s step-end infinite`,
+                }}
+              />
+            ))}
+          </span>
+        </div>
+      )}
+      {phase === "done" && (
+        <div className="flex items-center gap-2" style={{ lineHeight: "22px", animation: "landing-slide-up 0.3s ease both" }}>
+          <span style={{ color: "#3fb950" }}>✓ Exited</span>
+          <span style={{ color: "#ffa657" }}>· {time}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AISuggestionDemo() {
+  const FULL = "Your loop has an off-by-one error on line 8.";
+  const [text, setText] = React.useState("");
+  const [showFix, setShowFix] = React.useState(false);
+
+  useEffect(() => {
+    let idx = 0;
+    let cancelled = false;
+    let tid: ReturnType<typeof setTimeout>;
+
+    const typeChar = () => {
+      if (cancelled) return;
+      if (idx <= FULL.length) {
+        setText(FULL.slice(0, idx++));
+        tid = setTimeout(typeChar, 28);
+      } else {
+        tid = setTimeout(() => { if (!cancelled) setShowFix(true); }, 300);
+        tid = setTimeout(() => {
+          if (cancelled) return;
+          idx = 0; setText(""); setShowFix(false);
+          tid = setTimeout(typeChar, 400);
+        }, 7500);
+      }
+    };
+    tid = setTimeout(typeChar, 900);
+    return () => { cancelled = true; clearTimeout(tid); };
+  }, []);
+
+  return (
+    <div
+      className="mt-4 rounded-xl"
+      style={{ background: "#7c3aed10", border: "1px solid #7c3aed28", padding: "12px 14px", fontSize: 11.5 }}
+    >
+      <div className="flex items-center gap-1.5 mb-2" style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: "#d2a8ff" }}>
+        <Sparkles size={10} strokeWidth={2} />
+        Suggestion
+      </div>
+      <div style={{ color: "#8b949e", lineHeight: 1.6, fontSize: 12, minHeight: 36 }}>
+        {text}
+        <span style={{ display: "inline-block", width: 1.5, height: 12, background: "#d2a8ff", verticalAlign: "middle", marginLeft: 1, animation: "landing-blink 0.9s step-end infinite" }} />
+      </div>
+      {showFix && (
+        <div
+          className="mt-2 rounded-lg font-mono"
+          style={{ background: "#0a0d13", border: "1px solid #21262d", padding: "6px 10px", fontSize: 11, color: "#3fb950", animation: "landing-slide-up 0.3s ease both" }}
+        >
+          hi = mid - 1 <span style={{ color: "#6e7681" }}>← fix</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CollabDemo() {
+  const FULL = "    # O(log n) — returns index or -1";
+  const remoteRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    let idx = 0;
+    let dir = 1;
+    let cancelled = false;
+    let tid: ReturnType<typeof setTimeout>;
+
+    const step = () => {
+      if (cancelled) return;
+      if (dir === 1) {
+        if (idx <= FULL.length) {
+          if (remoteRef.current) remoteRef.current.textContent = FULL.slice(0, idx++);
+          tid = setTimeout(step, 55 + Math.random() * 40);
+        } else {
+          tid = setTimeout(() => { dir = -1; step(); }, 3200);
+        }
+      } else {
+        if (idx >= 0) {
+          if (remoteRef.current) remoteRef.current.textContent = FULL.slice(0, idx--);
+          tid = setTimeout(step, 22);
+        } else {
+          dir = 1; tid = setTimeout(step, 1200);
+        }
+      }
+    };
+    if (remoteRef.current) remoteRef.current.textContent = "    ";
+    tid = setTimeout(step, 1600);
+    return () => { cancelled = true; clearTimeout(tid); };
+  }, []);
+
+  return (
+    <div
+      className="rounded-xl font-mono"
+      style={{
+        background: "linear-gradient(135deg, #58a6ff35 0%, transparent 40%, #7c3aed20 100%), #0d1117",
+        border: "1px solid #21262d",
+        padding: "12px 14px",
+        fontSize: 11.5,
+      }}
+    >
+      {/* Line 1 — your cursor */}
+      <div className="flex items-center gap-1 rounded" style={{ lineHeight: "22px", background: "#58a6ff0a", padding: "0 4px" }}>
+        <span style={{ fontSize: 8, fontWeight: 700, padding: "1px 6px", borderRadius: 3, background: "#58a6ff", color: "#0d1117", flexShrink: 0 }}>You</span>
+        <span style={{ color: "#ff7b72" }}>while </span>
+        <span style={{ color: "#ffa657" }}>lo</span>
+        <span style={{ color: "#e6edf3" }}> &lt;= </span>
+        <span style={{ color: "#ffa657" }}>hi</span>
+        <span style={{ color: "#e6edf3" }}>:</span>
+        <span style={{ display: "inline-block", width: 1.5, height: 12, background: "#58a6ff", verticalAlign: "middle", marginLeft: 1, animation: "landing-blink 1.1s step-end infinite" }} />
+      </div>
+      {/* Line 2 — Sarah typing */}
+      <div className="flex items-center gap-1 rounded" style={{ lineHeight: "22px", background: "#d2a8ff09", padding: "0 4px" }}>
+        <span style={{ fontSize: 8, fontWeight: 700, padding: "1px 6px", borderRadius: 3, background: "#d2a8ff", color: "#0d1117", flexShrink: 0 }}>Sarah</span>
+        <span ref={remoteRef} style={{ color: "#6e7681" }}>{"    "}</span>
+        <span style={{ display: "inline-block", width: 1.5, height: 12, background: "#d2a8ff", verticalAlign: "middle", marginLeft: 1, animation: "landing-blink 0.9s step-end infinite" }} />
+      </div>
+      {/* Line 3 */}
+      <div style={{ lineHeight: "22px", padding: "0 4px" }}>
+        <span style={{ color: "#ffa657" }}>    mid</span>
+        <span style={{ color: "#e6edf3" }}> = (</span>
+        <span style={{ color: "#ffa657" }}>lo</span>
+        <span style={{ color: "#e6edf3" }}> + </span>
+        <span style={{ color: "#ffa657" }}>hi</span>
+        <span style={{ color: "#e6edf3" }}>) // </span>
+        <span style={{ color: "#79c0ff" }}>2</span>
+      </div>
+    </div>
+  );
+}
+
+function CopyButton() {
+  const [copied, setCopied] = React.useState(false);
+
+  return (
+    <div
+      className="flex items-center gap-2 mt-4 rounded-xl font-mono"
+      style={{ background: "#0a0d13", border: "1px solid #21262d", padding: "10px 14px", fontSize: 11, color: "#58a6ff" }}
+    >
+      <Share2 size={11} color="#6e7681" strokeWidth={2} />
+      syntaxlab.dev/s/xk9mf2
+      <button
+        className="ml-auto rounded-md"
+        style={{
+          fontSize: 10, padding: "4px 10px",
+          background: copied ? "#1a2f1a" : "#21262d",
+          color: copied ? "#3fb950" : "#8b949e",
+          border: `1px solid ${copied ? "#3fb95050" : "#30363d"}`,
+          cursor: "pointer",
+          transition: "all 0.2s",
+          fontFamily: "inherit",
+          flexShrink: 0,
+        }}
+        onClick={() => { setCopied(true); setTimeout(() => setCopied(false), 2000); }}
+      >
+        {copied ? "Copied!" : "Copy"}
+      </button>
     </div>
   );
 }
