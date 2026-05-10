@@ -13,6 +13,123 @@ export default function LandingPage() {
   const flashRef   = useRef<HTMLSpanElement>(null);
   const landingRef = useRef<HTMLDivElement>(null);
 
+  // ── 1. Mouse parallax on editor window
+  useEffect(() => {
+    const hero   = heroRef.current;
+    const editor = editorRef.current;
+    if (!hero || !editor) return;
+    const onMove = (e: MouseEvent) => {
+      const r = hero.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width  / 2)) / r.width;
+      const dy = (e.clientY - (r.top  + r.height / 2)) / r.height;
+      editor.style.transform  = `rotateX(${-dy * 6}deg) rotateY(${dx * 8}deg) translateZ(8px)`;
+      editor.style.transition = "transform 0.08s linear";
+    };
+    const onLeave = () => {
+      editor.style.transform  = "rotateX(0deg) rotateY(0deg) translateZ(0)";
+      editor.style.transition = "transform 0.6s cubic-bezier(.22,1,.36,1)";
+    };
+    hero.addEventListener("mousemove", onMove);
+    hero.addEventListener("mouseleave", onLeave);
+    return () => {
+      hero.removeEventListener("mousemove", onMove);
+      hero.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
+  // ── 2. Stat count-up (60 languages, 340ms)
+  useEffect(() => {
+    function countUp(el: HTMLSpanElement, target: number, duration: number) {
+      const start = performance.now();
+      const step  = (now: number) => {
+        const p     = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = String(Math.round(eased * target));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    const t = setTimeout(() => {
+      if (stat1Ref.current) countUp(stat1Ref.current, 60,  1200);
+      if (stat2Ref.current) countUp(stat2Ref.current, 340,  900);
+    }, 400);
+    return () => clearTimeout(t);
+  }, []);
+
+  // ── 3. Remote cursor typewriter ("Sarah" types the comment)
+  useEffect(() => {
+    const FULL = "# O(log n) — returns index or -1";
+    const BASE = "    ";
+    let ri = 0;
+    let cancelled = false;
+    let tid: ReturnType<typeof setTimeout>;
+
+    const type = () => {
+      if (cancelled) return;
+      if (ri <= FULL.length) {
+        if (remoteRef.current) remoteRef.current.textContent = BASE + FULL.slice(0, ri);
+        ri++;
+        tid = setTimeout(type, 55 + Math.random() * 40);
+      } else {
+        tid = setTimeout(del, 3200);
+      }
+    };
+    const del = () => {
+      if (cancelled) return;
+      if (ri > 0) {
+        ri--;
+        if (remoteRef.current) remoteRef.current.textContent = BASE + FULL.slice(0, ri);
+        tid = setTimeout(del, 22);
+      } else {
+        tid = setTimeout(type, 1200);
+      }
+    };
+    if (remoteRef.current) remoteRef.current.textContent = BASE;
+    tid = setTimeout(type, 1800);
+    return () => { cancelled = true; clearTimeout(tid); };
+  }, []);
+
+  // ── 4. Status bar "Run complete" flash
+  useEffect(() => {
+    const times = ["0.18s", "0.23s", "0.31s", "0.19s", "0.27s"];
+    let tid: ReturnType<typeof setTimeout>;
+    const flash = () => {
+      const el = flashRef.current;
+      if (el) {
+        el.textContent = `✓ Run complete · ${times[Math.floor(Math.random() * times.length)]}`;
+        el.style.opacity = "1";
+        setTimeout(() => { if (el) el.style.opacity = "0"; }, 2200);
+      }
+      tid = setTimeout(flash, 8000 + Math.random() * 5000);
+    };
+    tid = setTimeout(flash, 3500);
+    return () => clearTimeout(tid);
+  }, []);
+
+  // ── 5. Grid intersection sparkles
+  useEffect(() => {
+    const container = landingRef.current;
+    if (!container) return;
+    let tid: ReturnType<typeof setTimeout>;
+    const sparkle = () => {
+      const dot = document.createElement("div");
+      const gx  = Math.floor(Math.random() * 24) * 44;
+      const gy  = Math.floor(Math.random() * 14) * 44;
+      Object.assign(dot.style, {
+        position: "absolute", left: `${gx}px`, top: `${gy}px`,
+        width: "3px", height: "3px", borderRadius: "50%",
+        background: "#58a6ff", boxShadow: "0 0 6px #58a6ff",
+        pointerEvents: "none", zIndex: "2",
+        animation: "landing-sparkle-fade 0.8s ease-out forwards",
+      });
+      container.appendChild(dot);
+      setTimeout(() => dot.remove(), 800);
+      tid = setTimeout(sparkle, 600 + Math.random() * 900);
+    };
+    tid = setTimeout(sparkle, 1000);
+    return () => clearTimeout(tid);
+  }, []);
+
   return (
     <div
       ref={landingRef}
