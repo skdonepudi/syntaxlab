@@ -936,9 +936,9 @@ function BentoCard({
 function TerminalDemo() {
   const [phase, setPhase] = React.useState<"idle" | "running" | "done">("idle");
   const [time, setTime] = React.useState("0.23s");
-  const times = ["0.18s", "0.23s", "0.31s", "0.19s", "0.27s"];
 
   useEffect(() => {
+    const times = ["0.18s", "0.23s", "0.31s", "0.19s", "0.27s"];
     let cancelled = false;
     let tid: ReturnType<typeof setTimeout>;
     const cycle = () => {

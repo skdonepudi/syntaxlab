@@ -216,7 +216,7 @@ export default function EditorPage() {
         {/* Output panel */}
         {!isFullScreen && (
           <div className="hidden md:flex flex-col w-[32%] border-l border-border-default bg-obsidian-base">
-            <OutputTabs activeTab={outputTab} onTabChange={setOutputTab} hasAIResponse={!!aiResponse}>
+            <OutputTabs activeTab={outputTab} onTabChange={setOutputTab}>
               {outputTab === "output" ? (
                 <>
                   <OutputWindow outputDetails={outputDetails} position="top" />

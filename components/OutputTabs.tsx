@@ -7,7 +7,6 @@ type Tab = "output" | "ai";
 interface OutputTabsProps {
   activeTab: Tab;
   onTabChange: (tab: Tab) => void;
-  hasAIResponse: boolean;
   children: React.ReactNode;
 }
 
@@ -16,7 +15,7 @@ const TAB_META: Record<Tab, { label: string; Icon: React.ElementType }> = {
   ai: { label: "AI", Icon: Sparkles },
 };
 
-export function OutputTabs({ activeTab, onTabChange, hasAIResponse, children }: OutputTabsProps) {
+export function OutputTabs({ activeTab, onTabChange, children }: OutputTabsProps) {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center border-b border-border-default bg-obsidian-surface shrink-0">
