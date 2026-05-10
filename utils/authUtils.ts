@@ -8,8 +8,7 @@ export async function getCurrentUser(): Promise<User | null> {
       data: { user },
     } = await supabase.auth.getUser();
     return user;
-  } catch (error) {
-    console.error("Error fetching current user:", error);
+  } catch {
     return null;
   }
 }
