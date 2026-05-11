@@ -246,12 +246,12 @@ export default function LandingPage() {
         </div>
 
         {/* Right actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {user ? (
             <Link
               href="/dashboard"
               className="flex items-center gap-2 rounded-lg"
-              style={{ fontSize: 15, padding: "8px 18px", color: "#8b949e", border: "1px solid #30363d", background: "transparent", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
+              style={{ fontSize: 14, padding: "7px 14px", color: "#8b949e", border: "1px solid #30363d", background: "transparent", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
               onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.borderColor = "#58a6ff50"; el.style.background = "#21262d"; }}
               onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.borderColor = "#30363d"; el.style.background = "transparent"; }}
             >
@@ -263,8 +263,8 @@ export default function LandingPage() {
           ) : (
             <SignInDialog redirectPath="/editor">
               <button
-                className="rounded-lg"
-                style={{ fontSize: 15, padding: "8px 18px", color: "#8b949e", border: "1px solid #30363d", background: "transparent", cursor: "pointer", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
+                className="hidden sm:block rounded-lg"
+                style={{ fontSize: 14, padding: "7px 14px", color: "#8b949e", border: "1px solid #30363d", background: "transparent", cursor: "pointer", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.borderColor = "#58a6ff50"; el.style.background = "#21262d"; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.borderColor = "#30363d"; el.style.background = "transparent"; }}
               >
@@ -276,15 +276,14 @@ export default function LandingPage() {
             href="/editor"
             className="font-semibold rounded-lg"
             style={{
-              fontSize: 15,
-              padding: "8px 20px",
+              fontSize: 14,
+              padding: "7px 16px",
               background: "#58a6ff",
               color: "#0a0d13",
-              animation: "landing-ctabreathe 3s ease-in-out infinite",
               transition: "transform 0.2s, box-shadow 0.2s, background 0.2s",
             }}
-            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#79c0ff"; el.style.transform = "translateY(-1px)"; el.style.boxShadow = "0 6px 20px #58a6ff50"; el.style.animation = "none"; }}
-            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#58a6ff"; el.style.transform = ""; el.style.boxShadow = ""; el.style.animation = "landing-ctabreathe 3s ease-in-out infinite"; }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#79c0ff"; el.style.transform = "translateY(-1px)"; el.style.boxShadow = "0 4px 14px #58a6ff40"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#58a6ff"; el.style.transform = ""; el.style.boxShadow = ""; }}
           >
             Open Editor
           </Link>
