@@ -263,7 +263,7 @@ export default function LandingPage() {
           ) : (
             <SignInDialog redirectPath="/editor">
               <button
-                className="hidden sm:block rounded-lg"
+                className="rounded-lg"
                 style={{ fontSize: 14, padding: "7px 14px", color: "#8b949e", border: "1px solid #30363d", background: "transparent", cursor: "pointer", transition: "color 0.2s, border-color 0.2s, background 0.2s" }}
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#e6edf3"; el.style.borderColor = "#58a6ff50"; el.style.background = "#21262d"; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "#8b949e"; el.style.borderColor = "#30363d"; el.style.background = "transparent"; }}
