@@ -272,16 +272,6 @@ export default function LandingPage() {
               </button>
             </SignInDialog>
           )}
-          {/* Mobile: plain text link. sm+: solid blue button */}
-          <Link
-            href="/editor"
-            className="font-semibold rounded-lg sm:hidden"
-            style={{ fontSize: 14, color: "#58a6ff", transition: "color 0.2s" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#79c0ff"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#58a6ff"; }}
-          >
-            Open Editor
-          </Link>
           <Link
             href="/editor"
             className="hidden sm:block font-semibold rounded-lg"
