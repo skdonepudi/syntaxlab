@@ -201,7 +201,7 @@ export default function LandingPage() {
 
       {/* ── Navigation ── */}
       <nav
-        className="relative flex items-center justify-between px-8 z-10"
+        className="relative flex items-center justify-between px-4 sm:px-8 z-10"
         style={{
           height: 68,
           background: "rgba(10, 13, 19, 0.75)",
@@ -294,11 +294,10 @@ export default function LandingPage() {
       {/* ── Hero ── */}
       <div
         ref={heroRef}
-        className="relative z-10 grid items-center gap-12 px-16 w-full"
+        className="relative z-10 grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-12 px-6 sm:px-10 lg:px-16 w-full"
         style={{
-          gridTemplateColumns: "1fr 1fr",
-          paddingTop: 88,
-          paddingBottom: 64,
+          paddingTop: 64,
+          paddingBottom: 48,
         }}
       >
         {/* LEFT */}
@@ -329,7 +328,7 @@ export default function LandingPage() {
           {/* Headline */}
           <div
             className="font-extrabold mb-5"
-            style={{ fontSize: 68, lineHeight: 1.03, letterSpacing: "-2.5px" }}
+            style={{ fontSize: "clamp(38px, 7vw, 68px)", lineHeight: 1.03, letterSpacing: "-2.5px" }}
           >
             <span className="block" style={{ color: "#e6edf3" }}>Write code.</span>
             <span
@@ -357,7 +356,7 @@ export default function LandingPage() {
           </p>
 
           {/* CTAs */}
-          <div className="flex items-center gap-3 mb-9">
+          <div className="flex flex-wrap items-center gap-3 mb-9">
             <Link
               href="/editor"
               className="inline-flex items-center gap-2 rounded-lg font-bold text-sm"
@@ -412,7 +411,7 @@ export default function LandingPage() {
         </div>
 
         {/* RIGHT — Editor window */}
-        <div style={{ perspective: "1000px", animation: "landing-slideInRight 0.75s 0.1s cubic-bezier(.22,1,.36,1) both", position: "relative" }}>
+        <div className="hidden md:block" style={{ perspective: "1000px", animation: "landing-slideInRight 0.75s 0.1s cubic-bezier(.22,1,.36,1) both", position: "relative" }}>
           {/* Behind-editor glow orb */}
           <div
             className="absolute pointer-events-none"
@@ -741,8 +740,8 @@ function BentoSection() {
     <section
       id="features"
       ref={sectionRef}
-      className="relative z-10 w-full"
-      style={{ padding: "96px 80px", background: "#0a0d13" }}
+      className="relative z-10 w-full px-5 sm:px-10 lg:px-20 py-16 lg:py-24"
+      style={{ background: "#0a0d13" }}
     >
       {/* subtle grid bg */}
       <div
@@ -766,7 +765,7 @@ function BentoSection() {
         </div>
         <h2
           className="landing-fade-up font-extrabold"
-          style={{ fontSize: 42, letterSpacing: "-1.5px", lineHeight: 1.07, marginBottom: 12 }}
+          style={{ fontSize: "clamp(28px, 5vw, 42px)", letterSpacing: "-1.5px", lineHeight: 1.07, marginBottom: 12 }}
         >
           Built for developers<br />who move fast
         </h2>
@@ -779,9 +778,8 @@ function BentoSection() {
 
         {/* Grid */}
         <div
+          className="grid grid-cols-1 md:grid-cols-2"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
             gap: 12,
             maxWidth: 900,
             margin: "0 auto",
@@ -818,7 +816,7 @@ function BentoSection() {
 
           {/* Row 2 — wide */}
           <BentoCard accent="#3fb950" gradientClass="green" delay={0.12} wide>
-            <div style={{ display: "flex", gap: 36, alignItems: "flex-start" }}>
+            <div className="flex flex-col md:flex-row" style={{ gap: 24, alignItems: "flex-start" }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div
                   className="flex items-center justify-center rounded-xl mb-4 flex-shrink-0"
@@ -911,10 +909,9 @@ function BentoCard({
 
   return (
     <div
-      className={`landing-fade-up relative overflow-hidden rounded-2xl`}
+      className={`landing-fade-up relative overflow-hidden rounded-2xl ${wide ? "md:col-span-2" : ""}`}
       data-delay={String(delay)}
       style={{
-        gridColumn: wide ? "1 / 3" : undefined,
         background: `${gradients[gradientClass]}, #0d1117`,
         border: `1px solid ${hovered ? `${accent}40` : "#21262d"}`,
         padding: 28,
@@ -1329,15 +1326,8 @@ function AISpotlight() {
     <section
       id="ai-spotlight"
       ref={sectionRef}
-      className="relative z-10 w-full"
-      style={{
-        padding: "96px 80px",
-        background: "#0a0d13",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: 72,
-        alignItems: "center",
-      }}
+      className="relative z-10 w-full grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-16 px-5 sm:px-10 lg:px-20 py-16 lg:py-24"
+      style={{ background: "#0a0d13" }}
     >
       {/* ambient right glow */}
       <div
@@ -1360,7 +1350,7 @@ function AISpotlight() {
         </div>
         <h2
           className="landing-fade-up font-extrabold"
-          style={{ fontSize: 38, letterSpacing: "-1.2px", lineHeight: 1.08, marginBottom: 16 }}
+          style={{ fontSize: "clamp(26px, 4.5vw, 38px)", letterSpacing: "-1.2px", lineHeight: 1.08, marginBottom: 16 }}
         >
           An AI that<br />sees your output
         </h2>
@@ -1549,8 +1539,8 @@ function UseCases() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 w-full"
-      style={{ padding: "80px 80px", background: "#0d1117" }}
+      className="relative z-10 w-full px-5 sm:px-10 lg:px-20 py-14 lg:py-20"
+      style={{ background: "#0d1117" }}
     >
       {/* Section label */}
       <div className="landing-fade-up" style={{ textAlign: "center", marginBottom: 48 }}>
@@ -1564,9 +1554,8 @@ function UseCases() {
 
       {/* Cards */}
       <div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
           gap: 20,
           maxWidth: 1040,
           margin: "0 auto",
@@ -1674,8 +1663,8 @@ function CTABanner() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 w-full overflow-hidden text-center"
-      style={{ padding: "100px 80px", background: "#0a0d13", borderTop: "1px solid #21262d" }}
+      className="relative z-10 w-full overflow-hidden text-center px-5 sm:px-10 lg:px-20 py-16 lg:py-24"
+      style={{ background: "#0a0d13", borderTop: "1px solid #21262d" }}
     >
       {/* grid */}
       <div
@@ -1693,7 +1682,7 @@ function CTABanner() {
 
       <h2
         className="landing-fade-up font-extrabold"
-        style={{ fontSize: 48, letterSpacing: "-2px", lineHeight: 1.05, marginBottom: 14, position: "relative" }}
+        style={{ fontSize: "clamp(30px, 5.5vw, 48px)", letterSpacing: "-2px", lineHeight: 1.05, marginBottom: 14, position: "relative" }}
       >
         Start writing{" "}
         <span
@@ -1715,7 +1704,7 @@ function CTABanner() {
       >
         No account required. Open your first file in under 10 seconds.
       </p>
-      <div className="landing-fade-up flex items-center justify-center gap-3" style={{ position: "relative" }}>
+      <div className="landing-fade-up flex flex-col sm:flex-row items-center justify-center gap-3" style={{ position: "relative" }}>
         <Link
           href="/editor"
           className="inline-flex items-center gap-2 rounded-xl font-bold"
@@ -1778,8 +1767,7 @@ function LandingFooter() {
       <div style={{ height: 1, background: "linear-gradient(90deg, transparent, #30363d 20%, #30363d 80%, transparent)" }} />
 
       <div
-        className="flex items-center justify-between"
-        style={{ padding: "20px 80px" }}
+        className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 sm:gap-0 px-6 sm:px-16 lg:px-20 py-5"
       >
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 group">
@@ -1798,7 +1786,7 @@ function LandingFooter() {
         </Link>
 
         {/* Nav links */}
-        <nav className="flex items-center gap-6">
+        <nav className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
           {navLinks.map(({ label, href }) => (
             <Link
               key={label}
