@@ -1207,15 +1207,32 @@ function CopyButton() {
    LANGUAGES MARQUEE
 ────────────────────────────────────────────────────────── */
 
-const LANGUAGES: [string, string][] = [
-  ["Python", "#3776ab"], ["Go", "#00acd7"], ["Rust", "#dea584"],
-  ["TypeScript", "#3178c6"], ["JavaScript", "#f7df1e"], ["Java", "#b07219"],
-  ["C#", "#239120"], ["Swift", "#ef4035"], ["Kotlin", "#7F52FF"],
-  ["Haskell", "#a97bff"], ["Ruby", "#cc342d"], ["PHP", "#4f5d95"],
-  ["C++", "#00599c"], ["Scala", "#dc322f"], ["Dart", "#0175c2"],
-  ["Elixir", "#6e4a7e"], ["R", "#276dc3"], ["Lua", "#000080"],
-  ["Bash", "#4eaa25"], ["Clojure", "#5881d8"], ["Erlang", "#a90533"],
-  ["F#", "#378bba"], ["Julia", "#9558b2"], ["Perl", "#39457e"],
+const DI = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
+const LANGUAGES: { name: string; icon: string }[] = [
+  { name: "Python",     icon: `${DI}/python/python-original.svg` },
+  { name: "Go",         icon: `${DI}/go/go-original.svg` },
+  { name: "Rust",       icon: `${DI}/rust/rust-original.svg` },
+  { name: "TypeScript", icon: `${DI}/typescript/typescript-original.svg` },
+  { name: "JavaScript", icon: `${DI}/javascript/javascript-original.svg` },
+  { name: "Java",       icon: `${DI}/java/java-original.svg` },
+  { name: "C#",         icon: `${DI}/csharp/csharp-original.svg` },
+  { name: "Swift",      icon: `${DI}/swift/swift-original.svg` },
+  { name: "Kotlin",     icon: `${DI}/kotlin/kotlin-original.svg` },
+  { name: "Haskell",    icon: `${DI}/haskell/haskell-original.svg` },
+  { name: "Ruby",       icon: `${DI}/ruby/ruby-original.svg` },
+  { name: "PHP",        icon: `${DI}/php/php-original.svg` },
+  { name: "C++",        icon: `${DI}/cplusplus/cplusplus-original.svg` },
+  { name: "Scala",      icon: `${DI}/scala/scala-original.svg` },
+  { name: "Dart",       icon: `${DI}/dart/dart-original.svg` },
+  { name: "Elixir",     icon: `${DI}/elixir/elixir-original.svg` },
+  { name: "R",          icon: `${DI}/r/r-original.svg` },
+  { name: "Lua",        icon: `${DI}/lua/lua-original.svg` },
+  { name: "Bash",       icon: `${DI}/bash/bash-original.svg` },
+  { name: "Clojure",    icon: `${DI}/clojure/clojure-original.svg` },
+  { name: "Erlang",     icon: `${DI}/erlang/erlang-original.svg` },
+  { name: "F#",         icon: `${DI}/fsharp/fsharp-original.svg` },
+  { name: "Julia",      icon: `${DI}/julia/julia-original.svg` },
+  { name: "Perl",       icon: `${DI}/perl/perl-original.svg` },
 ];
 
 function LanguagesMarquee() {
@@ -1249,10 +1266,10 @@ function LanguagesMarquee() {
       >
         <div style={{ display: "flex" }}>
           <div style={{ display: "flex", animation: "landing-marquee 30s linear infinite" }}>
-            {items.map(([name, color], i) => (
+            {items.map(({ name, icon }, i) => (
               <div
                 key={i}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2.5"
                 style={{
                   padding: "10px 24px",
                   borderRight: "1px solid #21262d",
@@ -1263,7 +1280,8 @@ function LanguagesMarquee() {
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#161b22"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
               >
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: color, display: "inline-block", flexShrink: 0 }} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={icon} alt={name} width={18} height={18} style={{ display: "block", flexShrink: 0 }} onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
                 <span style={{ fontSize: 13, color: "#8b949e", fontWeight: 500 }}>{name}</span>
               </div>
             ))}
